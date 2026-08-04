@@ -35,8 +35,25 @@ export default defineConfig({
         ]
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,jpg,webp,svg,woff,woff2}'],
+        globPatterns: ['**/*.{js,css,html,ico,svg,woff,woff2}'],
+        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // 5 MB
+        navigateFallback: '/index.html',
+        navigateFallbackDenylist: [/^\/api/, /^\/__/, /^\/sw\.js$/],
         runtimeCaching: [
+          {
+            urlPattern: /\/cards\/.+\.(png|webp|jpg|jpeg)$/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'local-card-images',
+              expiration: {
+                maxEntries: 200,
+                maxAgeSeconds: 60 * 60 * 24 * 365,
+              },
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+            },
+          },
           {
             urlPattern: /^https:\/\/assets\.tcgdex\.net\/.*/i,
             handler: 'CacheFirst',
