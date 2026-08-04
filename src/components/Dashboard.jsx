@@ -1,4 +1,4 @@
-import { useCollection } from '../context/CollectionContext'
+import { useCollection } from '../hooks/useCollection'
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { CheckCircle2, Circle, Sparkles, Truck } from 'lucide-react'

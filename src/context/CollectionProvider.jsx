@@ -1,6 +1,4 @@
 import {
-  createContext,
-  useContext,
   useEffect,
   useState,
   useCallback,
@@ -26,13 +24,13 @@ import {
 import { LAYOUT_OPTIONS } from '../lib/layout'
 import rawCards from '../data/cards.json'
 
+import { CollectionContext } from './CollectionContext.js'
+
 const STORAGE_KEY = 'glaceon-collection-v1'
 const LAYOUT_KEY = 'glaceon-layout-v1'
 const SYNC_STATE_KEY = 'glaceon-sync-state-v1'
 const MIGRATION_KEY = 'glaceon-migration-v1'
 const DEBOUNCE_MS = 1200
-
-const CollectionContext = createContext(null)
 
 function loadJson(key, fallback) {
   try {
@@ -451,10 +449,4 @@ export function CollectionProvider({ children }) {
       {children}
     </CollectionContext.Provider>
   )
-}
-
-export function useCollection() {
-  const ctx = useContext(CollectionContext)
-  if (!ctx) throw new Error('useCollection must be used inside CollectionProvider')
-  return ctx
 }

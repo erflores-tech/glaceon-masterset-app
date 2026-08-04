@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react'
-import { useCollection } from '../context/CollectionContext'
+import { useCollection } from '../hooks/useCollection'
 import { useSearchParams } from 'react-router-dom'
 import { LAYOUT_CONFIG } from '../lib/layout'
 import { useLastListState, loadLastListState } from '../hooks/useLastListState'

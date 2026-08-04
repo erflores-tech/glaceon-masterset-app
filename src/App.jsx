@@ -1,5 +1,6 @@
 import { Routes, Route, Link, useLocation } from 'react-router-dom'
-import { CollectionProvider, useCollection } from './context/CollectionContext'
+import { CollectionProvider } from './context/CollectionProvider.jsx'
+import { useCollection } from './hooks/useCollection'
 import Dashboard from './components/Dashboard'
 import CardList from './components/CardList'
 import CardDetail from './components/CardDetail'
@@ -15,14 +16,10 @@ import { Snowflake, LayoutGrid, List, CloudOff, CloudCheck, CloudSync, RefreshCw
 
 function AppShell() {
   const [needUpdate, setNeedUpdate] = useState(false)
-  const [offlineReady, setOfflineReady] = useState(false)
 
   const updateServiceWorker = useRegisterSW({
     onNeedRefresh() {
       setNeedUpdate(true)
-    },
-    onOfflineReady() {
-      setOfflineReady(true)
     },
     onRegisteredSW(swUrl, r) {
       console.log('SW registered:', swUrl, r)
@@ -136,7 +133,6 @@ function AppShell() {
 
 function AuthGate() {
   const { user, authLoading } = useCollection()
-  const location = useLocation()
 
   if (authLoading) {
     return (

@@ -1,11 +1,9 @@
-import { useCollection } from '../context/CollectionContext'
-import { Link, useLocation } from 'react-router-dom'
+import { useCollection } from '../hooks/useCollection'
+import { Link } from 'react-router-dom'
 import { User, LogOut } from 'lucide-react'
 
 export default function AuthButton() {
-  const { user, authLoading, signInWithGoogle, signOutUser } = useCollection()
-  const location = useLocation()
-  const isLoginPage = location.pathname === '/login'
+  const { user, authLoading, signOutUser } = useCollection()
 
   if (authLoading) {
     return (

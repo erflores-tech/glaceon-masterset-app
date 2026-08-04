@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { useCollection } from '../context/CollectionContext'
+import { useCollection } from '../hooks/useCollection'
 import { useToasts } from '../hooks/useToasts'
 import { ToastContainer } from '../components/Toast'
 import { Snowflake, AlertCircle, Eye } from 'lucide-react'

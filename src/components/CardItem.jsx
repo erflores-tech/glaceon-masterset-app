@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { useCollection } from '../context/CollectionContext'
+import { useCollection } from '../hooks/useCollection'
 import { Check, Truck } from 'lucide-react'
 import SmartImage from './SmartImage'
 

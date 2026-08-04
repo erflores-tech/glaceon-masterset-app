@@ -1,4 +1,4 @@
-import { useCollection } from '../context/CollectionContext'
+import { useCollection } from '../hooks/useCollection'
 import { LAYOUT_OPTIONS, LAYOUT_CONFIG } from '../lib/layout'
 import { Grid2X2, Grid3X3, LayoutGrid, ChevronLeft } from 'lucide-react'
 import { Link } from 'react-router-dom'

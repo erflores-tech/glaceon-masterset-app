@@ -1,5 +1,5 @@
 import { useParams, useNavigate, Link } from 'react-router-dom'
-import { useCollection } from '../context/CollectionContext'
+import { useCollection } from '../hooks/useCollection'
 import { useState, useMemo } from 'react'
 import { Check, Truck, ArrowLeft, StickyNote, MapPin, X } from 'lucide-react'
 import SmartImage from './SmartImage'

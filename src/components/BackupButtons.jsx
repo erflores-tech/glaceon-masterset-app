@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { useCollection } from '../context/CollectionContext'
+import { useCollection } from '../hooks/useCollection'
 import { useToasts } from '../hooks/useToasts'
 import { ToastContainer } from './Toast'
 import { Download, Upload, AlertTriangle } from 'lucide-react'
