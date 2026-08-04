@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect } from 'react'
 import { useCollection } from '../context/CollectionContext'
 import { useSearchParams } from 'react-router-dom'
 import { LAYOUT_CONFIG } from '../lib/layout'
+import { useLastListState } from '../hooks/useLastListState'
 import CardItem from './CardItem'
 import { Search, SlidersHorizontal, X, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react'
 
@@ -27,6 +28,9 @@ export default function CardList() {
   const [searchParams, setSearchParams] = useSearchParams()
   const [showFilters, setShowFilters] = useState(false)
   const [page, setPage] = useState(1)
+
+  // Persist current filters/page so CardDetail can restore them on back
+  useLastListState()
 
   const masterPct = stats.total ? Math.round((stats.owned / stats.total) * 100) : 0
 

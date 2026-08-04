@@ -4,6 +4,7 @@ import { useMemo } from 'react'
 import { Check, Heart, ArrowLeft, StickyNote } from 'lucide-react'
 import SmartImage from './SmartImage'
 import { getPageSlot } from '../lib/layout'
+import { loadLastListState } from '../hooks/useLastListState'
 
 const GRADES = ['', 'NM', 'LP', 'MP', 'HP', 'PSA 10', 'PSA 9', 'PSA 8', 'CGC 10', 'BGS 9.5']
 
@@ -35,7 +36,14 @@ export default function CardDetail() {
   return (
     <div className="max-w-2xl mx-auto space-y-5">
       <button
-        onClick={() => navigate(-1)}
+        onClick={() => {
+          const lastState = loadLastListState()
+          if (lastState) {
+            navigate(`/?${lastState.toString()}`)
+          } else {
+            navigate(-1)
+          }
+        }}
         className="flex items-center gap-1.5 text-sm text-navy-500 dark:text-ice-300 hover:text-glaceon transition"
       >
         <ArrowLeft className="w-4 h-4" /> Back
