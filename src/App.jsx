@@ -8,6 +8,7 @@ import Login from './pages/Login'
 import AuthButton from './components/AuthButton'
 import BackupButtons from './components/BackupButtons'
 import InstallPWA from './components/InstallPWA'
+import ErrorBoundary from './components/ErrorBoundary'
 import { useRegisterSW } from 'virtual:pwa-register/react'
 import { useState } from 'react'
 import { Snowflake, LayoutGrid, List, CloudOff, CloudCheck, CloudSync, RefreshCw, Settings as SettingsIcon } from 'lucide-react'
@@ -161,8 +162,10 @@ function AuthGate() {
 
 export default function App() {
   return (
-    <CollectionProvider>
-      <AuthGate />
-    </CollectionProvider>
+    <ErrorBoundary>
+      <CollectionProvider>
+        <AuthGate />
+      </CollectionProvider>
+    </ErrorBoundary>
   )
 }

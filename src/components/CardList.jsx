@@ -1,15 +1,9 @@
 import { useState, useMemo, useEffect } from 'react'
 import { useCollection } from '../context/CollectionContext'
 import { useSearchParams } from 'react-router-dom'
+import { LAYOUT_CONFIG } from '../lib/layout'
 import CardItem from './CardItem'
 import { Search, SlidersHorizontal, X, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react'
-
-const LAYOUT_CONFIG = {
-  '2x2': { cols: 'grid-cols-2 sm:grid-cols-2 md:grid-cols-2', label: '2×2', pageSize: 4 },
-  '3x3': { cols: 'grid-cols-2 sm:grid-cols-3 md:grid-cols-3', label: '3×3', pageSize: 9 },
-  '4x3': { cols: 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4', label: '4×3', pageSize: 12 },
-  '4x4': { cols: 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4', label: '4×4', pageSize: 16 },
-}
 
 function getVisiblePages(current, total) {
   if (total <= 5) return Array.from({ length: total }, (_, i) => i + 1)
@@ -102,6 +96,7 @@ export default function CardList() {
               <button
                 onClick={() => updateParam('q', '')}
                 className="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-ice-100 dark:hover:bg-navy-600"
+                aria-label="Clear search"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -114,6 +109,8 @@ export default function CardList() {
                 ? 'bg-glaceon border-glaceon text-navy-700'
                 : 'bg-white dark:bg-navy-700 border-ice-200 dark:border-navy-500 text-navy-500 dark:text-ice-300'
             }`}
+            aria-label="Toggle filters"
+            aria-pressed={showFilters}
           >
             <SlidersHorizontal className="w-5 h-5" />
           </button>
@@ -180,7 +177,7 @@ export default function CardList() {
               onClick={() => setPage(1)}
               disabled={page <= 1}
               className="p-2 rounded-xl bg-white dark:bg-navy-700 border border-ice-200 dark:border-navy-500 text-navy-500 dark:text-ice-300 disabled:opacity-40 disabled:cursor-not-allowed"
-              title="First page"
+              aria-label="First page"
             >
               <ChevronsLeft className="w-5 h-5" />
             </button>
@@ -188,6 +185,7 @@ export default function CardList() {
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page <= 1}
               className="p-2 rounded-xl bg-white dark:bg-navy-700 border border-ice-200 dark:border-navy-500 text-navy-500 dark:text-ice-300 disabled:opacity-40 disabled:cursor-not-allowed"
+              aria-label="Previous page"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
@@ -202,6 +200,8 @@ export default function CardList() {
                   <button
                     key={p}
                     onClick={() => setPage(p)}
+                    aria-label={`Page ${p}`}
+                    aria-current={page === p ? 'page' : undefined}
                     className={`min-w-[2.25rem] h-9 px-2 rounded-xl text-sm font-medium transition ${
                       page === p
                         ? 'bg-glaceon text-navy-700'
@@ -218,6 +218,7 @@ export default function CardList() {
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={page >= totalPages}
               className="p-2 rounded-xl bg-white dark:bg-navy-700 border border-ice-200 dark:border-navy-500 text-navy-500 dark:text-ice-300 disabled:opacity-40 disabled:cursor-not-allowed"
+              aria-label="Next page"
             >
               <ChevronRight className="w-5 h-5" />
             </button>
@@ -225,7 +226,7 @@ export default function CardList() {
               onClick={() => setPage(totalPages)}
               disabled={page >= totalPages}
               className="p-2 rounded-xl bg-white dark:bg-navy-700 border border-ice-200 dark:border-navy-500 text-navy-500 dark:text-ice-300 disabled:opacity-40 disabled:cursor-not-allowed"
-              title="Last page"
+              aria-label="Last page"
             >
               <ChevronsRight className="w-5 h-5" />
             </button>
@@ -238,10 +239,12 @@ export default function CardList() {
 }
 
 function Select({ label, value, options, onChange }) {
+  const id = `filter-${label.toLowerCase()}`
   return (
     <div className="flex flex-col gap-1">
-      <label className="text-xs font-medium text-navy-400 dark:text-ice-300">{label}</label>
+      <label htmlFor={id} className="text-xs font-medium text-navy-400 dark:text-ice-300">{label}</label>
       <select
+        id={id}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className="px-2 py-1.5 rounded-lg bg-ice-50 dark:bg-navy-600 border border-ice-200 dark:border-navy-500 text-sm focus:outline-none focus:ring-2 focus:ring-glaceon"

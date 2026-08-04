@@ -3,15 +3,9 @@ import { useCollection } from '../context/CollectionContext'
 import { useMemo } from 'react'
 import { Check, Heart, ArrowLeft, StickyNote } from 'lucide-react'
 import SmartImage from './SmartImage'
+import { getPageSlot, LAYOUT_CONFIG } from '../lib/layout'
 
 const GRADES = ['', 'NM', 'LP', 'MP', 'HP', 'PSA 10', 'PSA 9', 'PSA 8', 'CGC 10', 'BGS 9.5']
-
-const LAYOUT_PAGE_SIZES = {
-  '2x2': 4,
-  '3x3': 9,
-  '4x3': 12,
-  '4x4': 16,
-}
 
 export default function CardDetail() {
   const { cardId } = useParams()
@@ -31,13 +25,12 @@ export default function CardDetail() {
   }
 
   const state = getCardState(card.id)
-  const prevCard = cards[cards.findIndex((c) => c.id === cardId) - 1]
-  const nextCard = cards[cards.findIndex((c) => c.id === cardId) + 1]
+  const cardIndex = cards.findIndex((c) => c.id === cardId)
+  const prevCard = cards[cardIndex - 1]
+  const nextCard = cards[cardIndex + 1]
 
-  const releaseOrder = card.releaseOrder || cards.findIndex((c) => c.id === cardId) + 1
-  const pageSize = LAYOUT_PAGE_SIZES[layout] || 12
-  const pageNum = Math.ceil(releaseOrder / pageSize)
-  const slotNum = ((releaseOrder - 1) % pageSize) + 1
+  const releaseOrder = card.releaseOrder || cardIndex + 1
+  const { pageNum, slotNum } = getPageSlot(releaseOrder, layout)
 
   return (
     <div className="max-w-2xl mx-auto space-y-5">
@@ -52,12 +45,12 @@ export default function CardDetail() {
         <div className="flex flex-col sm:flex-row gap-5">
           <div className="w-full sm:w-56 flex-shrink-0">
             <div className="aspect-[2.5/3.5] rounded-xl overflow-hidden bg-ice-100 dark:bg-navy-600 shadow-card">
-          <SmartImage
-            card={card}
-            sources={imageSources}
-            detail={true}
-            className="w-full h-full object-cover"
-          />
+              <SmartImage
+                card={card}
+                sources={imageSources}
+                detail={true}
+                className="w-full h-full object-cover"
+              />
             </div>
           </div>
 
@@ -100,8 +93,11 @@ export default function CardDetail() {
 
             <div className="grid grid-cols-2 gap-3">
               <div className="flex flex-col gap-1">
-                <label className="text-xs font-medium text-navy-400 dark:text-ice-300">Grade / Condition</label>
+                <label htmlFor="grade" className="text-xs font-medium text-navy-400 dark:text-ice-300">
+                  Grade / Condition
+                </label>
                 <select
+                  id="grade"
                   value={state.grade || ''}
                   onChange={(e) => setGrade(card.id, e.target.value)}
                   className="px-3 py-2 rounded-lg bg-ice-50 dark:bg-navy-600 border border-ice-200 dark:border-navy-500 focus:outline-none focus:ring-2 focus:ring-glaceon"
@@ -114,10 +110,11 @@ export default function CardDetail() {
             </div>
 
             <div className="flex flex-col gap-1">
-              <label className="text-xs font-medium text-navy-400 dark:text-ice-300 flex items-center gap-1">
+              <label htmlFor="notes" className="text-xs font-medium text-navy-400 dark:text-ice-300 flex items-center gap-1">
                 <StickyNote className="w-3.5 h-3.5" /> Notes
               </label>
               <textarea
+                id="notes"
                 value={state.note || ''}
                 onChange={(e) => setNote(card.id, e.target.value)}
                 rows={4}

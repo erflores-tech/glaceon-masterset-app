@@ -23,13 +23,13 @@ import {
   BACKUP_VERSION,
   MAX_BACKUP_SIZE_BYTES,
 } from '../lib/backup'
+import { LAYOUT_OPTIONS } from '../lib/layout'
 import rawCards from '../data/cards.json'
 
 const STORAGE_KEY = 'glaceon-collection-v1'
 const LAYOUT_KEY = 'glaceon-layout-v1'
 const SYNC_STATE_KEY = 'glaceon-sync-state-v1'
 const DEBOUNCE_MS = 1200
-export const LAYOUT_OPTIONS = ['2x2', '3x3', '4x3', '4x4']
 
 const CollectionContext = createContext(null)
 

@@ -1,19 +1,20 @@
-import { useCollection, LAYOUT_OPTIONS } from '../context/CollectionContext'
+import { useCollection } from '../context/CollectionContext'
+import { LAYOUT_OPTIONS, LAYOUT_CONFIG } from '../lib/layout'
 import { Grid2X2, Grid3X3, LayoutGrid, ChevronLeft } from 'lucide-react'
 import { Link } from 'react-router-dom'
-
-const LAYOUT_CONFIG = {
-  '2x2': { cols: 'grid-cols-2', label: '2 × 2', pageSize: 4, desc: '4 cards per binder page' },
-  '3x3': { cols: 'grid-cols-3', label: '3 × 3', pageSize: 9, desc: '9 cards per binder page' },
-  '4x3': { cols: 'grid-cols-4', label: '4 × 3', pageSize: 12, desc: '12 cards per binder page' },
-  '4x4': { cols: 'grid-cols-4', label: '4 × 4', pageSize: 16, desc: '16 cards per binder page' },
-}
 
 const LAYOUT_ICONS = {
   '2x2': Grid2X2,
   '3x3': Grid3X3,
   '4x3': LayoutGrid,
   '4x4': LayoutGrid,
+}
+
+const SETTINGS_LAYOUT_META = {
+  '2x2': { label: '2 × 2', desc: '4 cards per binder page' },
+  '3x3': { label: '3 × 3', desc: '9 cards per binder page' },
+  '4x3': { label: '4 × 3', desc: '12 cards per binder page' },
+  '4x4': { label: '4 × 4', desc: '16 cards per binder page' },
 }
 
 export default function Settings() {
@@ -25,6 +26,7 @@ export default function Settings() {
         <Link
           to="/"
           className="p-2 rounded-xl bg-white dark:bg-navy-700 border border-ice-200 dark:border-navy-500 text-navy-500 dark:text-ice-300 hover:bg-ice-100 dark:hover:bg-navy-600 transition"
+          aria-label="Back to cards"
         >
           <ChevronLeft className="w-5 h-5" />
         </Link>
@@ -41,13 +43,14 @@ export default function Settings() {
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {LAYOUT_OPTIONS.map((key) => {
-            const config = LAYOUT_CONFIG[key]
+            const meta = SETTINGS_LAYOUT_META[key]
             const Icon = LAYOUT_ICONS[key]
             const active = layout === key
             return (
               <button
                 key={key}
                 onClick={() => setLayout(key)}
+                aria-pressed={active}
                 className={`flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition ${
                   active
                     ? 'border-glaceon bg-glaceon/10 dark:bg-glaceon/20'
@@ -56,16 +59,16 @@ export default function Settings() {
               >
                 <Icon className={`w-8 h-8 ${active ? 'text-glaceon' : 'text-navy-400 dark:text-ice-300'}`} />
                 <div className={`font-semibold ${active ? 'text-navy-700 dark:text-white' : 'text-navy-600 dark:text-ice-200'}`}>
-                  {config.label}
+                  {meta.label}
                 </div>
-                <div className="text-xs text-navy-400 dark:text-ice-300">{config.desc}</div>
+                <div className="text-xs text-navy-400 dark:text-ice-300">{meta.desc}</div>
               </button>
             )
           })}
         </div>
 
         <div className="text-xs text-navy-400 dark:text-ice-300 bg-ice-50 dark:bg-navy-600 rounded-lg p-3">
-          Current selection: <span className="font-medium text-navy-700 dark:text-white">{LAYOUT_CONFIG[layout].label}</span> ·{' '}
+          Current selection: <span className="font-medium text-navy-700 dark:text-white">{SETTINGS_LAYOUT_META[layout].label}</span> ·{' '}
           {LAYOUT_CONFIG[layout].pageSize} cards per page
         </div>
       </section>
