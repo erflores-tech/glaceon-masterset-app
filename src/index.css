@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light dark;
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  @apply bg-snow text-navy-600 antialiased;
+  margin: 0;
+  min-height: 100svh;
+}
+
+body.dark {
+  @apply bg-navy-600 text-ice-100;
+}
+
+#root {
+  min-height: 100svh;
+}
+
+@layer components {
+  .card-owned {
+    @apply ring-2 ring-glaceon bg-ice-100/50;
+  }
+  .card-needed {
+    @apply bg-white/80;
+  }
+}
+
+@layer utilities {
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
