@@ -1,10 +1,13 @@
 import { useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useCollection } from '../context/CollectionContext'
+import { useToasts } from '../hooks/useToasts'
+import { ToastContainer } from '../components/Toast'
 import { Snowflake, AlertCircle, User } from 'lucide-react'
 
 export default function Login() {
-  const { user, authLoading, signInWithGoogle, signInAsGuest } = useCollection()
+  const { user, authLoading, lastError, signInWithGoogle, signInAsGuest } = useCollection()
+  const { toasts, addToast, removeToast } = useToasts()
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -14,6 +17,16 @@ export default function Login() {
       navigate(from, { replace: true })
     }
   }, [user, navigate, location])
+
+  useEffect(() => {
+    if (lastError) {
+      addToast({
+        type: 'error',
+        title: 'Sign-in failed',
+        message: lastError.message || 'Please try again.',
+      })
+    }
+  }, [lastError, addToast])
 
   if (authLoading) {
     return (
@@ -77,6 +90,7 @@ export default function Login() {
           </p>
         </div>
       </div>
+      <ToastContainer toasts={toasts} onDismiss={removeToast} />
     </div>
   )
 }
