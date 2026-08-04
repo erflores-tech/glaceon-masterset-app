@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useCollection } from '../context/CollectionContext'
-import { Check, Heart } from 'lucide-react'
+import { Check, Truck } from 'lucide-react'
 import SmartImage from './SmartImage'
 
 const DENSITY_TEXT = {
@@ -11,16 +11,18 @@ const DENSITY_TEXT = {
 }
 
 export default function CardItem({ card, density = '4x3' }) {
-  const { toggleOwned, toggleWant, getCardState } = useCollection()
+  const { toggleOwned, toggleOrdered, getCardState } = useCollection()
   const state = getCardState(card.id)
 
   const imageSources = card.imageSources || []
   const isDense = density === '4x4' || density === '4x3'
+  const isOwned = state.owned
+  const isOrdered = state.ordered && !isOwned
 
   return (
     <div
       className={`group relative bg-white dark:bg-navy-700 rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-all ${
-        state.owned ? 'ring-[3px] ring-glaceon ring-offset-1 ring-offset-ice-50 dark:ring-offset-navy-600' : ''
+        isOwned ? 'ring-[3px] ring-glaceon ring-offset-1 ring-offset-ice-50 dark:ring-offset-navy-600' : ''
       }`}
     >
       <Link to={`/card/${card.id}`} className="block">
@@ -30,7 +32,7 @@ export default function CardItem({ card, density = '4x3' }) {
             sources={imageSources}
             className="w-full h-full object-cover transition-transform group-hover:scale-105"
           />
-          {state.owned && (
+          {isOwned && (
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
               <div
                 className={`flex items-center gap-2 rounded-full bg-glaceon text-white font-bold shadow-lg ring-2 ring-white/30 ${
@@ -39,6 +41,18 @@ export default function CardItem({ card, density = '4x3' }) {
               >
                 <Check className={isDense ? 'w-4 h-4' : 'w-5 h-5'} />
                 Owned
+              </div>
+            </div>
+          )}
+          {isOrdered && (
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div
+                className={`flex items-center gap-2 rounded-full bg-amber-400 text-navy-700 font-bold shadow-lg ring-2 ring-white/30 ${
+                  isDense ? 'text-sm px-3 py-1.5' : 'text-base px-4 py-2'
+                }`}
+              >
+                <Truck className={isDense ? 'w-4 h-4' : 'w-5 h-5'} />
+                Ordered
               </div>
             </div>
           )}
@@ -70,27 +84,27 @@ export default function CardItem({ card, density = '4x3' }) {
                 toggleOwned(card.id)
               }}
               className={`w-8 h-8 rounded-lg flex items-center justify-center transition ${
-                state.owned
+                isOwned
                   ? 'bg-glaceon text-navy-700'
                   : 'bg-ice-100 dark:bg-navy-600 text-navy-400 dark:text-ice-300 hover:bg-ice-200'
               }`}
-              title={state.owned ? 'Mark not owned' : 'Mark owned'}
+              title={isOwned ? 'Mark not owned' : 'Mark owned'}
             >
               <Check className="w-4 h-4" />
             </button>
             <button
               onClick={(e) => {
                 e.preventDefault()
-                toggleWant(card.id)
+                toggleOrdered(card.id)
               }}
               className={`w-8 h-8 rounded-lg flex items-center justify-center transition ${
-                state.want
-                  ? 'bg-rose-400 text-white'
+                isOrdered
+                  ? 'bg-amber-400 text-navy-700'
                   : 'bg-ice-100 dark:bg-navy-600 text-navy-400 dark:text-ice-300 hover:bg-ice-200'
               }`}
-              title={state.want ? 'Remove from want list' : 'Add to want list'}
+              title={isOrdered ? 'Cancel order' : 'Mark ordered'}
             >
-              <Heart className={`w-4 h-4 ${state.want ? 'fill-current' : ''}`} />
+              <Truck className="w-4 h-4" />
             </button>
           </div>
         </div>

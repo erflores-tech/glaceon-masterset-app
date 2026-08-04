@@ -1,6 +1,7 @@
-export const BACKUP_VERSION = 1
+export const BACKUP_VERSION = 2
 export const MAX_BACKUP_SIZE_BYTES = 5 * 1024 * 1024 // 5 MB
 export const MAX_NOTE_LENGTH = 5000
+export const MAX_LOCATION_LENGTH = 80
 export const MAX_ENTRIES = 10000
 
 const FORBIDDEN_KEYS = ['__proto__', 'constructor', 'prototype']
@@ -10,12 +11,18 @@ export function isValidCardId(cardId) {
   return typeof cardId === 'string' && cardId.length > 0 && cardId.length <= 128 && !FORBIDDEN_KEYS.includes(cardId)
 }
 
-export function sanitizeCardState(state) {
+export function sanitizeCardState(state, sourceVersion = BACKUP_VERSION) {
   if (!state || typeof state !== 'object') return null
   const sanitized = {}
 
+  // Legacy v1 migration: want becomes ordered, unless the card is already owned
+  let ordered = state.ordered
+  if (sourceVersion < 2 && state.want === true && state.owned !== true) {
+    ordered = true
+  }
+
+  if (typeof ordered === 'boolean') sanitized.ordered = ordered
   if (typeof state.owned === 'boolean') sanitized.owned = state.owned
-  if (typeof state.want === 'boolean') sanitized.want = state.want
 
   if (state.note !== undefined) {
     const note = String(state.note).slice(0, MAX_NOTE_LENGTH)
@@ -27,12 +34,26 @@ export function sanitizeCardState(state) {
     if (VALID_GRADES.has(grade)) sanitized.grade = grade
   }
 
+  if (state.purchaseLocation !== undefined) {
+    const location = String(state.purchaseLocation).slice(0, MAX_LOCATION_LENGTH)
+    if (location) sanitized.purchaseLocation = location
+  }
+
+  const now = new Date().toISOString()
+  if (state.orderedAt !== undefined && typeof state.orderedAt === 'string') {
+    sanitized.orderedAt = state.orderedAt.slice(0, 64)
+  } else if (ordered && sourceVersion < 2) {
+    sanitized.orderedAt = now
+  }
+
   if (state.ownedAt !== undefined && typeof state.ownedAt === 'string') {
     sanitized.ownedAt = state.ownedAt.slice(0, 64)
   }
 
   if (state.updatedAt !== undefined && typeof state.updatedAt === 'string') {
     sanitized.updatedAt = state.updatedAt.slice(0, 64)
+  } else if (sourceVersion < 2 && ordered) {
+    sanitized.updatedAt = now
   }
 
   return sanitized
@@ -53,8 +74,8 @@ export function validateBackupPayload(payload, knownCardIds) {
     throw new Error('Invalid backup: expected JSON object')
   }
 
-  if (payload.version !== BACKUP_VERSION) {
-    throw new Error(`Unsupported backup version: ${payload.version}. Expected ${BACKUP_VERSION}.`)
+  if (![1, 2].includes(payload.version)) {
+    throw new Error(`Unsupported backup version: ${payload.version}. Expected 1 or 2.`)
   }
 
   if (!payload.cards || typeof payload.cards !== 'object' || Array.isArray(payload.cards)) {
@@ -80,7 +101,7 @@ export function validateBackupPayload(payload, knownCardIds) {
       continue
     }
 
-    const sanitized = sanitizeCardState(payload.cards[cardId])
+    const sanitized = sanitizeCardState(payload.cards[cardId], payload.version)
     if (sanitized) {
       result[cardId] = sanitized
     } else {
@@ -110,9 +131,10 @@ export function computeImportPreview(currentCollection, importedCards) {
       added.push(cardId)
     } else if (
       current.owned !== state.owned ||
-      current.want !== state.want ||
+      current.ordered !== state.ordered ||
       current.note !== state.note ||
-      current.grade !== state.grade
+      current.grade !== state.grade ||
+      current.purchaseLocation !== state.purchaseLocation
     ) {
       updated.push(cardId)
     } else {

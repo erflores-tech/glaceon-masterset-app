@@ -29,6 +29,7 @@ import rawCards from '../data/cards.json'
 const STORAGE_KEY = 'glaceon-collection-v1'
 const LAYOUT_KEY = 'glaceon-layout-v1'
 const SYNC_STATE_KEY = 'glaceon-sync-state-v1'
+const MIGRATION_KEY = 'glaceon-migration-v1'
 const DEBOUNCE_MS = 1200
 
 const CollectionContext = createContext(null)
@@ -56,11 +57,39 @@ function getKnownCardIds(cards) {
   return new Set(cards.map((c) => c.id))
 }
 
+function migrateV1ToV2(collection) {
+  let changed = false
+  const migrated = {}
+  for (const [cardId, state] of Object.entries(collection)) {
+    if (state && state.want === true && !state.ordered) {
+      changed = true
+      const { want: _want, ...rest } = state
+      migrated[cardId] = {
+        ...rest,
+        ordered: true,
+        orderedAt: state.orderedAt || state.updatedAt || new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      }
+    } else {
+      migrated[cardId] = state
+    }
+  }
+  return changed ? migrated : collection
+}
+
 export function CollectionProvider({ children }) {
   const cards = rawCards
   const cardIdsRef = useRef(getKnownCardIds(cards))
 
-  const [collection, setCollection] = useState(() => loadJson(STORAGE_KEY, {}))
+  const [collection, setCollection] = useState(() => {
+    const saved = loadJson(STORAGE_KEY, {})
+    const migrated = loadJson(MIGRATION_KEY, null) ? saved : migrateV1ToV2(saved)
+    if (migrated !== saved) {
+      saveJson(STORAGE_KEY, migrated)
+    }
+    saveJson(MIGRATION_KEY, { version: 2, migratedAt: new Date().toISOString() })
+    return migrated
+  })
   const [user, setUser] = useState(null)
   const [authLoading, setAuthLoading] = useState(true)
   const [syncStatus, setSyncStatus] = useState('local')
@@ -107,9 +136,6 @@ export function CollectionProvider({ children }) {
 
       const data = snap.data()
       const remoteVersion = data.version || 0
-      const remoteUpdatedAt = data.updatedAt?.toMillis
-        ? data.updatedAt.toMillis()
-        : 0
       const remoteCards = data.cards || {}
 
       setCollection((prev) => {
@@ -228,25 +254,37 @@ export function CollectionProvider({ children }) {
           ...existing,
           owned,
           ownedAt: owned ? new Date().toISOString() : existing.ownedAt,
+          // Clear ordered state when the card arrives
+          ordered: owned ? false : existing.ordered,
+          purchaseLocation: owned ? undefined : existing.purchaseLocation,
+          orderedAt: owned ? undefined : existing.orderedAt,
           updatedAt: new Date().toISOString(),
         },
       }
     })
   }, [])
 
-  const toggleWant = useCallback((cardId) => {
+  const toggleOrdered = useCallback((cardId) => {
     setCollection((prev) => {
       const existing = prev[cardId] || {}
+      const ordered = !existing.ordered
       return {
         ...prev,
         [cardId]: {
           ...existing,
-          want: !existing.want,
+          ordered,
+          purchaseLocation: ordered ? existing.purchaseLocation : undefined,
+          orderedAt: ordered ? new Date().toISOString() : undefined,
           updatedAt: new Date().toISOString(),
         },
       }
     })
   }, [])
+
+  const setPurchaseLocation = useCallback(
+    (cardId, purchaseLocation) => updateCard(cardId, { purchaseLocation }),
+    [updateCard]
+  )
 
   const setNote = useCallback(
     (cardId, note) => updateCard(cardId, { note }),
@@ -338,17 +376,22 @@ export function CollectionProvider({ children }) {
   )
 
   const getCardState = useCallback(
-    (cardId) => collection[cardId] || { owned: false, want: false, note: '', grade: '' },
+    (cardId) => collection[cardId] || { owned: false, ordered: false, note: '', grade: '', purchaseLocation: '' },
     [collection]
   )
 
   const stats = useMemo(() => {
     const owned = cards.filter((c) => collection[c.id]?.owned).length
+    const ordered = cards.filter((c) => {
+      const state = collection[c.id]
+      return state?.ordered && !state?.owned
+    }).length
     return {
       total: cards.length,
       owned,
-      wanted: cards.filter((c) => collection[c.id]?.want).length,
+      ordered,
       remaining: cards.length - owned,
+      inTransit: ordered,
     }
   }, [cards, collection])
 
@@ -365,7 +408,8 @@ export function CollectionProvider({ children }) {
       layout,
       setLayout,
       toggleOwned,
-      toggleWant,
+      toggleOrdered,
+      setPurchaseLocation,
       setNote,
       setGrade,
       getCardState,
@@ -389,7 +433,8 @@ export function CollectionProvider({ children }) {
       layout,
       setLayout,
       toggleOwned,
-      toggleWant,
+      toggleOrdered,
+      setPurchaseLocation,
       setNote,
       setGrade,
       getCardState,

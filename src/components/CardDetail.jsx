@@ -1,17 +1,31 @@
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { useCollection } from '../context/CollectionContext'
-import { useMemo } from 'react'
-import { Check, Heart, ArrowLeft, StickyNote } from 'lucide-react'
+import { useState, useMemo } from 'react'
+import { Check, Truck, ArrowLeft, StickyNote, MapPin, X } from 'lucide-react'
 import SmartImage from './SmartImage'
 import { getPageSlot } from '../lib/layout'
 import { loadLastListState } from '../hooks/useLastListState'
+import { useRecentLocations } from '../hooks/useRecentLocations'
 
 const GRADES = ['', 'NM', 'LP', 'MP', 'HP', 'PSA 10', 'PSA 9', 'PSA 8', 'CGC 10', 'BGS 9.5']
+const MAX_LOCATION_LENGTH = 80
 
 export default function CardDetail() {
   const { cardId } = useParams()
   const navigate = useNavigate()
-  const { cards, toggleOwned, toggleWant, setNote, setGrade, getCardState, layout } = useCollection()
+  const {
+    cards,
+    collection,
+    toggleOwned,
+    toggleOrdered,
+    setPurchaseLocation,
+    setNote,
+    setGrade,
+    getCardState,
+    layout,
+  } = useCollection()
+  const recentLocations = useRecentLocations(collection)
+  const [showLocationSheet, setShowLocationSheet] = useState(false)
 
   const card = useMemo(() => cards.find((c) => c.id === cardId), [cards, cardId])
   const imageSources = card?.imageSources || []
@@ -87,17 +101,45 @@ export default function CardDetail() {
                 {state.owned ? 'Owned' : 'Mark Owned'}
               </button>
               <button
-                onClick={() => toggleWant(card.id)}
+                onClick={() => toggleOrdered(card.id)}
                 className={`flex items-center gap-2 px-4 py-2 rounded-xl font-semibold transition ${
-                  state.want
-                    ? 'bg-rose-400 text-white'
+                  state.ordered
+                    ? 'bg-amber-400 text-navy-700'
                     : 'bg-ice-100 dark:bg-navy-600 text-navy-600 dark:text-ice-100 hover:bg-ice-200'
                 }`}
               >
-                <Heart className={`w-5 h-5 ${state.want ? 'fill-current' : ''}`} />
-                {state.want ? 'Wanted' : 'Want List'}
+                <Truck className="w-5 h-5" />
+                {state.ordered ? 'Ordered' : 'Mark Ordered'}
               </button>
             </div>
+
+            {state.ordered && !state.owned && (
+              <div className="grid grid-cols-1 gap-3">
+                <div className="flex flex-col gap-1">
+                  <label htmlFor="purchaseLocation" className="text-xs font-medium text-navy-400 dark:text-ice-300 flex items-center gap-1">
+                    <MapPin className="w-3.5 h-3.5" /> Purchase location
+                  </label>
+                  <div className="flex gap-2">
+                    <input
+                      id="purchaseLocation"
+                      type="text"
+                      value={state.purchaseLocation || ''}
+                      onChange={(e) => setPurchaseLocation(card.id, e.target.value.slice(0, MAX_LOCATION_LENGTH))}
+                      placeholder="eBay seller, card shop, trade partner..."
+                      className="flex-1 px-3 py-2 rounded-lg bg-ice-50 dark:bg-navy-600 border border-ice-200 dark:border-navy-500 focus:outline-none focus:ring-2 focus:ring-glaceon"
+                    />
+                    {recentLocations.length > 0 && (
+                      <button
+                        onClick={() => setShowLocationSheet(true)}
+                        className="px-3 py-2 rounded-lg bg-ice-100 dark:bg-navy-600 text-navy-600 dark:text-ice-200 text-sm font-medium hover:bg-ice-200 dark:hover:bg-navy-500"
+                      >
+                        Recent
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
 
             <div className="grid grid-cols-2 gap-3">
               <div className="flex flex-col gap-1">
@@ -133,6 +175,37 @@ export default function CardDetail() {
           </div>
         </div>
       </div>
+
+      {showLocationSheet && (
+        <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/50 p-4">
+          <div className="w-full max-w-sm rounded-2xl bg-white dark:bg-navy-700 p-5 shadow-xl border border-ice-200 dark:border-navy-500">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="font-semibold text-navy-700 dark:text-white">Recent locations</h3>
+              <button
+                onClick={() => setShowLocationSheet(false)}
+                className="p-1 rounded-full hover:bg-ice-100 dark:hover:bg-navy-600 text-navy-400"
+                aria-label="Close"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            <div className="flex flex-col gap-2 max-h-72 overflow-auto">
+              {recentLocations.map((loc) => (
+                <button
+                  key={loc}
+                  onClick={() => {
+                    setPurchaseLocation(card.id, loc)
+                    setShowLocationSheet(false)
+                  }}
+                  className="text-left px-3 py-2 rounded-lg bg-ice-50 dark:bg-navy-600 text-navy-700 dark:text-ice-100 text-sm hover:bg-ice-100 dark:hover:bg-navy-500 truncate"
+                >
+                  {loc}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="flex justify-between">
         {prevCard ? (

@@ -1,7 +1,7 @@
 import { useCollection } from '../context/CollectionContext'
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { CheckCircle2, Circle, Heart, Sparkles } from 'lucide-react'
+import { CheckCircle2, Circle, Sparkles, Truck } from 'lucide-react'
 
 export default function Dashboard() {
   const { cards, collection, stats } = useCollection()
@@ -44,8 +44,8 @@ export default function Dashboard() {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <StatCard label="Total Cards" value={stats.total} icon={<Circle className="w-5 h-5 text-ice-400" />} />
         <StatCard label="Owned" value={stats.owned} icon={<CheckCircle2 className="w-5 h-5 text-emerald-400" />} />
+        <StatCard label="In Transit" value={stats.inTransit} icon={<Truck className="w-5 h-5 text-amber-400" />} />
         <StatCard label="Remaining" value={stats.remaining} icon={<Circle className="w-5 h-5 text-rose-300" />} />
-        <StatCard label="Want List" value={stats.wanted} icon={<Heart className="w-5 h-5 text-rose-400" />} />
       </div>
 
       <div className="bg-white dark:bg-navy-700 rounded-2xl p-4 sm:p-6 shadow-card">

@@ -54,8 +54,8 @@ export default function CardList() {
       if (statusFilter !== 'All') {
         const state = collection[c.id]
         if (statusFilter === 'owned' && !state?.owned) return false
-        if (statusFilter === 'needed' && state?.owned) return false
-        if (statusFilter === 'want' && !state?.want) return false
+        if (statusFilter === 'needed' && (state?.owned || state?.ordered)) return false
+        if (statusFilter === 'ordered' && !state?.ordered) return false
       }
       return true
     })
@@ -128,7 +128,7 @@ export default function CardList() {
             <Select
               label="Status"
               value={statusFilter}
-              options={['All', 'owned', 'needed', 'want']}
+              options={['All', 'owned', 'needed', 'ordered']}
               onChange={(v) => updateParam('status', v)}
             />
           </div>

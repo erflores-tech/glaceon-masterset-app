@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-08-04
+
+### Changed
+- Replace the "Want List" feature with "Ordered" status, since every master set card is wanted by definition.
+- Marking a card as Owned now clears its Ordered status and purchase location automatically.
+- Backup format bumped to v2; v1 backups with `want: true` are automatically migrated to `ordered: true` on import.
+- Status filter becomes All / Owned / Needed / Ordered.
+- Dashboard "Want List" tile replaced with "In Transit" tile for ordered-but-not-owned cards.
+
+### Added
+- `ordered`, `purchaseLocation`, and `orderedAt` fields per card.
+- Purchase location input on card detail with a quick-pick sheet of recent locations.
+- `src/hooks/useRecentLocations.js` to suggest recent purchase locations.
+- `src/hooks/useLastListState.js` preserves list page and filters when returning from card detail.
+
 ## [0.2.0] - 2026-08-04
 
 ### Changed

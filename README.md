@@ -81,13 +81,21 @@ Backups are JSON files with this structure:
 
 ```json
 {
-  "version": 1,
-  "exportedAt": "2026-08-03T00:00:00.000Z",
+  "version": 2,
+  "exportedAt": "2026-08-04T00:00:00.000Z",
   "cards": {
-    "card-id": { "owned": true, "want": false, "note": "", "grade": "NM" }
+    "card-id": {
+      "owned": true,
+      "ordered": false,
+      "purchaseLocation": "eBay - seller_name",
+      "note": "",
+      "grade": "NM"
+    }
   }
 }
 ```
+
+Version 1 backups with a `want` field are automatically migrated to `ordered` on import.
 
 The version field helps future releases detect incompatible backup formats.
 

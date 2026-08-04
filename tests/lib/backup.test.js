@@ -6,26 +6,49 @@ import {
   createBackupPayload,
   isValidCardId,
   BACKUP_VERSION,
+  MAX_LOCATION_LENGTH,
 } from '../../src/lib/backup'
 
 describe('backup validation', () => {
   const knownIds = new Set(['card-1', 'card-2', 'card-3'])
 
-  it('accepts a valid backup', () => {
+  it('accepts a valid v2 backup', () => {
     const payload = {
       version: BACKUP_VERSION,
       exportedAt: new Date().toISOString(),
       cards: {
-        'card-1': { owned: true, want: false, note: 'Bought on eBay', grade: 'NM' },
+        'card-1': { owned: true, ordered: false, purchaseLocation: 'Local shop', note: 'Bought on eBay', grade: 'NM' },
       },
     }
     const result = validateBackupPayload(payload, knownIds)
     expect(result.ignored).toBe(0)
     expect(result.cards['card-1']).toEqual({
       owned: true,
-      want: false,
+      ordered: false,
+      purchaseLocation: 'Local shop',
       note: 'Bought on eBay',
       grade: 'NM',
+    })
+  })
+
+  it('migrates v1 want to v2 ordered', () => {
+    const payload = {
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      cards: {
+        'card-1': { owned: false, want: true },
+        'card-2': { owned: true, want: true },
+      },
+    }
+    const result = validateBackupPayload(payload, knownIds)
+    expect(result.cards['card-1']).toEqual({
+      owned: false,
+      ordered: true,
+      orderedAt: expect.any(String),
+      updatedAt: expect.any(String),
+    })
+    expect(result.cards['card-2']).toEqual({
+      owned: true,
     })
   })
 
@@ -73,26 +96,38 @@ describe('backup validation', () => {
   it('sanitizes invalid state fields', () => {
     const state = sanitizeCardState({
       owned: true,
-      want: 'yes',
+      ordered: 'yes',
       note: 'a'.repeat(6000),
       grade: 'INVALID',
+      purchaseLocation: 'a'.repeat(120),
       extraField: 'ignore',
     })
     expect(state.owned).toBe(true)
-    expect(state.want).toBeUndefined()
+    expect(state.ordered).toBeUndefined()
     expect(state.note).toHaveLength(5000)
     expect(state.grade).toBeUndefined()
+    expect(state.purchaseLocation).toHaveLength(MAX_LOCATION_LENGTH)
     expect(state.extraField).toBeUndefined()
+  })
+
+  it('strips want from v2 backups', () => {
+    const state = sanitizeCardState({
+      owned: false,
+      want: true,
+      ordered: true,
+    }, 2)
+    expect(state.want).toBeUndefined()
+    expect(state.ordered).toBe(true)
   })
 
   it('computes import preview correctly', () => {
     const current = {
       'card-1': { owned: true },
-      'card-2': { owned: false, want: true },
+      'card-2': { owned: false, ordered: true },
     }
     const imported = {
       'card-1': { owned: true },
-      'card-2': { owned: true, want: true },
+      'card-2': { owned: true, ordered: true },
       'card-3': { owned: true },
     }
     const preview = computeImportPreview(current, imported)
