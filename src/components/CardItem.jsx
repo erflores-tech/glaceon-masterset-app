@@ -31,13 +31,15 @@ export default function CardItem({ card, density = '4x3' }) {
             className="w-full h-full object-cover transition-transform group-hover:scale-105"
           />
           {state.owned && (
-            <div
-              className={`absolute top-2 left-2 flex items-center gap-1 rounded-full bg-glaceon text-navy-700 font-bold shadow ${
-                isDense ? 'text-[10px] px-1.5 py-0.5' : 'text-xs px-2 py-1'
-              }`}
-            >
-              <Check className={isDense ? 'w-3 h-3' : 'w-3.5 h-3.5'} />
-              Owned
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div
+                className={`flex items-center gap-2 rounded-full bg-glaceon text-white font-bold shadow-lg ring-2 ring-white/30 ${
+                  isDense ? 'text-sm px-3 py-1.5' : 'text-base px-4 py-2'
+                }`}
+              >
+                <Check className={isDense ? 'w-4 h-4' : 'w-5 h-5'} />
+                Owned
+              </div>
             </div>
           )}
           <div
