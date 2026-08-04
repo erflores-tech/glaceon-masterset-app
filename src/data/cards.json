@@ -12,7 +12,7 @@
     "setId": "dpp",
     "series": "dp",
     "imageSources": [
-      "/cards/001_Glaceon_070DP_P_Standard.png",
+      "/cards/001_Glaceon_070DP_P_Standard.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2006-11-15__jpn_dpp__70__Glaceon__Standard__large.webp"
     ],
     "tcgdexId": null,
@@ -33,7 +33,7 @@
     "setId": "S9a",
     "series": "s",
     "imageSources": [
-      "/cards/002_Glaceon_DP4_1st_Edition.png",
+      "/cards/002_Glaceon_DP4_1st_Edition.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2007-10-26__jpn_dp4b__28__Glaceon_LV.X__1st_Edition__large.webp"
     ],
     "tcgdexId": null,
@@ -54,7 +54,7 @@
     "setId": "S9a",
     "series": "s",
     "imageSources": [
-      "/cards/003_Glaceon_DP4_Holo.png",
+      "/cards/003_Glaceon_DP4_Holo.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2007-10-26__jpn_dp4b__28__Glaceon_LV.X__1st_Edition__large.webp"
     ],
     "tcgdexId": null,
@@ -75,7 +75,7 @@
     "setId": "S9a",
     "series": "s",
     "imageSources": [
-      "/cards/004_Glaceon_DPBP161_1st_Edition.png",
+      "/cards/004_Glaceon_DPBP161_1st_Edition.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2007-10-26__jpn_dp4b__18__Glaceon__1st_Edition__large.webp"
     ],
     "tcgdexId": null,
@@ -96,7 +96,7 @@
     "setId": "S9a",
     "series": "s",
     "imageSources": [
-      "/cards/005_Glaceon_DPBP161_Holo.png",
+      "/cards/005_Glaceon_DPBP161_Holo.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2007-10-26__jpn_dp4b__18__Glaceon__1st_Edition__large.webp"
     ],
     "tcgdexId": null,
@@ -117,7 +117,7 @@
     "setId": "dp5",
     "series": "dp",
     "imageSources": [
-      "/cards/006_Glaceon_005100_Holo.png",
+      "/cards/006_Glaceon_005100_Holo.webp",
       "https://assets.tcgdex.net/en/dp/dp5/5.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2008-05-21__dp5__5__Glaceon__Reverse_Holo__large.webp"
     ],
@@ -139,7 +139,7 @@
     "setId": "dp5",
     "series": "dp",
     "imageSources": [
-      "/cards/007_Glaceon_005100_Reverse_Holo.png",
+      "/cards/007_Glaceon_005100_Reverse_Holo.webp",
       "https://assets.tcgdex.net/en/dp/dp5/5.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2008-05-21__dp5__5__Glaceon__Reverse_Holo__large.webp"
     ],
@@ -161,7 +161,7 @@
     "setId": "dp5",
     "series": "dp",
     "imageSources": [
-      "/cards/008_Glaceon_020100_Cosmos_Holo.png",
+      "/cards/008_Glaceon_020100_Cosmos_Holo.webp",
       "https://assets.tcgdex.net/en/dp/dp5/20/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2008-05-21__dp5__20__Glaceon__Standard__large.webp"
     ],
@@ -183,7 +183,7 @@
     "setId": "dp5",
     "series": "dp",
     "imageSources": [
-      "/cards/009_Glaceon_020100_Standard.png",
+      "/cards/009_Glaceon_020100_Standard.webp",
       "https://assets.tcgdex.net/en/dp/dp5/20/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2008-05-21__dp5__20__Glaceon__Standard__large.webp"
     ],
@@ -205,7 +205,7 @@
     "setId": "dp5",
     "series": "dp",
     "imageSources": [
-      "/cards/010_Glaceon_020100_Reverse_Holo.png",
+      "/cards/010_Glaceon_020100_Reverse_Holo.webp",
       "https://assets.tcgdex.net/en/dp/dp5/20/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2008-05-21__dp5__20__Glaceon__Standard__large.webp"
     ],
@@ -227,7 +227,7 @@
     "setId": "dp5",
     "series": "dp",
     "imageSources": [
-      "/cards/011_Glaceon_020100_Burger_King_Collection_2009.png",
+      "/cards/011_Glaceon_020100_Burger_King_Collection_2009.webp",
       "https://assets.tcgdex.net/en/dp/dp5/20/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2008-05-21__dp5__20__Glaceon__Burger_King_Collection_2009__large.webp"
     ],
@@ -249,7 +249,7 @@
     "setId": "dp5",
     "series": "dp",
     "imageSources": [
-      "/cards/012_Glaceon_020100_Countdown_Calendar.png",
+      "/cards/012_Glaceon_020100_Countdown_Calendar.webp",
       "https://assets.tcgdex.net/en/dp/dp5/20/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2008-05-21__dp5__20__Glaceon__Countdown_Calendar__large.webp"
     ],
@@ -271,7 +271,7 @@
     "setId": "dp5",
     "series": "dp",
     "imageSources": [
-      "/cards/013_Glaceon_098100_Holo.png",
+      "/cards/013_Glaceon_098100_Holo.webp",
       "https://assets.tcgdex.net/en/dp/dp5/98/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2008-05-21__dp5__98__Glaceon_LV.X__Holo__large.webp"
     ],
@@ -293,7 +293,7 @@
     "setId": "S12",
     "series": "s",
     "imageSources": [
-      "/cards/014_Glaceon_024090_1st_Edition.png",
+      "/cards/014_Glaceon_024090_1st_Edition.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2008-12-26__jpn_pt2__24__Glaceon__1st_Edition__large.webp"
     ],
     "tcgdexId": null,
@@ -314,7 +314,7 @@
     "setId": "S12",
     "series": "s",
     "imageSources": [
-      "/cards/015_Glaceon_024090_Standard.png",
+      "/cards/015_Glaceon_024090_Standard.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2008-12-26__jpn_pt2__24__Glaceon__1st_Edition__large.webp"
     ],
     "tcgdexId": null,
@@ -335,7 +335,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/016_Glaceon_005012_Holo.png",
+      "/cards/016_Glaceon_005012_Holo.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2009-04-18__jpn_ptd__5__Glaceon__Standard__large.webp"
     ],
     "tcgdexId": null,
@@ -356,7 +356,7 @@
     "setId": "pl2",
     "series": "pl",
     "imageSources": [
-      "/cards/017_Glaceon_041111_Standard.png",
+      "/cards/017_Glaceon_041111_Standard.webp",
       "https://assets.tcgdex.net/en/pl/pl2/41/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2009-05-16__pl2__41__Glaceon__Standard__large.webp"
     ],
@@ -378,7 +378,7 @@
     "setId": "pl2",
     "series": "pl",
     "imageSources": [
-      "/cards/018_Glaceon_041111_Reverse_Holo.png",
+      "/cards/018_Glaceon_041111_Reverse_Holo.webp",
       "https://assets.tcgdex.net/en/pl/pl2/41/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2009-05-16__pl2__41__Glaceon__Standard__large.webp"
     ],
@@ -400,7 +400,7 @@
     "setId": "bwp",
     "series": "bw",
     "imageSources": [
-      "/cards/019_Glaceon_185BW_P_Standard.png",
+      "/cards/019_Glaceon_185BW_P_Standard.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2010-12-17__jpn_bwp__185__Glaceon__Standard__large.webp"
     ],
     "tcgdexId": null,
@@ -421,7 +421,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/020_Glaceon_006018_Reshiram_EX_Battle_Strength_Deck.png",
+      "/cards/020_Glaceon_006018_Reshiram_EX_Battle_Strength_Deck.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2011-10-21__jpn_bkr__6__Glaceon__Reshiram_EX_Battle_Strength_Deck__large.webp"
     ],
     "tcgdexId": null,
@@ -442,7 +442,7 @@
     "setId": "bw5",
     "series": "bw",
     "imageSources": [
-      "/cards/021_Glaceon_030108_Standard.png",
+      "/cards/021_Glaceon_030108_Standard.webp",
       "https://assets.tcgdex.net/en/bw/bw5/30/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2012-05-09__bw5__30__Glaceon__Standard__large.webp"
     ],
@@ -464,7 +464,7 @@
     "setId": "bw5",
     "series": "bw",
     "imageSources": [
-      "/cards/022_Glaceon_030108_Reverse_Holo.png",
+      "/cards/022_Glaceon_030108_Reverse_Holo.webp",
       "https://assets.tcgdex.net/en/bw/bw5/30/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2012-05-09__bw5__30__Glaceon__Reverse_Holo__large.webp"
     ],
@@ -486,7 +486,7 @@
     "setId": "S11",
     "series": "s",
     "imageSources": [
-      "/cards/023_Glaceon_012051_1st_Edition_Holo.png",
+      "/cards/023_Glaceon_012051_1st_Edition_Holo.webp",
       "https://www.serebii.net/card/spiralforce/12.jpg",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2012-12-14__jpn_bw8s__12__Glaceon__1st_Edition_Holo__large.webp"
     ],
@@ -508,7 +508,7 @@
     "setId": "bw9",
     "series": "bw",
     "imageSources": [
-      "/cards/024_Glaceon_023116_Cracked_Ice_Holo.png",
+      "/cards/024_Glaceon_023116_Cracked_Ice_Holo.webp",
       "https://assets.tcgdex.net/en/bw/bw9/23/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2013-05-08__bw9__23__Glaceon__Standard__large.webp"
     ],
@@ -530,7 +530,7 @@
     "setId": "bw9",
     "series": "bw",
     "imageSources": [
-      "/cards/025_Glaceon_023116_Standard.png",
+      "/cards/025_Glaceon_023116_Standard.webp",
       "https://assets.tcgdex.net/en/bw/bw9/23/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2013-05-08__bw9__23__Glaceon__Standard__large.webp"
     ],
@@ -552,7 +552,7 @@
     "setId": "bw9",
     "series": "bw",
     "imageSources": [
-      "/cards/026_Glaceon_023116_Reverse_Holo.png",
+      "/cards/026_Glaceon_023116_Reverse_Holo.webp",
       "https://assets.tcgdex.net/en/bw/bw9/23/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2013-05-08__bw9__23__Glaceon__Reverse_Holo__large.webp"
     ],
@@ -574,7 +574,7 @@
     "setId": "bw9",
     "series": "bw",
     "imageSources": [
-      "/cards/027_Glaceon_023116_City_Championships.png",
+      "/cards/027_Glaceon_023116_City_Championships.webp",
       "https://assets.tcgdex.net/en/bw/bw9/23/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2013-05-08__bw9__23__Glaceon__City_Championships__large.webp"
     ],
@@ -596,7 +596,7 @@
     "setId": "bw9",
     "series": "bw",
     "imageSources": [
-      "/cards/028_Glaceon_023116_City_Championships_Staff.png",
+      "/cards/028_Glaceon_023116_City_Championships_Staff.webp",
       "https://assets.tcgdex.net/en/bw/bw9/23/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2013-05-08__bw9__23__Glaceon__City_Championships_Staff__large.webp"
     ],
@@ -618,7 +618,7 @@
     "setId": "bwp",
     "series": "bw",
     "imageSources": [
-      "/cards/029_Glaceon_BW90_Cosmos_Holo.png",
+      "/cards/029_Glaceon_BW90_Cosmos_Holo.webp",
       "https://assets.tcgdex.net/en/bw/bwp/BW90/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2011-01-03__bwp__BW90__Glaceon__Cosmos_Holo__large.webp"
     ],
@@ -640,7 +640,7 @@
     "setId": "XY3",
     "series": "xy",
     "imageSources": [
-      "/cards/030_Glaceon_019096_1st_Edition.png",
+      "/cards/030_Glaceon_019096_1st_Edition.webp",
       "https://www.serebii.net/card/risingfist/19.jpg",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2014-06-14__jpn_xy3__19__Glaceon__1st_Edition__large.webp"
     ],
@@ -662,7 +662,7 @@
     "setId": "XY3",
     "series": "xy",
     "imageSources": [
-      "/cards/031_Glaceon_019096_Standard.png",
+      "/cards/031_Glaceon_019096_Standard.webp",
       "https://www.serebii.net/card/risingfist/19.jpg",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2014-06-14__jpn_xy3__19__Glaceon__1st_Edition__large.webp"
     ],
@@ -684,7 +684,7 @@
     "setId": "xy3",
     "series": "xy",
     "imageSources": [
-      "/cards/032_Glaceon_019111_Standard.png",
+      "/cards/032_Glaceon_019111_Standard.webp",
       "https://assets.tcgdex.net/en/xy/xy3/19/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2014-08-13__xy3__19__Glaceon__Standard__large.webp"
     ],
@@ -706,7 +706,7 @@
     "setId": "xy3",
     "series": "xy",
     "imageSources": [
-      "/cards/033_Glaceon_019111_Reverse_Holo.png",
+      "/cards/033_Glaceon_019111_Reverse_Holo.webp",
       "https://assets.tcgdex.net/en/xy/xy3/19/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2014-08-13__xy3__19__Glaceon__Reverse_Holo__large.webp"
     ],
@@ -728,7 +728,7 @@
     "setId": "XY10",
     "series": "xy",
     "imageSources": [
-      "/cards/034_Glaceon_018078_1st_Edition.png",
+      "/cards/034_Glaceon_018078_1st_Edition.webp",
       "https://www.serebii.net/card/awakeningpsychicchampion/18.jpg",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2016-03-18__jpn_xy10__18__Glaceon_EX__1st_Edition__large.webp"
     ],
@@ -750,7 +750,7 @@
     "setId": "XY10",
     "series": "xy",
     "imageSources": [
-      "/cards/035_Glaceon_018078_Holo.png",
+      "/cards/035_Glaceon_018078_Holo.webp",
       "https://www.serebii.net/card/awakeningpsychicchampion/18.jpg",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2016-03-18__jpn_xy10__18__Glaceon_EX__1st_Edition__large.webp"
     ],
@@ -772,7 +772,7 @@
     "setId": "XY10",
     "series": "xy",
     "imageSources": [
-      "/cards/036_Glaceon_079078_1st_Edition_Full_Art.png",
+      "/cards/036_Glaceon_079078_1st_Edition_Full_Art.webp",
       "https://www.serebii.net/card/awakeningpsychicchampion/79.jpg",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2016-03-18__jpn_xy10__79__Glaceon_EX__1st_Edition__large.webp"
     ],
@@ -794,7 +794,7 @@
     "setId": "XY10",
     "series": "xy",
     "imageSources": [
-      "/cards/037_Glaceon_079078_Full_Art.png",
+      "/cards/037_Glaceon_079078_Full_Art.webp",
       "https://www.serebii.net/card/awakeningpsychicchampion/79.jpg",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2016-03-18__jpn_xy10__79__Glaceon_EX__1st_Edition__large.webp"
     ],
@@ -816,7 +816,7 @@
     "setId": "xy10",
     "series": "xy",
     "imageSources": [
-      "/cards/038_Glaceon_020124_Holo.png",
+      "/cards/038_Glaceon_020124_Holo.webp",
       "https://assets.tcgdex.net/en/xy/xy10/20/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2016-05-02__xy10__20__Glaceon_EX__Holo__large.webp"
     ],
@@ -838,7 +838,7 @@
     "setId": "xy10",
     "series": "xy",
     "imageSources": [
-      "/cards/039_Glaceon_116124_Full_Art.png",
+      "/cards/039_Glaceon_116124_Full_Art.webp",
       "https://assets.tcgdex.net/en/xy/xy10/116/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2016-05-02__xy10__116__Glaceon_EX__Holo__large.webp"
     ],
@@ -860,7 +860,7 @@
     "setId": "smp",
     "series": "sm",
     "imageSources": [
-      "/cards/040_Glaceon_SM147_Holo.png",
+      "/cards/040_Glaceon_SM147_Holo.webp",
       "https://images.pokemontcg.io/smp/SM147.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2016-12-09__smp__SM147__Glaceon_GX__Holo__large.webp"
     ],
@@ -882,7 +882,7 @@
     "setId": "smp",
     "series": "sm",
     "imageSources": [
-      "/cards/041_Glaceon_SM238_Standard.png",
+      "/cards/041_Glaceon_SM238_Standard.webp",
       "https://images.pokemontcg.io/smp/SM238.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2016-12-09__smp__SM238__Glaceon__Standard__large.webp"
     ],
@@ -904,7 +904,7 @@
     "setId": "smp",
     "series": "sm",
     "imageSources": [
-      "/cards/042_Glaceon_269SM_P_Championship_Series.png",
+      "/cards/042_Glaceon_269SM_P_Championship_Series.webp",
       "https://www.serebii.net/card/smpromo/269.jpg",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2016-12-09__jpn_smp__269__Glaceon_GX__Championship_Series__large.webp"
     ],
@@ -926,7 +926,7 @@
     "setId": "smp",
     "series": "sm",
     "imageSources": [
-      "/cards/043_Glaceon_385SM_P_Pokémon_TCG_Gym.png",
+      "/cards/043_Glaceon_385SM_P_Pokémon_TCG_Gym.webp",
       "https://www.serebii.net/card/smpromo/385.jpg",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2016-12-09__jpn_smp__385__Glaceon__Poke_mon_TCG_Gym__large.webp"
     ],
@@ -948,7 +948,7 @@
     "setId": "CP4",
     "series": "xy",
     "imageSources": [
-      "/cards/044_Glaceon_20_Holo.png",
+      "/cards/044_Glaceon_20_Holo.webp",
       "https://www.serebii.net/card/thebestofxy/20.jpg",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2017-04-21__jpn_smxy__20__Glaceon_EX__Holo__large.webp"
     ],
@@ -970,7 +970,7 @@
     "setId": "SM5M",
     "series": "sm",
     "imageSources": [
-      "/cards/045_Glaceon_011066_Holo.png",
+      "/cards/045_Glaceon_011066_Holo.webp",
       "https://www.serebii.net/card/ultramoon/11.jpg",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2017-12-08__jpn_sm5m__11__Glaceon_GX__Holo__large.webp"
     ],
@@ -992,7 +992,7 @@
     "setId": "SM5M",
     "series": "sm",
     "imageSources": [
-      "/cards/046_Glaceon_067066_Holo.png",
+      "/cards/046_Glaceon_067066_Holo.webp",
       "https://www.serebii.net/card/ultramoon/67.jpg",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2017-12-08__jpn_sm5m__67__Glaceon_GX__Holo__large.webp"
     ],
@@ -1014,7 +1014,7 @@
     "setId": "SM5M",
     "series": "sm",
     "imageSources": [
-      "/cards/047_Glaceon_073066_Holo.png",
+      "/cards/047_Glaceon_073066_Holo.webp",
       "https://www.serebii.net/card/ultramoon/73.jpg",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2017-12-08__jpn_sm5m__73__Glaceon_GX__Holo__large.webp"
     ],
@@ -1036,7 +1036,7 @@
     "setId": "sm5",
     "series": "sm",
     "imageSources": [
-      "/cards/048_Glaceon_039156_Holo.png",
+      "/cards/048_Glaceon_039156_Holo.webp",
       "https://assets.tcgdex.net/en/sm/sm5/39.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2018-02-02__sm5__39__Glaceon_GX__Holo__large.webp"
     ],
@@ -1058,7 +1058,7 @@
     "setId": "sm5",
     "series": "sm",
     "imageSources": [
-      "/cards/049_Glaceon_141156_Holo.png",
+      "/cards/049_Glaceon_141156_Holo.webp",
       "https://assets.tcgdex.net/en/sm/sm5/141.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2018-02-02__sm5__141__Glaceon_GX__Holo__large.webp"
     ],
@@ -1080,7 +1080,7 @@
     "setId": "sm5",
     "series": "sm",
     "imageSources": [
-      "/cards/050_Glaceon_159156_Holo.png",
+      "/cards/050_Glaceon_159156_Holo.webp",
       "https://assets.tcgdex.net/en/sm/sm5/159.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2018-02-02__sm5__159__Glaceon_GX__Holo__large.webp"
     ],
@@ -1102,7 +1102,7 @@
     "setId": "SM8b",
     "series": "sm",
     "imageSources": [
-      "/cards/051_Glaceon_027150_Holo.png",
+      "/cards/051_Glaceon_027150_Holo.webp",
       "https://www.serebii.net/card/gxultrashiny/27.jpg",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2018-10-02__jpn_sm8b__27__Glaceon_GX__Holo__large.webp"
     ],
@@ -1124,7 +1124,7 @@
     "setId": "SM8b",
     "series": "sm",
     "imageSources": [
-      "/cards/052_Glaceon_215150_Holo.png",
+      "/cards/052_Glaceon_215150_Holo.webp",
       "https://www.serebii.net/card/gxultrashiny/215.jpg",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2018-10-02__jpn_sm8b__215__Glaceon_GX__Holo__large.webp"
     ],
@@ -1146,7 +1146,7 @@
     "setId": "sma",
     "series": "sm",
     "imageSources": [
-      "/cards/053_Glaceon_SV55SV94_Holo.png",
+      "/cards/053_Glaceon_SV55SV94_Holo.webp",
       "https://assets.tcgdex.net/en/sm/sma/SV55.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2019-08-23__sma__SV55__Glaceon_GX__Holo__large.webp"
     ],
@@ -1168,7 +1168,7 @@
     "setId": "swshp",
     "series": "swsh",
     "imageSources": [
-      "/cards/054_Glaceon_216S_P_Pokémon_TCG_Gym.png",
+      "/cards/054_Glaceon_216S_P_Pokémon_TCG_Gym.webp",
       "https://www.serebii.net/card/spromo/216.jpg",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2019-11-15__jpn_swshp__216__Glaceon__Poke_mon_TCG_Gym__large.webp"
     ],
@@ -1190,7 +1190,7 @@
     "setId": "swshp",
     "series": "swsh",
     "imageSources": [
-      "/cards/055_Glaceon_270S_P_Holo.png",
+      "/cards/055_Glaceon_270S_P_Holo.webp",
       "https://www.serebii.net/card/spromo/270.jpg",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2019-11-15__jpn_swshp__270__Glaceon_V__Holo__large.webp"
     ],
@@ -1212,7 +1212,7 @@
     "setId": "swshp",
     "series": "swsh",
     "imageSources": [
-      "/cards/056_Glaceon_271S_P_Holo.png",
+      "/cards/056_Glaceon_271S_P_Holo.webp",
       "https://www.serebii.net/card/spromo/271.jpg",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2019-11-15__jpn_swshp__271__Glaceon_VSTAR__Holo__large.webp"
     ],
@@ -1234,7 +1234,7 @@
     "setId": "S6a",
     "series": "s",
     "imageSources": [
-      "/cards/057_Glaceon_024069_Holo.png",
+      "/cards/057_Glaceon_024069_Holo.webp",
       "https://www.serebii.net/card/eeveeheroes/24.jpg",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2021-05-28__jpn_s6a__24__Glaceon_V__Holo__large.webp"
     ],
@@ -1256,7 +1256,7 @@
     "setId": "S6a",
     "series": "s",
     "imageSources": [
-      "/cards/058_Glaceon_025069_Holo.png",
+      "/cards/058_Glaceon_025069_Holo.webp",
       "https://www.serebii.net/card/eeveeheroes/25.jpg",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2021-05-28__jpn_s6a__25__Glaceon_VMAX__Holo__large.webp"
     ],
@@ -1278,7 +1278,7 @@
     "setId": "S6a",
     "series": "s",
     "imageSources": [
-      "/cards/059_Glaceon_076069_Holo.png",
+      "/cards/059_Glaceon_076069_Holo.webp",
       "https://www.serebii.net/card/eeveeheroes/76.jpg",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2021-05-28__jpn_s6a__76__Glaceon_V__Holo__large.webp"
     ],
@@ -1300,7 +1300,7 @@
     "setId": "S6a",
     "series": "s",
     "imageSources": [
-      "/cards/060_Glaceon_077069_Holo.png",
+      "/cards/060_Glaceon_077069_Holo.webp",
       "https://www.serebii.net/card/eeveeheroes/77.jpg",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2021-05-28__jpn_s6a__77__Glaceon_V__Holo__large.webp"
     ],
@@ -1322,7 +1322,7 @@
     "setId": "S6a",
     "series": "s",
     "imageSources": [
-      "/cards/061_Glaceon_090069_Holo.png",
+      "/cards/061_Glaceon_090069_Holo.webp",
       "https://www.serebii.net/card/eeveeheroes/90.jpg",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2021-05-28__jpn_s6a__90__Glaceon_VMAX__Holo__large.webp"
     ],
@@ -1344,7 +1344,7 @@
     "setId": "S6a",
     "series": "s",
     "imageSources": [
-      "/cards/062_Glaceon_091069_Holo.png",
+      "/cards/062_Glaceon_091069_Holo.webp",
       "https://www.serebii.net/card/eeveeheroes/91.jpg",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2021-05-28__jpn_s6a__91__Glaceon_VMAX__Holo__large.webp"
     ],
@@ -1366,7 +1366,7 @@
     "setId": "swsh7",
     "series": "swsh",
     "imageSources": [
-      "/cards/063_Glaceon_040203_Holo.png",
+      "/cards/063_Glaceon_040203_Holo.webp",
       "https://assets.tcgdex.net/en/swsh/swsh7/40.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2021-08-27__swsh7__40__Glaceon_V__Holo__large.webp"
     ],
@@ -1388,7 +1388,7 @@
     "setId": "swsh7",
     "series": "swsh",
     "imageSources": [
-      "/cards/064_Glaceon_040203_Play_Pokémon.png",
+      "/cards/064_Glaceon_040203_Play_Pokémon.webp",
       "https://assets.tcgdex.net/en/swsh/swsh7/40.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2021-08-27__swsh7__40__Glaceon_V__Holo__large.webp"
     ],
@@ -1410,7 +1410,7 @@
     "setId": "swsh7",
     "series": "swsh",
     "imageSources": [
-      "/cards/065_Glaceon_040203_Holiday_Calendar_2023.png",
+      "/cards/065_Glaceon_040203_Holiday_Calendar_2023.webp",
       "https://assets.tcgdex.net/en/swsh/swsh7/40.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2021-08-27__swsh7__40__Glaceon_V__Holiday_Calendar_2023__large.webp"
     ],
@@ -1432,7 +1432,7 @@
     "setId": "swsh7",
     "series": "swsh",
     "imageSources": [
-      "/cards/066_Glaceon_041203_Holo.png",
+      "/cards/066_Glaceon_041203_Holo.webp",
       "https://assets.tcgdex.net/en/swsh/swsh7/41.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2021-08-27__swsh7__41__Glaceon_VMAX__Holo__large.webp"
     ],
@@ -1454,7 +1454,7 @@
     "setId": "swsh7",
     "series": "swsh",
     "imageSources": [
-      "/cards/067_Glaceon_041203_Play_Pokémon.png",
+      "/cards/067_Glaceon_041203_Play_Pokémon.webp",
       "https://assets.tcgdex.net/en/swsh/swsh7/41.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2021-08-27__swsh7__41__Glaceon_VMAX__Holo__large.webp"
     ],
@@ -1476,7 +1476,7 @@
     "setId": "swsh7",
     "series": "swsh",
     "imageSources": [
-      "/cards/068_Glaceon_041203_Holiday_Calendar_2023.png",
+      "/cards/068_Glaceon_041203_Holiday_Calendar_2023.webp",
       "https://assets.tcgdex.net/en/swsh/swsh7/41.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2021-08-27__swsh7__41__Glaceon_VMAX__Holiday_Calendar_2023__large.webp"
     ],
@@ -1498,7 +1498,7 @@
     "setId": "swsh7",
     "series": "swsh",
     "imageSources": [
-      "/cards/069_Glaceon_174203_Holo.png",
+      "/cards/069_Glaceon_174203_Holo.webp",
       "https://assets.tcgdex.net/en/swsh/swsh7/174.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2021-08-27__swsh7__174__Glaceon_V__Holo__large.webp"
     ],
@@ -1520,7 +1520,7 @@
     "setId": "swsh7",
     "series": "swsh",
     "imageSources": [
-      "/cards/070_Glaceon_175203_Holo.png",
+      "/cards/070_Glaceon_175203_Holo.webp",
       "https://assets.tcgdex.net/en/swsh/swsh7/175.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2021-08-27__swsh7__175__Glaceon_V__Holo__large.webp"
     ],
@@ -1542,7 +1542,7 @@
     "setId": "swsh7",
     "series": "swsh",
     "imageSources": [
-      "/cards/071_Glaceon_208203_Holo.png",
+      "/cards/071_Glaceon_208203_Holo.webp",
       "https://assets.tcgdex.net/en/swsh/swsh7/208.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2021-08-27__swsh7__208__Glaceon_VMAX__Holo__large.webp"
     ],
@@ -1564,7 +1564,7 @@
     "setId": "swsh7",
     "series": "swsh",
     "imageSources": [
-      "/cards/072_Glaceon_209203_Holo.png",
+      "/cards/072_Glaceon_209203_Holo.webp",
       "https://assets.tcgdex.net/en/swsh/swsh7/209.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2021-08-27__swsh7__209__Glaceon_VMAX__Holo__large.webp"
     ],
@@ -1586,7 +1586,7 @@
     "setId": "MC",
     "series": "sv",
     "imageSources": [
-      "/cards/073_Glaceon_103414_Full_Art.png",
+      "/cards/073_Glaceon_103414_Full_Art.webp",
       "https://www.serebii.net/card/starterdeck100/103.jpg",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2021-12-17__jpn_sI__103__Glaceon_V__Start_Deck_100__large.webp"
     ],
@@ -1608,7 +1608,7 @@
     "setId": "MC",
     "series": "sv",
     "imageSources": [
-      "/cards/074_Glaceon_104414_Full_Art.png",
+      "/cards/074_Glaceon_104414_Full_Art.webp",
       "https://www.serebii.net/card/starterdeck100/104.jpg",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2021-12-17__jpn_sI__104__Glaceon_VMAX__Start_Deck_100__large.webp"
     ],
@@ -1630,7 +1630,7 @@
     "setId": "swshp",
     "series": "swsh",
     "imageSources": [
-      "/cards/075_Glaceon_SWSH196_Holo.png",
+      "/cards/075_Glaceon_SWSH196_Holo.webp",
       "https://assets.tcgdex.net/en/swsh/swshp/SWSH196/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2020-02-07__swshp__SWSH196__Glaceon_V__Holo__large.webp"
     ],
@@ -1652,7 +1652,7 @@
     "setId": "swshp",
     "series": "swsh",
     "imageSources": [
-      "/cards/076_Glaceon_SWSH197_Holo.png",
+      "/cards/076_Glaceon_SWSH197_Holo.webp",
       "https://assets.tcgdex.net/en/swsh/swshp/SWSH197/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2020-02-07__swshp__SWSH197__Glaceon_VSTAR__Holo__large.webp"
     ],
@@ -1674,7 +1674,7 @@
     "setId": "swshp",
     "series": "swsh",
     "imageSources": [
-      "/cards/077_Glaceon_SWSH197_Jumbo.png",
+      "/cards/077_Glaceon_SWSH197_Jumbo.webp",
       "https://assets.tcgdex.net/en/swsh/swshp/SWSH197/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2020-02-07__swshp__SWSH197__Glaceon_VSTAR__Holo__large.webp"
     ],
@@ -1696,7 +1696,7 @@
     "setId": "swshp",
     "series": "swsh",
     "imageSources": [
-      "/cards/078_Glaceon_SWSH192_Cosmos_Holo.png",
+      "/cards/078_Glaceon_SWSH192_Cosmos_Holo.webp",
       "https://assets.tcgdex.net/en/swsh/swshp/SWSH192/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2020-02-07__swshp__SWSH192__Glaceon__Cosmos_Holo__large.webp"
     ],
@@ -1718,7 +1718,7 @@
     "setId": "S10P",
     "series": "s",
     "imageSources": [
-      "/cards/079_Glaceon_021067_Standard.png",
+      "/cards/079_Glaceon_021067_Standard.webp",
       "https://www.serebii.net/card/spacejuggler/21.jpg",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2022-04-08__jpn_s10P__21__Glaceon__Standard__large.webp"
     ],
@@ -1740,7 +1740,7 @@
     "setId": "swsh10",
     "series": "swsh",
     "imageSources": [
-      "/cards/080_Glaceon_038189_Standard.png",
+      "/cards/080_Glaceon_038189_Standard.webp",
       "https://assets.tcgdex.net/en/swsh/swsh10/038.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2022-05-27__swsh10__38__Glaceon__Standard__large.webp"
     ],
@@ -1762,7 +1762,7 @@
     "setId": "swsh10",
     "series": "swsh",
     "imageSources": [
-      "/cards/081_Glaceon_038189_Reverse_Holo.png",
+      "/cards/081_Glaceon_038189_Reverse_Holo.webp",
       "https://assets.tcgdex.net/en/swsh/swsh10/038.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2022-05-27__swsh10__38__Glaceon__Reverse_Holo__large.webp"
     ],
@@ -1784,7 +1784,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/082_Glaceon_026150_Holo.png",
+      "/cards/082_Glaceon_026150_Holo.webp",
       "https://static.tcgcollector.com/content/images/11/7e/be/117ebe04bfc1b21cac1e1c71e86459236649dfe19fb73b91cfa898e24e74f2e1.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2022-10-28__scn_csm1c__26__Glaceon_GX__Holo__large.webp"
     ],
@@ -1806,7 +1806,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/083_Glaceon_171150_Holo.png",
+      "/cards/083_Glaceon_171150_Holo.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2022-10-28__scn_csm1c__171__Glaceon_GX__Holo__large.webp"
     ],
     "tcgdexId": null,
@@ -1827,7 +1827,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/084_Glaceon_193150_Holo.png",
+      "/cards/084_Glaceon_193150_Holo.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2022-10-28__scn_csm1c__193__Glaceon_GX__Holo__large.webp"
     ],
     "tcgdexId": null,
@@ -1848,7 +1848,7 @@
     "setId": "S12a",
     "series": "s",
     "imageSources": [
-      "/cards/085_Glaceon_217_Holo.png",
+      "/cards/085_Glaceon_217_Holo.webp",
       "https://assets.tcgdex.net/ja/S/S12a/217/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2022-12-02__jpn_s12a__217__Glaceon_VSTAR__Holo__large.webp"
     ],
@@ -1870,7 +1870,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/086_Glaceon_2_Holo.png",
+      "/cards/086_Glaceon_2_Holo.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2023-01-06__scn_csmY__2__Glaceon_GX__Holo__large.webp"
     ],
     "tcgdexId": null,
@@ -1891,7 +1891,7 @@
     "setId": "swsh12.5",
     "series": "swsh",
     "imageSources": [
-      "/cards/087_Glaceon_038159_Holo.png",
+      "/cards/087_Glaceon_038159_Holo.webp",
       "https://assets.tcgdex.net/en/swsh/swsh12.5/038/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2023-01-19__swsh12pt5__38__Glaceon_V__Holo__large.webp"
     ],
@@ -1913,7 +1913,7 @@
     "setId": "swsh12.5gg",
     "series": "swsh",
     "imageSources": [
-      "/cards/088_Glaceon_GG40_Holo.png",
+      "/cards/088_Glaceon_GG40_Holo.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2023-01-19__swsh12pt5gg__GG40__Glaceon_VSTAR__Holo__large.webp"
     ],
     "tcgdexId": "swsh12.5gg-GG40",
@@ -1934,7 +1934,7 @@
     "setId": "swshp",
     "series": "swsh",
     "imageSources": [
-      "/cards/089_Glaceon_SWSH197_Play_Pokémon.png",
+      "/cards/089_Glaceon_SWSH197_Play_Pokémon.webp",
       "https://assets.tcgdex.net/en/swsh/swshp/SWSH197/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2020-02-07__swshp__SWSH197__Glaceon_VSTAR__Play_Poke_mon__large.webp"
     ],
@@ -1956,7 +1956,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/090_Glaceon_4_Holo.png",
+      "/cards/090_Glaceon_4_Holo.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2023-04-15__scn_csmPi__4__Glaceon_GX__Holo__large.webp"
     ],
     "tcgdexId": null,
@@ -1977,7 +1977,7 @@
     "setId": "svp",
     "series": "sv",
     "imageSources": [
-      "/cards/091_Glaceon_069SV_P_Yu_Nagaba_x_Pokémon_Card_Game.png",
+      "/cards/091_Glaceon_069SV_P_Yu_Nagaba_x_Pokémon_Card_Game.webp",
       "https://www.serebii.net/card/svpromo/69.jpg",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2022-11-18__jpn_svp__69__Glaceon__Yu_Nagaba_x_Poke_mon_Card_Game__large.webp"
     ],
@@ -1999,7 +1999,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/092_Glaceon_034150_Holo.png",
+      "/cards/092_Glaceon_034150_Holo.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2024-03-01__scn_cs4a__34__Glaceon_V__Holo__large.webp"
     ],
     "tcgdexId": null,
@@ -2020,7 +2020,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/093_Glaceon_035150_Holo.png",
+      "/cards/093_Glaceon_035150_Holo.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2024-03-01__scn_cs4a__35__Glaceon_VMAX__Holo__large.webp"
     ],
     "tcgdexId": null,
@@ -2041,7 +2041,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/094_Glaceon_140150_Holo.png",
+      "/cards/094_Glaceon_140150_Holo.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2024-03-01__scn_cs4a__140__Glaceon_V__Holo__large.webp"
     ],
     "tcgdexId": null,
@@ -2062,7 +2062,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/095_Glaceon_141150_Holo.png",
+      "/cards/095_Glaceon_141150_Holo.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2024-03-01__scn_cs4a__141__Glaceon_V__Holo__large.webp"
     ],
     "tcgdexId": null,
@@ -2083,7 +2083,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/096_Glaceon_167150_Holo.png",
+      "/cards/096_Glaceon_167150_Holo.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2024-03-01__scn_cs4a__167__Glaceon_VMAX__Holo__large.webp"
     ],
     "tcgdexId": null,
@@ -2104,7 +2104,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/097_Glaceon_168150_Holo.png",
+      "/cards/097_Glaceon_168150_Holo.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2024-03-01__scn_cs4a__168__Glaceon_VMAX__Holo__large.webp"
     ],
     "tcgdexId": null,
@@ -2125,7 +2125,7 @@
     "setId": "SV5a",
     "series": "sv",
     "imageSources": [
-      "/cards/098_Glaceon_021066_Standard.png",
+      "/cards/098_Glaceon_021066_Standard.webp",
       "https://assets.tcgdex.net/ja/SV/SV5a/021/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2024-03-22__jpn_sv5a__21__Glaceon__Standard__large.webp"
     ],
@@ -2147,7 +2147,7 @@
     "setId": "MC",
     "series": "sv",
     "imageSources": [
-      "/cards/099_Glaceon_103_Start_Deck_100.png",
+      "/cards/099_Glaceon_103_Start_Deck_100.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2024-05-17__scn_cs4da__103__Glaceon_V__Start_Deck_100__large.webp"
     ],
     "tcgdexId": null,
@@ -2168,7 +2168,7 @@
     "setId": "MC",
     "series": "sv",
     "imageSources": [
-      "/cards/100_Glaceon_104_Start_Deck_100.png",
+      "/cards/100_Glaceon_104_Start_Deck_100.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2024-05-17__scn_cs4da__104__Glaceon_VMAX__Start_Deck_100__large.webp"
     ],
     "tcgdexId": null,
@@ -2189,7 +2189,7 @@
     "setId": "sv06",
     "series": "sv",
     "imageSources": [
-      "/cards/101_Glaceon_054167_Standard.png",
+      "/cards/101_Glaceon_054167_Standard.webp",
       "https://assets.tcgdex.net/en/sv/sv06/054/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2024-05-24__sv6__54__Glaceon__Standard__large.webp"
     ],
@@ -2211,7 +2211,7 @@
     "setId": "sv06",
     "series": "sv",
     "imageSources": [
-      "/cards/102_Glaceon_054167_Reverse_Holo.png",
+      "/cards/102_Glaceon_054167_Reverse_Holo.webp",
       "https://assets.tcgdex.net/en/sv/sv06/054/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2024-05-24__sv6__54__Glaceon__Reverse_Holo__large.webp"
     ],
@@ -2233,7 +2233,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/103_Glaceon_37_Gallant_Galaxy_V_Starter_Deck.png",
+      "/cards/103_Glaceon_37_Gallant_Galaxy_V_Starter_Deck.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2024-06-18__scn_cs5d__37__Glaceon_V__Gallant_Galaxy_V_Starter_Deck__large.webp"
     ],
     "tcgdexId": null,
@@ -2254,7 +2254,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/104_Glaceon_38_Gallant_Galaxy_V_Starter_Deck.png",
+      "/cards/104_Glaceon_38_Gallant_Galaxy_V_Starter_Deck.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2024-06-18__scn_cs5d__38__Glaceon_VSTAR__Gallant_Galaxy_V_Starter_Deck__large.webp"
     ],
     "tcgdexId": null,
@@ -2275,7 +2275,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/105_Glaceon_159_Gallant_Galaxy_V_Starter_Deck.png",
+      "/cards/105_Glaceon_159_Gallant_Galaxy_V_Starter_Deck.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2024-06-18__scn_cs5d__159__Glaceon_VSTAR__Gallant_Galaxy_V_Starter_Deck__large.webp"
     ],
     "tcgdexId": null,
@@ -2296,7 +2296,7 @@
     "setId": "swshp",
     "series": "swsh",
     "imageSources": [
-      "/cards/106_Glaceon_115_Pokémon_TCG_Gym.png",
+      "/cards/106_Glaceon_115_Pokémon_TCG_Gym.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2024-06-28__scn_swshp__115__Glaceon__Poke_mon_TCG_Gym__large.webp"
     ],
     "tcgdexId": null,
@@ -2317,7 +2317,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/107_Glaceon_019095_Standard.png",
+      "/cards/107_Glaceon_019095_Standard.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2024-11-15__scn_cs65__19__Glaceon__Standard__large.webp"
     ],
     "tcgdexId": null,
@@ -2338,7 +2338,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/108_Glaceon_019095_Reverse_Holo.png",
+      "/cards/108_Glaceon_019095_Reverse_Holo.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2024-11-15__scn_cs65__19__Glaceon__Reverse_Holo__large.webp"
     ],
     "tcgdexId": null,
@@ -2359,7 +2359,7 @@
     "setId": "SV8a",
     "series": "sv",
     "imageSources": [
-      "/cards/109_Glaceon_040187_Master_Ball_Holo.png",
+      "/cards/109_Glaceon_040187_Master_Ball_Holo.webp",
       "https://assets.tcgdex.net/ja/SV/SV8a/040/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2024-12-06__jpn_sv8a__40__Glaceon__Standard__large.webp"
     ],
@@ -2381,7 +2381,7 @@
     "setId": "SV8a",
     "series": "sv",
     "imageSources": [
-      "/cards/110_Glaceon_040187_Poké_Ball_Holo.png",
+      "/cards/110_Glaceon_040187_Poké_Ball_Holo.webp",
       "https://assets.tcgdex.net/ja/SV/SV8a/040/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2024-12-06__jpn_sv8a__40__Glaceon__Poke_Ball_Holo__large.webp"
     ],
@@ -2403,7 +2403,7 @@
     "setId": "SV8a",
     "series": "sv",
     "imageSources": [
-      "/cards/111_Glaceon_040187_Standard.png",
+      "/cards/111_Glaceon_040187_Standard.webp",
       "https://assets.tcgdex.net/ja/SV/SV8a/040/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2024-12-06__jpn_sv8a__40__Glaceon__Standard__large.webp"
     ],
@@ -2425,7 +2425,7 @@
     "setId": "SV8a",
     "series": "sv",
     "imageSources": [
-      "/cards/112_Glaceon_041187_Holo.png",
+      "/cards/112_Glaceon_041187_Holo.webp",
       "https://assets.tcgdex.net/ja/SV/SV8a/041/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2024-12-06__jpn_sv8a__41__Glaceon_ex__Holo__large.webp"
     ],
@@ -2447,7 +2447,7 @@
     "setId": "SV8a",
     "series": "sv",
     "imageSources": [
-      "/cards/113_Glaceon_206187_Holo.png",
+      "/cards/113_Glaceon_206187_Holo.webp",
       "https://assets.tcgdex.net/ja/SV/SV8a/206/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2024-12-06__jpn_sv8a__206__Glaceon_ex__Holo__large.webp"
     ],
@@ -2469,7 +2469,7 @@
     "setId": "sv08.5",
     "series": "sv",
     "imageSources": [
-      "/cards/114_Glaceon_025131_Cosmos_Holo.png",
+      "/cards/114_Glaceon_025131_Cosmos_Holo.webp",
       "https://assets.tcgdex.net/en/sv/sv08.5/025.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2025-01-17__sv85__25__Glaceon__Cosmos_Holo__large.webp"
     ],
@@ -2491,7 +2491,7 @@
     "setId": "sv08.5",
     "series": "sv",
     "imageSources": [
-      "/cards/115_Glaceon_025131_Holo.png",
+      "/cards/115_Glaceon_025131_Holo.webp",
       "https://assets.tcgdex.net/en/sv/sv08.5/025.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2025-01-17__sv85__25__Glaceon__Cosmos_Holo__large.webp"
     ],
@@ -2513,7 +2513,7 @@
     "setId": "sv08.5",
     "series": "sv",
     "imageSources": [
-      "/cards/116_Glaceon_025131_Reverse_Holo.png",
+      "/cards/116_Glaceon_025131_Reverse_Holo.webp",
       "https://assets.tcgdex.net/en/sv/sv08.5/025.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2025-01-17__sv85__25__Glaceon__Reverse_Holo__large.webp"
     ],
@@ -2535,7 +2535,7 @@
     "setId": "sv08.5",
     "series": "sv",
     "imageSources": [
-      "/cards/117_Glaceon_025131_Poké_Ball_Holo.png",
+      "/cards/117_Glaceon_025131_Poké_Ball_Holo.webp",
       "https://assets.tcgdex.net/en/sv/sv08.5/025.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2025-01-17__sv85__25__Glaceon__Poke_Ball_Holo__large.webp"
     ],
@@ -2557,7 +2557,7 @@
     "setId": "sv08.5",
     "series": "sv",
     "imageSources": [
-      "/cards/118_Glaceon_025131_Master_Ball_Holo.png",
+      "/cards/118_Glaceon_025131_Master_Ball_Holo.webp",
       "https://assets.tcgdex.net/en/sv/sv08.5/025.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2025-01-17__sv85__25__Glaceon__Master_Ball_Holo__large.webp"
     ],
@@ -2579,7 +2579,7 @@
     "setId": "sv08.5",
     "series": "sv",
     "imageSources": [
-      "/cards/119_Glaceon_026131_Holo.png",
+      "/cards/119_Glaceon_026131_Holo.webp",
       "https://assets.tcgdex.net/en/sv/sv08.5/026/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2025-01-17__sv85__26__Glaceon_ex__Holo__large.webp"
     ],
@@ -2601,7 +2601,7 @@
     "setId": "sv08.5",
     "series": "sv",
     "imageSources": [
-      "/cards/120_Glaceon_026131_Expansion_Stamp.png",
+      "/cards/120_Glaceon_026131_Expansion_Stamp.webp",
       "https://assets.tcgdex.net/en/sv/sv08.5/026/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2025-01-17__sv85__26__Glaceon_ex__Expansion_Stamp__large.webp"
     ],
@@ -2623,7 +2623,7 @@
     "setId": "sv08.5",
     "series": "sv",
     "imageSources": [
-      "/cards/121_Glaceon_026131_Holiday_Calendar_2025.png",
+      "/cards/121_Glaceon_026131_Holiday_Calendar_2025.webp",
       "https://assets.tcgdex.net/en/sv/sv08.5/026/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2025-01-17__sv85__26__Glaceon_ex__Holiday_Calendar_2025__large.webp"
     ],
@@ -2645,7 +2645,7 @@
     "setId": "sv08.5",
     "series": "sv",
     "imageSources": [
-      "/cards/122_Glaceon_026131_Play_Pokémon.png",
+      "/cards/122_Glaceon_026131_Play_Pokémon.webp",
       "https://assets.tcgdex.net/en/sv/sv08.5/026/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2025-01-17__sv85__26__Glaceon_ex__Play_Poke_mon__large.webp"
     ],
@@ -2667,7 +2667,7 @@
     "setId": "sv08.5",
     "series": "sv",
     "imageSources": [
-      "/cards/123_Glaceon_150131_Holo.png",
+      "/cards/123_Glaceon_150131_Holo.webp",
       "https://assets.tcgdex.net/en/sv/sv08.5/150/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2025-01-17__sv85__150__Glaceon_ex__Holo__large.webp"
     ],
@@ -2689,7 +2689,7 @@
     "setId": "svp",
     "series": "sv",
     "imageSources": [
-      "/cards/124_Glaceon_SVP171_Cosmos_Holo.png",
+      "/cards/124_Glaceon_SVP171_Cosmos_Holo.webp",
       "https://assets.tcgdex.net/en/sv/svp/171/high.png",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2023-01-06__svp__171__Glaceon__Cosmos_Holo__large.webp"
     ],
@@ -2711,7 +2711,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/125_Glaceon_08_0114_Holo.png",
+      "/cards/125_Glaceon_08_0114_Holo.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2025-05-16__scn_cbb2__801__Glaceon__Holo__large.webp"
     ],
     "tcgdexId": null,
@@ -2732,7 +2732,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/126_Glaceon_08_0214_Holo.png",
+      "/cards/126_Glaceon_08_0214_Holo.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2025-05-16__scn_cbb2__802__Glaceon__Holo__large.webp"
     ],
     "tcgdexId": null,
@@ -2753,7 +2753,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/127_Glaceon_08_0314_Poké_Ball_Holo.png",
+      "/cards/127_Glaceon_08_0314_Poké_Ball_Holo.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2025-05-16__scn_cbb2__803__Glaceon__Poke_Ball_Holo__large.webp"
     ],
     "tcgdexId": null,
@@ -2774,7 +2774,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/128_Glaceon_08_0414_Poké_Ball_Holo.png",
+      "/cards/128_Glaceon_08_0414_Poké_Ball_Holo.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2025-05-16__scn_cbb2__804__Glaceon__Poke_Ball_Holo__large.webp"
     ],
     "tcgdexId": null,
@@ -2795,7 +2795,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/129_Glaceon_08_0514_Starlight_Holo.png",
+      "/cards/129_Glaceon_08_0514_Starlight_Holo.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2025-05-16__scn_cbb2__805__Glaceon__Starlight_Holo__large.webp"
     ],
     "tcgdexId": null,
@@ -2816,7 +2816,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/130_Glaceon_08_0614_Starlight_Holo.png",
+      "/cards/130_Glaceon_08_0614_Starlight_Holo.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2025-05-16__scn_cbb2__806__Glaceon__Starlight_Holo__large.webp"
     ],
     "tcgdexId": null,
@@ -2837,7 +2837,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/131_Glaceon_08_0714_Holo.png",
+      "/cards/131_Glaceon_08_0714_Holo.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2025-05-16__scn_cbb2__807__Glaceon__Holo__large.webp"
     ],
     "tcgdexId": null,
@@ -2858,7 +2858,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/132_Glaceon_08_0814_Holo.png",
+      "/cards/132_Glaceon_08_0814_Holo.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2025-05-16__scn_cbb2__808__Glaceon__Holo__large.webp"
     ],
     "tcgdexId": null,
@@ -2879,7 +2879,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/133_Glaceon_08_0914_Master_Ball_Holo.png",
+      "/cards/133_Glaceon_08_0914_Master_Ball_Holo.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2025-05-16__scn_cbb2__809__Glaceon__Master_Ball_Holo__large.webp"
     ],
     "tcgdexId": null,
@@ -2900,7 +2900,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/134_Glaceon_08_1014_Master_Ball_Holo.png",
+      "/cards/134_Glaceon_08_1014_Master_Ball_Holo.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2025-05-16__scn_cbb2__810__Glaceon__Master_Ball_Holo__large.webp"
     ],
     "tcgdexId": null,
@@ -2921,7 +2921,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/135_Glaceon_08_1114_Expansion_Stamp.png",
+      "/cards/135_Glaceon_08_1114_Expansion_Stamp.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2025-05-16__scn_cbb2__811__Glaceon__Expansion_Stamp__large.webp"
     ],
     "tcgdexId": null,
@@ -2942,7 +2942,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/136_Glaceon_08_1214_Expansion_Stamp.png",
+      "/cards/136_Glaceon_08_1214_Expansion_Stamp.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2025-05-16__scn_cbb2__812__Glaceon__Expansion_Stamp__large.webp"
     ],
     "tcgdexId": null,
@@ -2963,7 +2963,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/137_Glaceon_08_1314_Holo.png",
+      "/cards/137_Glaceon_08_1314_Holo.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2025-05-16__scn_cbb2__813__Glaceon_V__Holo__large.webp"
     ],
     "tcgdexId": null,
@@ -2984,7 +2984,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/138_Glaceon_08_1414_Holo.png",
+      "/cards/138_Glaceon_08_1414_Holo.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2025-05-16__scn_cbb2__814__Glaceon_VMAX__Holo__large.webp"
     ],
     "tcgdexId": null,
@@ -3005,7 +3005,7 @@
     "setId": "MC",
     "series": "sv",
     "imageSources": [
-      "/cards/139_Glaceon_162742_Mirror_Holo.png",
+      "/cards/139_Glaceon_162742_Mirror_Holo.webp",
       "https://www.serebii.net/card/starterdeck100battlecollection/162.jpg",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2025-12-19__jpn_mc__162__Glaceon_ex__Start_Deck_100_Battle_Collection__large.webp"
     ],
@@ -3027,7 +3027,7 @@
     "setId": "MC",
     "series": "sv",
     "imageSources": [
-      "/cards/140_Glaceon_162742_Standard.png",
+      "/cards/140_Glaceon_162742_Standard.webp",
       "https://www.serebii.net/card/starterdeck100battlecollection/162.jpg",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2025-12-19__jpn_mc__162__Glaceon_ex__Start_Deck_100_Battle_Collection__large.webp"
     ],
@@ -3049,7 +3049,7 @@
     "setId": "S6H",
     "series": "s",
     "imageSources": [
-      "/cards/141_Glaceon_061167_Master_Ball_Holo.png",
+      "/cards/141_Glaceon_061167_Master_Ball_Holo.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2026-01-16__scn_csv7__61__Glaceon__Master_Ball_Holo__large.webp"
     ],
     "tcgdexId": null,
@@ -3070,7 +3070,7 @@
     "setId": "S6H",
     "series": "s",
     "imageSources": [
-      "/cards/142_Glaceon_061167_Poké_Ball_Holo.png",
+      "/cards/142_Glaceon_061167_Poké_Ball_Holo.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2026-01-16__scn_csv7__61__Glaceon__Poke_Ball_Holo__large.webp"
     ],
     "tcgdexId": null,
@@ -3091,7 +3091,7 @@
     "setId": "S6H",
     "series": "s",
     "imageSources": [
-      "/cards/143_Glaceon_061167_Standard.png",
+      "/cards/143_Glaceon_061167_Standard.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2026-01-16__scn_csv7__61__Glaceon__Standard__large.webp"
     ],
     "tcgdexId": null,
@@ -3112,7 +3112,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/144_Glaceon_046187_Master_Ball_Holo.png",
+      "/cards/144_Glaceon_046187_Master_Ball_Holo.webp",
       "https://static.tcgcollector.com/content/images/7f/40/b4/7f40b48b59bff1ed4cba7cb27f068540e8755ea959e84d106ea6e751b148559d.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2026-06-12__scn_csv95__46__Glaceon__Master_Ball_Holo__large.webp"
     ],
@@ -3134,7 +3134,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/145_Glaceon_046187_Poké_Ball_Holo.png",
+      "/cards/145_Glaceon_046187_Poké_Ball_Holo.webp",
       "https://static.tcgcollector.com/content/images/7f/40/b4/7f40b48b59bff1ed4cba7cb27f068540e8755ea959e84d106ea6e751b148559d.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2026-06-12__scn_csv95__46__Glaceon__Poke_Ball_Holo__large.webp"
     ],
@@ -3156,7 +3156,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/146_Glaceon_046187_Standard.png",
+      "/cards/146_Glaceon_046187_Standard.webp",
       "https://static.tcgcollector.com/content/images/7f/40/b4/7f40b48b59bff1ed4cba7cb27f068540e8755ea959e84d106ea6e751b148559d.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2026-06-12__scn_csv95__46__Glaceon__Standard__large.webp"
     ],
@@ -3178,7 +3178,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/147_Glaceon_046187_Reverse_Holo.png",
+      "/cards/147_Glaceon_046187_Reverse_Holo.webp",
       "https://static.tcgcollector.com/content/images/7f/40/b4/7f40b48b59bff1ed4cba7cb27f068540e8755ea959e84d106ea6e751b148559d.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2026-06-12__scn_csv95__46__Glaceon__Reverse_Holo__large.webp"
     ],
@@ -3200,7 +3200,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/148_Glaceon_047187_Holo.png",
+      "/cards/148_Glaceon_047187_Holo.webp",
       "https://static.tcgcollector.com/content/images/e3/21/f4/e321f43caa77cfd839b9a30fb397914cae73060b1edc126b54429ee8629c5250.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2026-06-12__scn_csv95__47__Glaceon_ex__Holo__large.webp"
     ],
@@ -3222,7 +3222,7 @@
     "setId": null,
     "series": null,
     "imageSources": [
-      "/cards/149_Glaceon_227187_Holo.png",
+      "/cards/149_Glaceon_227187_Holo.webp",
       "https://pokecottagecdn.com/mastersets/images/cards/glaceon-master-set__2026-06-12__scn_csv95__227__Glaceon_ex__Holo__large.webp"
     ],
     "tcgdexId": null,
