@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { useCollection } from '../context/CollectionContext'
 import { useToasts } from '../hooks/useToasts'
 import { ToastContainer } from '../components/Toast'
-import { Snowflake, AlertCircle, User } from 'lucide-react'
+import { Snowflake, AlertCircle, Eye } from 'lucide-react'
 
 export default function Login() {
   const { user, authLoading, lastError, signInWithGoogle, signInAsGuest } = useCollection()
@@ -73,8 +73,8 @@ export default function Login() {
             onClick={signInAsGuest}
             className="w-full flex items-center justify-center gap-3 px-5 py-3.5 rounded-xl bg-ice-50 dark:bg-navy-600 border border-ice-200 dark:border-navy-500 text-navy-700 dark:text-white font-medium hover:bg-ice-100 dark:hover:bg-navy-500 transition"
           >
-            <User className="w-5 h-5 text-navy-400 dark:text-ice-300" />
-            Continue as Guest
+            <Eye className="w-5 h-5 text-navy-400 dark:text-ice-300" />
+            Preview app
           </button>
         </div>
 
@@ -86,7 +86,7 @@ export default function Login() {
             </p>
           </div>
           <p className="text-xs text-navy-400 dark:text-ice-300 px-1">
-            Guest mode keeps data on this device only. You can sign in with Google later from Settings to back up your progress.
+            Preview mode lets you explore the app. Your data stays on this device only. Sign in with Google later from Settings to back up your collection.
           </p>
         </div>
       </div>

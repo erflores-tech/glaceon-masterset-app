@@ -278,7 +278,7 @@ export function CollectionProvider({ children }) {
     try {
       await signInAnonymously(auth)
     } catch (err) {
-      console.error('Anonymous sign-in error', err)
+      console.error('Preview sign-in error', err)
       setLastError(err)
     }
   }, [])
