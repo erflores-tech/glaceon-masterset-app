@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- CI `npm ci` failure caused by peer-dependency conflict: install with `--legacy-peer-deps`.
+- Firestore rules test now loads `@firebase/rules-unit-testing` dynamically and only runs when `FIRESTORE_EMULATOR_HOST` is set, so local `npm run test` skips it while CI runs it under the emulator.
+
 ## [0.3.0] - 2026-08-04
 
 ### Changed

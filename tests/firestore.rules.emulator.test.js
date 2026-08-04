@@ -1,45 +1,44 @@
 import { describe, it, beforeAll, afterAll, beforeEach } from 'vitest'
-import {
-  initializeTestEnvironment,
-  assertSucceeds,
-  assertFails,
-} from '@firebase/rules-unit-testing'
 import { doc, setDoc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore'
 import { readFileSync } from 'fs'
 import { resolve } from 'path'
 
-const PROJECT_ID = 'glaceon-master-set'
-const RULES_PATH = resolve(__dirname, '..', 'firestore.rules')
 const EMULATOR_HOST = process.env.FIRESTORE_EMULATOR_HOST
+const PROJECT_ID = 'glaceon-master-set'
+const RULES_PATH = resolve(import.meta.dirname, '..', 'firestore.rules')
 
+if (!EMULATOR_HOST) {
+  throw new Error(
+    'Firestore rules tests require the emulator. ' +
+      'Set FIRESTORE_EMULATOR_HOST or run `npm run test:emulator`.'
+  )
+}
+
+const [host, port] = EMULATOR_HOST.split(':')
 let testEnv
-let emulatorAvailable = false
+let assertSucceeds
+let assertFails
 
 describe('Firestore security rules', () => {
-  const alice = { uid: 'alice' }
-  const bob = { uid: 'bob' }
+  const alice = { sub: 'alice' }
+  const bob = { sub: 'bob' }
 
   beforeAll(async () => {
-    // Skip if no emulator is available. CI can run this via firebase emulators:exec,
-    // or locally with firebase emulators:start --only firestore.
-    if (!EMULATOR_HOST) {
-      console.warn('Skipping Firestore rules tests: FIRESTORE_EMULATOR_HOST not set.')
-      return
-    }
+    const rules = readFileSync(RULES_PATH, 'utf8')
+    const { initializeTestEnvironment, assertSucceeds: as, assertFails: af } = await import(
+      '@firebase/rules-unit-testing'
+    )
+    assertSucceeds = as
+    assertFails = af
 
-    try {
-      testEnv = await initializeTestEnvironment({
-        projectId: PROJECT_ID,
-        firestore: {
-          host: EMULATOR_HOST.split(':')[0],
-          port: parseInt(EMULATOR_HOST.split(':')[1], 10),
-          rules: readFileSync(RULES_PATH, 'utf8'),
-        },
-      })
-      emulatorAvailable = true
-    } catch (err) {
-      console.warn('Failed to connect to Firestore emulator:', err.message)
-    }
+    testEnv = await initializeTestEnvironment({
+      projectId: PROJECT_ID,
+      firestore: {
+        host,
+        port: parseInt(port, 10),
+        rules,
+      },
+    })
   })
 
   afterAll(async () => {
@@ -47,12 +46,7 @@ describe('Firestore security rules', () => {
   })
 
   beforeEach(async () => {
-    if (!emulatorAvailable) return
-    await testEnv?.clearFirestore()
-  })
-
-  beforeEach(({ skip }) => {
-    if (!emulatorAvailable) skip()
+    await testEnv.clearFirestore()
   })
 
   it('allows users to write their own collection state', async () => {
@@ -102,7 +96,7 @@ describe('Firestore security rules', () => {
 
   it('denies writing outside the expected document path', async () => {
     const db = testEnv.authenticatedContext('alice', alice).firestore()
-    const ref = doc(db, 'users', 'alice', 'profile')
+    const ref = doc(db, 'users', 'alice', 'collection', 'other')
     await assertFails(setDoc(ref, { name: 'Alice' }))
   })
 

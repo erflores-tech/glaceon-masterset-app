@@ -7,7 +7,7 @@ on:
     branches: [master, main]
 
 jobs:
-  lint-and-build:
+  lint-build-test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -20,7 +20,13 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps
+
+      - name: Setup Java for Firestore emulator
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
 
       - name: Lint
         run: npm run lint
@@ -28,5 +34,7 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Test
-        run: npm run test
+      - name: Test with Firestore emulator
+        run: npx firebase-tools emulators:exec --only firestore --project glaceon-master-set-ci "npm run test"
+        env:
+          FIRESTORE_EMULATOR_HOST: 127.0.0.1:8080
