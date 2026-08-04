@@ -53,7 +53,8 @@ export default function CardDetail() {
         onClick={() => {
           const lastState = loadLastListState()
           if (lastState) {
-            navigate(`/?${lastState.toString()}`)
+            lastState.params.set('page', String(lastState.page))
+            navigate(`/?${lastState.params.toString()}`)
           } else {
             navigate(-1)
           }

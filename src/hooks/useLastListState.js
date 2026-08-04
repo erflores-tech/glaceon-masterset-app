@@ -1,11 +1,15 @@
 import { useEffect, useRef } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
-const LIST_STATE_KEY = 'glaceon-last-list-state-v1'
+const LIST_STATE_KEY = 'glaceon-last-list-state-v2'
 
-export function saveLastListState(params) {
+export function saveLastListState(params, extra = {}) {
   try {
-    sessionStorage.setItem(LIST_STATE_KEY, params.toString())
+    const state = {
+      params: params.toString(),
+      page: extra.page ?? 1,
+    }
+    sessionStorage.setItem(LIST_STATE_KEY, JSON.stringify(state))
   } catch {
     // ignore
   }
@@ -14,7 +18,12 @@ export function saveLastListState(params) {
 export function loadLastListState() {
   try {
     const raw = sessionStorage.getItem(LIST_STATE_KEY)
-    return raw ? new URLSearchParams(raw) : null
+    if (!raw) return null
+    const parsed = JSON.parse(raw)
+    return {
+      params: new URLSearchParams(parsed.params || ''),
+      page: parsed.page || 1,
+    }
   } catch {
     return null
   }
@@ -28,14 +37,14 @@ export function clearLastListState() {
   }
 }
 
-export function useLastListState() {
+export function useLastListState(extra = {}) {
   const [searchParams] = useSearchParams()
   const lastParamsRef = useRef(searchParams.toString())
 
   useEffect(() => {
     lastParamsRef.current = searchParams.toString()
-    saveLastListState(searchParams)
-  }, [searchParams])
+    saveLastListState(searchParams, extra)
+  }, [searchParams, extra])
 
   return { lastParams: lastParamsRef.current }
 }
