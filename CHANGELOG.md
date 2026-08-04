@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-08-03
+
 ### Security
 - Add Content Security Policy and security headers for Firebase Hosting.
 - Validate collection backup imports and prevent prototype-pollution keys.
@@ -14,6 +16,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Establish project baseline, Git repository, and Conventional Commits workflow.
+- Centralize binder layout configuration and memoize collection statistics.
+- Improve Firestore sync conflict handling with versioning.
+- Replace browser `alert()` calls with accessible toast notifications.
+- Avoid precaching card images; cache them at runtime to reduce install size.
+
+### Added
+- Error boundary for graceful runtime error recovery.
+- Vitest + React Testing Library test suite with backup and layout tests.
+- GitHub Actions CI workflow for lint, build, and test.
+- CONTRIBUTING.md and project-specific README.
 
 ## [0.0.0] - 2026-08-03
 
