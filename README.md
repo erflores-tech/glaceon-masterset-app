@@ -12,6 +12,7 @@ Offline-first Progressive Web App for tracking your Glaceon Pokémon TCG master 
 - **Card detail view** with notes, grade, page/slot position, and prev/next navigation.
 - **Export/import JSON** backups with validation and preview.
 - **PWA install** and automatic update prompts.
+- **Offline card images**: all 149 card images are bundled as lossless WebP (~119 MB precache) so every card renders offline from first launch.
 
 ## Quick start
 
@@ -63,6 +64,7 @@ Offline-first Progressive Web App for tracking your Glaceon Pokémon TCG master 
   - `lib/` — utilities (backup, layout, Firebase init)
   - `pages/` — route-level pages
 - `scripts/` — data-generation and image-pipeline scripts
+  - `convert-cards-to-webp.mjs` — converts `public/cards/*.png` to lossless WebP
 - `archive/` — legacy widget scripts retained for reference
 - `tests/` — unit, component, and Firestore rules tests
 

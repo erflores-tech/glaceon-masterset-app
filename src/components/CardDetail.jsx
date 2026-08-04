@@ -3,7 +3,7 @@ import { useCollection } from '../context/CollectionContext'
 import { useMemo } from 'react'
 import { Check, Heart, ArrowLeft, StickyNote } from 'lucide-react'
 import SmartImage from './SmartImage'
-import { getPageSlot, LAYOUT_CONFIG } from '../lib/layout'
+import { getPageSlot } from '../lib/layout'
 
 const GRADES = ['', 'NM', 'LP', 'MP', 'HP', 'PSA 10', 'PSA 9', 'PSA 8', 'CGC 10', 'BGS 9.5']
 

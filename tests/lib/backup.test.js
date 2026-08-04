@@ -66,7 +66,8 @@ describe('backup validation', () => {
     }
     const result = validateBackupPayload(payload, knownIds)
     expect(Object.keys(result.cards)).toEqual(['card-1'])
-    expect(result.ignored).toBe(3)
+    // __proto__ is not enumerable, so only constructor and prototype are counted
+    expect(result.ignored).toBe(2)
   })
 
   it('sanitizes invalid state fields', () => {

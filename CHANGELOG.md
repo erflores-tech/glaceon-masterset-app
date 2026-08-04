@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-08-04
+
+### Changed
+- Convert bundled card images from PNG to lossless WebP, reducing the set from 162 MB to ~119 MB (26.6% smaller).
+- Precache all 149 WebP card images so every card renders offline from first launch.
+- Update Workbox glob patterns to include `webp` and remove the separate local-card-images runtime cache.
+
+### Added
+- `scripts/convert-cards-to-webp.mjs` for reproducible image conversion.
+- `tests/data/cards.test.js` to verify every card's primary image source is a bundled WebP file.
+
 ## [0.1.0] - 2026-08-03
 
 ### Security
