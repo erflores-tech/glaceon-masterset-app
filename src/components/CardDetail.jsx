@@ -4,7 +4,6 @@ import { useState, useMemo } from 'react'
 import { Check, Truck, ArrowLeft, StickyNote, MapPin, X } from 'lucide-react'
 import SmartImage from './SmartImage'
 import { getPageSlot } from '../lib/layout'
-import { loadLastListState } from '../hooks/useLastListState'
 import { useRecentLocations } from '../hooks/useRecentLocations'
 
 const GRADES = ['', 'NM', 'LP', 'MP', 'HP', 'PSA 10', 'PSA 9', 'PSA 8', 'CGC 10', 'BGS 9.5']
@@ -50,15 +49,7 @@ export default function CardDetail() {
   return (
     <div className="max-w-2xl mx-auto space-y-5">
       <button
-        onClick={() => {
-          const lastState = loadLastListState()
-          if (lastState) {
-            lastState.params.set('page', String(lastState.page))
-            navigate(`/?${lastState.params.toString()}`)
-          } else {
-            navigate(-1)
-          }
-        }}
+        onClick={() => navigate(-1)}
         className="flex items-center gap-1.5 text-sm text-navy-500 dark:text-ice-300 hover:text-glaceon transition"
       >
         <ArrowLeft className="w-4 h-4" /> Back
