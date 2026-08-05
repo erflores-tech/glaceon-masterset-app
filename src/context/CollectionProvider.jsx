@@ -182,7 +182,6 @@ export function CollectionProvider({ children }) {
       saveJson(STORAGE_KEY, collection)
 
       if (user) {
-        setSyncStatus('syncing')
         localVersionRef.current += 1
         const version = localVersionRef.current
         saveJson(SYNC_STATE_KEY, { version, updatedAt: new Date().toISOString() })
