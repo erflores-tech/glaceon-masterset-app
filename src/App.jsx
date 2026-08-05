@@ -11,7 +11,7 @@ import BackupButtons from './components/BackupButtons'
 import InstallPWA from './components/InstallPWA'
 import ErrorBoundary from './components/ErrorBoundary'
 import { useRegisterSW } from 'virtual:pwa-register/react'
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { Snowflake, LayoutGrid, List, CloudOff, CloudCheck, CloudSync, RefreshCw, Settings as SettingsIcon } from 'lucide-react'
 
 function AppShell() {
@@ -40,11 +40,18 @@ function AppShell() {
   const isDashboard = location.pathname === '/dashboard'
   const isSettings = location.pathname === '/settings'
 
-  const syncIcon =
-    syncStatus === 'synced' ? <CloudCheck className="w-4 h-4 text-emerald-400" /> :
-    syncStatus === 'syncing' ? <CloudSync className="w-4 h-4 text-amber-400 animate-pulse" /> :
-    syncStatus === 'error' ? <CloudOff className="w-4 h-4 text-rose-400" /> :
-    <CloudOff className="w-4 h-4 text-ice-300" />
+  const syncIcon = useMemo(() => {
+    switch (syncStatus) {
+      case 'synced':
+        return <CloudCheck className="w-4 h-4 text-emerald-400" />
+      case 'syncing':
+        return <CloudSync className="w-4 h-4 text-amber-400" />
+      case 'error':
+        return <CloudOff className="w-4 h-4 text-rose-400" />
+      default:
+        return <CloudOff className="w-4 h-4 text-ice-300" />
+    }
+  }, [syncStatus])
 
   return (
     <div className="min-h-screen flex flex-col bg-snow dark:bg-navy-600 text-navy-600 dark:text-ice-100 transition-colors">
@@ -120,7 +127,7 @@ function AppShell() {
 
       <footer className="border-t border-ice-200 dark:border-navy-500 bg-white/50 dark:bg-navy-700/50 safe-bottom">
         <div className="max-w-5xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-2 text-xs text-navy-400 dark:text-ice-300">
-          <span>Offline-first · {syncStatus === 'synced' ? 'Synced to cloud' : syncStatus === 'local' ? 'Local only' : syncStatus}</span>
+          <FooterSyncText syncStatus={syncStatus} />
           <div className="flex items-center gap-2">
             <BackupButtons />
             <InstallPWA />
@@ -129,6 +136,23 @@ function AppShell() {
       </footer>
     </div>
   )
+}
+
+const FooterSyncText = ({ syncStatus }) => {
+  const text = useMemo(() => {
+    switch (syncStatus) {
+      case 'synced':
+        return 'Synced to cloud'
+      case 'local':
+        return 'Local only'
+      case 'error':
+        return 'Sync error'
+      default:
+        return syncStatus
+    }
+  }, [syncStatus])
+
+  return <span>Offline-first · {text}</span>
 }
 
 function AuthGate() {

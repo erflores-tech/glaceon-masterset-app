@@ -146,17 +146,25 @@ export function CollectionProvider({ children }) {
         // Merge carefully: remote wins for entries it includes, but preserve
         // local-only entries that are newer than the remote sync time.
         const merged = { ...prev }
+        let changed = false
         for (const [cardId, remoteState] of Object.entries(remoteCards)) {
           const localState = prev[cardId]
           if (!localState) {
             merged[cardId] = remoteState
+            changed = true
             continue
           }
           const localUpdated = localState.updatedAt ? Date.parse(localState.updatedAt) : Infinity
           const remoteUpdated = remoteState.updatedAt ? Date.parse(remoteState.updatedAt) : 0
           if (remoteUpdated >= localUpdated || remoteVersion > localVersion) {
             merged[cardId] = remoteState
+            changed = true
           }
+        }
+
+        if (!changed) {
+          // Nothing changed; avoid a provider re-render that would flicker UI.
+          return prev
         }
 
         saveJson(STORAGE_KEY, merged)
