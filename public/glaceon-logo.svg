@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B1F33"/>
+      <stop offset="100%" stop-color="#132B45"/>
+    </linearGradient>
+    <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#7BD9ED"/>
+      <stop offset="100%" stop-color="#5BCEE6"/>
+    </linearGradient>
+    <linearGradient id="crystalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E8FAFF"/>
+      <stop offset="50%" stop-color="#A8E8F7"/>
+      <stop offset="100%" stop-color="#5BCEE6"/>
+    </linearGradient>
+    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Rounded square background -->
+  <rect width="512" height="512" rx="128" ry="128" fill="url(#bgGrad)"/>
+
+  <!-- Soft outer glow ring -->
+  <circle cx="256" cy="256" r="210" fill="none" stroke="#5BCEE6" stroke-width="4" opacity="0.15"/>
+  <circle cx="256" cy="256" r="190" fill="none" stroke="#5BCEE6" stroke-width="2" opacity="0.1"/>
+
+  <!-- Glaceon head and ears -->
+  <g transform="translate(256, 250) scale(1.05)">
+    <!-- Left ear -->
+    <path d="M -75 -35 L -135 -125 L -90 -55 Q -75 -40 -75 -35 Z" fill="url(#bodyGrad)"/>
+    <!-- Right ear -->
+    <path d="M 75 -35 L 135 -125 L 90 -55 Q 75 -40 75 -35 Z" fill="url(#bodyGrad)"/>
+    
+    <!-- Inner ear highlight -->
+    <path d="M -115 -105 L -95 -60 L -100 -58 Z" fill="#A8E8F7" opacity="0.8"/>
+    <path d="M 115 -105 L 95 -60 L 100 -58 Z" fill="#A8E8F7" opacity="0.8"/>
+
+    <!-- Main head shape -->
+    <ellipse cx="0" cy="15" rx="95" ry="85" fill="url(#bodyGrad)"/>
+
+    <!-- Forehead ice crystal -->
+    <path d="M 0 -55 L -22 -20 L 0 5 L 22 -20 Z" fill="url(#crystalGrad)" filter="url(#softGlow)"/>
+    <path d="M 0 -55 L -12 -20 L 0 -8 L 12 -20 Z" fill="#E8FAFF" opacity="0.6"/>
+
+    <!-- Eyes -->
+    <ellipse cx="-35" cy="5" rx="14" ry="18" fill="#0B1F33"/>
+    <ellipse cx="35" cy="5" rx="14" ry="18" fill="#0B1F33"/>
+    <circle cx="-31" cy="-2" r="5" fill="#E8FAFF" opacity="0.9"/>
+    <circle cx="39" cy="-2" r="5" fill="#E8FAFF" opacity="0.9"/>
+
+    <!-- Nose -->
+    <path d="M 0 32 L -8 42 L 8 42 Z" fill="#0B1F33" opacity="0.8"/>
+
+    <!-- Mouth -->
+    <path d="M -12 48 Q 0 55 12 48" fill="none" stroke="#0B1F33" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+
+    <!-- Chest ice crystal -->
+    <path d="M 0 88 L -18 115 L 0 140 L 18 115 Z" fill="url(#crystalGrad)" filter="url(#softGlow)"/>
+    <path d="M 0 88 L -10 115 L 0 125 L 10 115 Z" fill="#E8FAFF" opacity="0.5"/>
+  </g>
+</svg>
