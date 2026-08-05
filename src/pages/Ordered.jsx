@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useState, useMemo, useCallback } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useCollection } from '../hooks/useCollection'
 import SmartImage from '../components/SmartImage'
 import {
@@ -56,6 +56,7 @@ function Select({ id, label, value, options, onChange }) {
 }
 
 export default function Ordered() {
+  const navigate = useNavigate()
   const { cards, collection, stats, toggleOwned, markManyOwned } = useCollection()
   const [search, setSearch] = useState('')
   const [langFilter, setLangFilter] = useState('All')
@@ -186,13 +187,13 @@ export default function Ordered() {
           <p className="text-sm text-navy-400 dark:text-ice-300 max-w-md mx-auto">
             You have no cards currently marked as ordered. Head back to the card list to mark a card as ordered while you wait for it to arrive.
           </p>
-          <Link
-            to="/"
+          <button
+            onClick={() => navigate(-1)}
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-glaceon text-navy-700 font-semibold hover:bg-ice-300 transition shadow-card"
           >
             <ArrowLeft className="w-4 h-4" />
-            Back to Card List
-          </Link>
+            Back
+          </button>
         </div>
       </div>
     )
@@ -208,13 +209,13 @@ export default function Ordered() {
             {stats.inTransit}
           </span>
         </h1>
-        <Link
-          to="/"
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white dark:bg-navy-700 border border-ice-200 dark:border-navy-500 text-navy-700 dark:text-ice-100 font-medium hover:bg-ice-50 dark:hover:bg-navy-600 transition"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back to Cards
-        </Link>
+          <button
+            onClick={() => navigate(-1)}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white dark:bg-navy-700 border border-ice-200 dark:border-navy-500 text-navy-700 dark:text-ice-100 font-medium hover:bg-ice-50 dark:hover:bg-navy-600 transition"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back
+          </button>
       </div>
 
       <div className="flex flex-col gap-3">

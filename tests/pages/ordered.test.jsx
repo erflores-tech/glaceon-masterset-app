@@ -32,7 +32,7 @@ describe('Ordered page', () => {
   it('shows empty state when no ordered cards', () => {
     renderWithCtx({ collection: {} })
     expect(screen.getByText(/Nothing on the way/)).toBeInTheDocument()
-    expect(screen.getByText(/Back to Card List/)).toBeInTheDocument()
+    expect(screen.getByText(/Back/)).toBeInTheDocument()
   })
 
   it('lists ordered cards and hides owned cards', () => {
