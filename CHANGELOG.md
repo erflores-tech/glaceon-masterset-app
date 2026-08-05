@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-08-05
+
+### Added
+- New **Ordered** management page at `/ordered` lists every card marked `ordered && !owned` in a responsive table with card thumbnails, set, language, variant, purchase location, and order date.
+- Bulk actions on the Ordered page: select all / individual checkboxes and a **Mark selected owned** button that clears ordered state for the selected cards.
+- Quick per-row **Owned** button to mark a single ordered card as arrived.
+- Filter ordered cards by language and purchase location, plus search by name/set/card number.
+- Sort ordered cards by order date (default newest first), release order, name, or set.
+- New `markManyOwned` collection action for efficient bulk status updates.
+- Component tests for the Ordered page and added `@testing-library/dom` dev dependency.
+
+### Changed
+- Top navigation now includes an **Ordered** link with a truck icon.
+- `SmartImage.jsx` imports React explicitly to support component-level tests.
+
 ## [0.4.0] - 2026-08-05
 
 ### Changed
@@ -75,7 +90,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 149-card catalog across English, Japanese, and Chinese languages.
 - Binder-style layouts (2×2, 3×3, 4×3, 4×4), search/filter, dashboard, export/import.
 
-[Unreleased]: https://github.com/erflores-tech/glaceon-masterset-app/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/erflores-tech/glaceon-masterset-app/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/erflores-tech/glaceon-masterset-app/releases/tag/v0.5.0
 [0.4.0]: https://github.com/erflores-tech/glaceon-masterset-app/releases/tag/v0.4.0
 [0.3.0]: https://github.com/erflores-tech/glaceon-masterset-app/releases/tag/v0.3.0
 [0.2.0]: https://github.com/erflores-tech/glaceon-masterset-app/releases/tag/v0.2.0

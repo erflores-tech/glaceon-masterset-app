@@ -4,6 +4,7 @@ import { useCollection } from './hooks/useCollection'
 import Dashboard from './components/Dashboard'
 import CardList from './components/CardList'
 import CardDetail from './components/CardDetail'
+import Ordered from './pages/Ordered'
 import Settings from './pages/Settings'
 import Login from './pages/Login'
 import AuthButton from './components/AuthButton'
@@ -12,7 +13,7 @@ import InstallPWA from './components/InstallPWA'
 import ErrorBoundary from './components/ErrorBoundary'
 import { useRegisterSW } from 'virtual:pwa-register/react'
 import { useState, useMemo } from 'react'
-import { Snowflake, LayoutGrid, List, CloudOff, CloudCheck, CloudSync, RefreshCw, Settings as SettingsIcon } from 'lucide-react'
+import { Snowflake, LayoutGrid, List, Truck, CloudOff, CloudCheck, CloudSync, RefreshCw, Settings as SettingsIcon } from 'lucide-react'
 
 function AppShell() {
   const [needUpdate, setNeedUpdate] = useState(false)
@@ -38,6 +39,7 @@ function AppShell() {
 
   const isList = location.pathname === '/' || location.pathname.startsWith('/card/')
   const isDashboard = location.pathname === '/dashboard'
+  const isOrdered = location.pathname === '/ordered'
   const isSettings = location.pathname === '/settings'
 
   const syncIcon = useMemo(() => {
@@ -82,6 +84,15 @@ function AppShell() {
               <span className="hidden sm:inline">Dashboard</span>
             </Link>
             <Link
+              to="/ordered"
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition ${
+                isOrdered ? 'bg-glaceon text-navy-700' : 'text-ice-100 hover:bg-white/10'
+              }`}
+            >
+              <Truck className="w-4 h-4" />
+              <span className="hidden sm:inline">Ordered</span>
+            </Link>
+            <Link
               to="/settings"
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition ${
                 isSettings ? 'bg-glaceon text-navy-700' : 'text-ice-100 hover:bg-white/10'
@@ -120,6 +131,7 @@ function AppShell() {
           <Route path="/" element={<CardList />} />
           <Route path="/card/:cardId" element={<CardDetail />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/ordered" element={<Ordered />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/login" element={<Login />} />
         </Routes>

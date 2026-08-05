@@ -1,6 +1,6 @@
 # Glaceon Master Set
 
-[![Version](https://img.shields.io/badge/version-0.4.0-blue)](https://github.com/erflores-tech/glaceon-masterset-app/releases)
+[![Version](https://img.shields.io/badge/version-0.5.0-blue)](https://github.com/erflores-tech/glaceon-masterset-app/releases)
 [![CI](https://github.com/erflores-tech/glaceon-masterset-app/actions/workflows/ci.yml/badge.svg)](https://github.com/erflores-tech/glaceon-masterset-app/actions/workflows/ci.yml)
 
 Offline-first Progressive Web App for tracking your Glaceon Pokémon TCG master set collection across English, Japanese, and Chinese languages.
@@ -17,6 +17,7 @@ Offline-first Progressive Web App for tracking your Glaceon Pokémon TCG master 
 - **PWA install** and automatic update prompts.
 - **Offline card images**: all 149 card images are bundled as lossless WebP (~119 MB precache) so every card renders offline from first launch.
 - **Ordered tracking**: mark cards as ordered, set purchase location/date, and the dashboard shows "In Transit" cards.
+- **Ordered management page** (`/ordered`): bulk-select incoming cards and mark them as owned when they arrive.
 
 ## Quick start
 

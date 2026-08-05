@@ -45,3 +45,9 @@ dist-ssr/
 # Large scratch assets and legacy widgets (archived separately)
 # sample-large.webp
 # sample-png.png
+
+# Local reference files downloaded from PokéCottage
+*.pdf
+*.xlsx
+Glaceon Master Set Guide*
+PokeCottage-GLACEON-Master-Set-Checklist.xlsx
