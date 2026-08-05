@@ -7,9 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-08-05
+
+### Changed
+- Upgrade GitHub Actions to v5 (`actions/checkout@v5`, `actions/setup-node@v5`, `actions/setup-java@v5`) and Node.js 22 in CI.
+- Pin `firebase-tools@15.25.1` in CI for reproducible emulator runs.
+- Update `firebase` to `^12.17.1`.
+
 ### Fixed
+- Stop cloud sync icon and footer text from flickering on mobile by memoizing the icon/text and avoiding provider re-renders when Firestore snapshots echo unchanged local state.
+- Remove the import/upload button from BackupButtons; only export remains.
 - CI `npm ci` failure caused by peer-dependency conflict: install with `--legacy-peer-deps`.
 - Firestore rules test now loads `@firebase/rules-unit-testing` dynamically and only runs when `FIRESTORE_EMULATOR_HOST` is set, so local `npm run test` skips it while CI runs it under the emulator.
+- Resolve all Oxlint warnings and split context into `CollectionContext.js` + `CollectionProvider.jsx` for fast-refresh compliance.
 
 ## [0.3.0] - 2026-08-04
 
@@ -65,5 +75,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 149-card catalog across English, Japanese, and Chinese languages.
 - Binder-style layouts (2×2, 3×3, 4×3, 4×4), search/filter, dashboard, export/import.
 
-[Unreleased]: https://github.com/glaceon-masterset/glaceon-masterset-app/compare/v0.0.0...HEAD
-[0.0.0]: https://github.com/glaceon-masterset/glaceon-masterset-app/releases/tag/v0.0.0
+[Unreleased]: https://github.com/erflores-tech/glaceon-masterset-app/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/erflores-tech/glaceon-masterset-app/releases/tag/v0.4.0
+[0.3.0]: https://github.com/erflores-tech/glaceon-masterset-app/releases/tag/v0.3.0
+[0.2.0]: https://github.com/erflores-tech/glaceon-masterset-app/releases/tag/v0.2.0
+[0.1.0]: https://github.com/erflores-tech/glaceon-masterset-app/releases/tag/v0.1.0
+[0.0.0]: https://github.com/erflores-tech/glaceon-masterset-app/releases/tag/v0.0.0

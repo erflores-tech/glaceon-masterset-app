@@ -43,3 +43,4 @@ Releases follow [Semantic Versioning](https://semver.org/). The project is curre
 - [ ] Firestore rules tests pass if rules changed.
 - [ ] README updated if user-facing behavior changed.
 - [ ] CHANGELOG updated under `## [Unreleased]`.
+- [ ] Version badge in README updated if `package.json` version changed.

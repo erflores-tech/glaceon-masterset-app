@@ -1,5 +1,8 @@
 # Glaceon Master Set
 
+[![Version](https://img.shields.io/badge/version-0.4.0-blue)](https://github.com/erflores-tech/glaceon-masterset-app/releases)
+[![CI](https://github.com/erflores-tech/glaceon-masterset-app/actions/workflows/ci.yml/badge.svg)](https://github.com/erflores-tech/glaceon-masterset-app/actions/workflows/ci.yml)
+
 Offline-first Progressive Web App for tracking your Glaceon Pokémon TCG master set collection across English, Japanese, and Chinese languages.
 
 ## Features
@@ -10,9 +13,10 @@ Offline-first Progressive Web App for tracking your Glaceon Pokémon TCG master 
 - **Binder layouts**: 2×2, 3×3, 4×3, 4×4 with pagination matching physical pages.
 - **Search and filter** by set, language, variant, and ownership status.
 - **Card detail view** with notes, grade, page/slot position, and prev/next navigation.
-- **Export/import JSON** backups with validation and preview.
+- **Export JSON** backups with validation.
 - **PWA install** and automatic update prompts.
 - **Offline card images**: all 149 card images are bundled as lossless WebP (~119 MB precache) so every card renders offline from first launch.
+- **Ordered tracking**: mark cards as ordered, set purchase location/date, and the dashboard shows "In Transit" cards.
 
 ## Quick start
 
@@ -36,7 +40,7 @@ Offline-first Progressive Web App for tracking your Glaceon Pokémon TCG master 
 - `npm run build` — production build
 - `npm run lint` — run Oxlint
 - `npm run test` — run Vitest tests
-- `npm run test:rules` — run Firestore rules tests
+- `npm run test:emulator` — run Firestore rules tests with the emulator
 - `npm run preview` — preview production build locally
 
 ## Firebase setup
@@ -103,11 +107,13 @@ The version field helps future releases detect incompatible backup formats.
 
 This project uses [Conventional Commits](https://www.conventionalcommits.org/) and [Semantic Versioning](https://semver.org/).
 
-1. Update `CHANGELOG.md` under `## [Unreleased]`.
+1. Update `CHANGELOG.md` under `## [Unreleased]` and add a new `## [X.Y.Z]` section.
 2. Bump `package.json` version according to SemVer.
-3. Run the full test suite and build.
-4. Create a Git tag: `git tag -a vX.Y.Z -m "Release vX.Y.Z"`.
-5. Deploy to Firebase Hosting and update release notes with the deployed URL.
+3. Update `README.md` version badge and any feature lists that changed.
+4. Run the full test suite and build.
+5. Create a Git tag: `git tag -a vX.Y.Z -m "Release vX.Y.Z"`.
+6. Push the tag: `git push origin vX.Y.Z`.
+7. Deploy to Firebase Hosting and update release notes with the deployed URL.
 
 ## License
 
