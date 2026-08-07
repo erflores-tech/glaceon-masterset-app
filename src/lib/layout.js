@@ -7,10 +7,28 @@ export const LAYOUT_CONFIG = {
   '4x4': { cols: 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4', label: '4×4', pageSize: 16 },
 }
 
-export function getPageSlot(releaseOrder, layout) {
+export function getPageSlot(cardOrReleaseOrder, cards, layout) {
   const pageSize = LAYOUT_CONFIG[layout]?.pageSize || 12
-  const safeOrder = Math.max(1, Number(releaseOrder) || 1)
-  const pageNum = Math.ceil(safeOrder / pageSize)
-  const slotNum = ((safeOrder - 1) % pageSize) + 1
+
+  // Legacy support: first argument used to be a raw release order number
+  if (typeof cardOrReleaseOrder === 'number' || typeof cardOrReleaseOrder === 'string') {
+    const safeOrder = Math.max(1, Number(cardOrReleaseOrder) || 1)
+    const pageNum = Math.ceil(safeOrder / pageSize)
+    const slotNum = ((safeOrder - 1) % pageSize) + 1
+    return { pageNum, slotNum, pageSize }
+  }
+
+  const card = cardOrReleaseOrder
+  if (!card || card.variant === 'Jumbo') {
+    return { pageNum: null, slotNum: null, pageSize }
+  }
+
+  // Binder position excludes Jumbo cards because they do not fit in the binder pages.
+  const binderIndex = cards
+    ? cards.filter((c) => c.variant !== 'Jumbo' && c.releaseOrder <= card.releaseOrder).length
+    : Math.max(1, Number(card.releaseOrder) || 1)
+
+  const pageNum = Math.ceil(binderIndex / pageSize)
+  const slotNum = ((binderIndex - 1) % pageSize) + 1
   return { pageNum, slotNum, pageSize }
 }

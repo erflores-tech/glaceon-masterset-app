@@ -20,7 +20,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Top navigation now includes an **Ordered** link with a truck icon.
-- `SmartImage.jsx` imports React explicitly to support component-level tests.
+- `SmartImage.jsx`, `CardList.jsx`, and `CardItem.jsx` import React explicitly to support component-level tests.
+- Binder page/slot calculation now excludes Jumbo cards; cards after a Jumbo shift forward one slot.
+
+### Fixed
+- `Glaceon VSTAR #SWSH197 Jumbo` no longer consumes a binder page slot, and all following cards are shifted by one position.
 
 ## [0.4.0] - 2026-08-05
 

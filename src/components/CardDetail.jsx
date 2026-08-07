@@ -43,8 +43,7 @@ export default function CardDetail() {
   const prevCard = cards[cardIndex - 1]
   const nextCard = cards[cardIndex + 1]
 
-  const releaseOrder = card.releaseOrder || cardIndex + 1
-  const { pageNum, slotNum } = getPageSlot(releaseOrder, layout)
+  const { pageNum, slotNum } = getPageSlot(card, cards, layout)
 
   return (
     <div className="max-w-2xl mx-auto space-y-5">
@@ -76,7 +75,7 @@ export default function CardDetail() {
                 <Badge text={card.language} />
                 <Badge text={card.variant} />
                 <Badge text={`#${card.cardNumber}`} />
-                <Badge text={`Page ${pageNum}, Slot ${slotNum}`} />
+                {pageNum && slotNum ? <Badge text={`Page ${pageNum}, Slot ${slotNum}`} /> : <Badge text="Jumbo — not in binder" />}
               </div>
             </div>
 
