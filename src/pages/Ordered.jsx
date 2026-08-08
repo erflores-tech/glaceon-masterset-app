@@ -12,6 +12,7 @@ import {
   PackageCheck,
   ArrowLeft,
   X,
+  Maximize,
 } from 'lucide-react'
 
 const SORT_OPTIONS = [
@@ -71,23 +72,26 @@ export default function Ordered() {
     })
   }, [cards, collection])
 
+  const regularCards = useMemo(() => orderedCards.filter((c) => c.variant !== 'Jumbo'), [orderedCards])
+  const jumboCards = useMemo(() => orderedCards.filter((c) => c.variant === 'Jumbo'), [orderedCards])
+
   const languages = useMemo(
-    () => ['All', ...Array.from(new Set(orderedCards.map((c) => c.language))).sort()],
-    [orderedCards]
+    () => ['All', ...Array.from(new Set(regularCards.map((c) => c.language))).sort()],
+    [regularCards]
   )
 
   const locations = useMemo(() => {
     const locs = new Set()
-    orderedCards.forEach((c) => {
+    regularCards.forEach((c) => {
       const loc = collection[c.id]?.purchaseLocation
       if (loc) locs.add(loc)
     })
     return ['All', ...Array.from(locs).sort()]
-  }, [orderedCards, collection])
+  }, [regularCards, collection])
 
   const filteredCards = useMemo(() => {
     const q = search.trim().toLowerCase()
-    return orderedCards.filter((c) => {
+    return regularCards.filter((c) => {
       if (q) {
         const text = `${c.pokemon} ${c.cardNumber} ${c.set}`.toLowerCase()
         if (!text.includes(q)) return false
@@ -96,7 +100,7 @@ export default function Ordered() {
       if (locationFilter !== 'All' && collection[c.id]?.purchaseLocation !== locationFilter) return false
       return true
     })
-  }, [orderedCards, search, langFilter, locationFilter, collection])
+  }, [regularCards, search, langFilter, locationFilter, collection])
 
   const sortedCards = useMemo(() => {
     const { key, dir } = SORT_OPTIONS[sortIndex] || SORT_OPTIONS[0]
@@ -433,6 +437,68 @@ export default function Ordered() {
                       title="Mark owned"
                     >
                       <Check className="w-5 h-5" />
+                    </button>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      )}
+
+      {jumboCards.length > 0 && (
+        <div className="space-y-3">
+          <h2 className="text-lg font-semibold text-navy-700 dark:text-white flex items-center gap-2">
+            <Maximize className="w-5 h-5 text-amber-400" />
+            Jumbo Cards
+            <span className="text-sm font-medium px-2.5 py-0.5 rounded-full bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-200">
+              {jumboCards.length}
+            </span>
+          </h2>
+
+          <div className="bg-white dark:bg-navy-700 rounded-2xl shadow-card border border-ice-200 dark:border-navy-500 overflow-hidden divide-y divide-ice-100 dark:divide-navy-600">
+            {jumboCards.map((card) => {
+              const state = collection[card.id] || {}
+              return (
+                <div key={card.id} className="p-3 sm:p-4">
+                  <div className="flex items-start gap-4">
+                    <Link
+                      to={`/card/${card.id}`}
+                      className="w-24 h-32 sm:w-28 sm:h-36 rounded-lg overflow-hidden bg-ice-100 dark:bg-navy-600 flex-shrink-0"
+                    >
+                      <SmartImage
+                        card={card}
+                        sources={card.imageSources || []}
+                        className="w-full h-full object-cover"
+                      />
+                    </Link>
+                    <div className="flex-1 min-w-0 space-y-1">
+                      <div className="font-semibold text-navy-700 dark:text-white text-lg">
+                        <Link to={`/card/${card.id}`} className="hover:underline">
+                          {card.pokemon}
+                        </Link>
+                      </div>
+                      <div className="text-sm text-navy-400 dark:text-ice-300">
+                        {card.set} · {card.cardNumber}
+                      </div>
+                      <div className="text-sm text-navy-400 dark:text-ice-300">
+                        {card.language} · {card.variant}
+                      </div>
+                      {state.purchaseLocation && (
+                        <div className="text-sm text-navy-500 dark:text-ice-300">
+                          From {state.purchaseLocation}
+                        </div>
+                      )}
+                      <div className="text-sm text-navy-400 dark:text-ice-300">
+                        Ordered {formatDate(state.orderedAt)}
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => handleMarkOwned(card.id)}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-glaceon text-navy-700 text-sm font-semibold hover:bg-ice-300 transition shadow-sm"
+                    >
+                      <Check className="w-4 h-4" />
+                      Owned
                     </button>
                   </div>
                 </div>
