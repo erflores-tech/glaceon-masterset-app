@@ -77,8 +77,8 @@ describe('binder positions for all cards', () => {
   })
 
   it('matches the PDF order at the end of the 3x3 binder', () => {
-    const card227 = orderedCards.find((card) => card.cardNumber === '227/187')
-    const card047 = orderedCards.find((card) => card.cardNumber === '047/187')
+    const card227 = orderedCards.find((card) => card.cardNumber === '227/208')
+    const card047 = orderedCards.find((card) => card.cardNumber === '047/208')
 
     expect(order.get(card227.id)).toBe(142)
     expect(order.get(card047.id)).toBe(147)

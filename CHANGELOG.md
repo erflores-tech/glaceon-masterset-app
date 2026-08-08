@@ -7,10 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Corrected Terastal Gathering Chinese set size from `/187` to `/208` for the 6 final Chinese cards: `046/187 → 046/208` (4 variants), `047/187 → 047/208`, and `227/187 → 227/208`. Renamed the corresponding bundled WebP files. The Chinese Terastal Gathering set has 208 cards, not 187.
+
 ### Changed
 - Align the card catalog and binder navigation with the supplied PokéCottage PDF sequence using a canonical 148-card binder order.
 - Keep the SWSH197 Jumbo card in the catalog while placing it outside binder slots and after the PDF-ordered cards.
-- Move Terastal Gathering `227/187` before the `046/187` variants, with `047/187` as the final binder card.
+- Move Terastal Gathering `227/208` before the `046/208` variants, with `047/208` as the final binder card.
 
 ## [0.5.0] - 2026-08-05
 
