@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Align the card catalog and binder navigation with the supplied PokéCottage PDF sequence using a canonical 148-card binder order.
+- Keep the SWSH197 Jumbo card in the catalog while placing it outside binder slots and after the PDF-ordered cards.
+- Move Terastal Gathering `227/187` before the `046/187` variants, with `047/187` as the final binder card.
+
 ## [0.5.0] - 2026-08-05
 
 ### Added

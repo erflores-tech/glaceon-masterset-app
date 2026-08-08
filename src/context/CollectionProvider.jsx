@@ -23,6 +23,7 @@ import {
 } from '../lib/backup'
 import { LAYOUT_OPTIONS } from '../lib/layout'
 import rawCards from '../data/cards.json'
+import binderOrder from '../data/binder-order.json'
 
 import { CollectionContext } from './CollectionContext.js'
 
@@ -76,7 +77,14 @@ function migrateV1ToV2(collection) {
 }
 
 export function CollectionProvider({ children }) {
-  const cards = rawCards
+  const cards = useMemo(() => {
+    const order = new Map(binderOrder.map((cardId, index) => [cardId, index]))
+    return [...rawCards].sort((a, b) => {
+      const aOrder = order.get(a.id) ?? Number.POSITIVE_INFINITY
+      const bOrder = order.get(b.id) ?? Number.POSITIVE_INFINITY
+      return aOrder - bOrder || a.releaseOrder - b.releaseOrder
+    })
+  }, [])
   const cardIdsRef = useRef(getKnownCardIds(cards))
 
   const [collection, setCollection] = useState(() => {

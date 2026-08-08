@@ -112,8 +112,8 @@ export default function Ordered() {
         va = collection[a.id]?.orderedAt || ''
         vb = collection[b.id]?.orderedAt || ''
       } else if (key === 'releaseOrder') {
-        va = a.releaseOrder ?? 0
-        vb = b.releaseOrder ?? 0
+        va = cards.indexOf(a)
+        vb = cards.indexOf(b)
       } else {
         va = a[key] || ''
         vb = b[key] || ''
@@ -122,7 +122,7 @@ export default function Ordered() {
       if (va > vb) return 1 * multiplier
       return a.releaseOrder - b.releaseOrder
     })
-  }, [filteredCards, sortIndex, collection])
+  }, [filteredCards, sortIndex, collection, cards])
 
   const allSelected = sortedCards.length > 0 && sortedCards.every((c) => selected.has(c.id))
 

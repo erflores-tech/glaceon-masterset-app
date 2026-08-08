@@ -23,10 +23,14 @@ export function getPageSlot(cardOrReleaseOrder, cards, layout) {
     return { pageNum: null, slotNum: null, pageSize }
   }
 
-  // Binder position excludes Jumbo cards because they do not fit in the binder pages.
+  // The cards array is sorted to the PDF's canonical binder order by the provider.
   const binderIndex = cards
-    ? cards.filter((c) => c.variant !== 'Jumbo' && c.releaseOrder <= card.releaseOrder).length
+    ? cards.filter((c) => c.variant !== 'Jumbo').findIndex((c) => c.id === card.id) + 1
     : Math.max(1, Number(card.releaseOrder) || 1)
+
+  if (binderIndex <= 0) {
+    return { pageNum: null, slotNum: null, pageSize }
+  }
 
   const pageNum = Math.ceil(binderIndex / pageSize)
   const slotNum = ((binderIndex - 1) % pageSize) + 1
