@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-08-10
+
 ### Added
 - New **Owned** management page at `/owned` lists every card marked `owned` in a responsive table with card thumbnails, set, language, variant, grade, and owned date.
 - Bulk actions on the Owned page: select all / individual checkboxes and a **Mark selected not owned** button that clears owned state for the selected cards.
@@ -127,7 +129,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 149-card catalog across English, Japanese, and Chinese languages.
 - Binder-style layouts (2×2, 3×3, 4×3, 4×4), search/filter, dashboard, export/import.
 
-[Unreleased]: https://github.com/erflores-tech/glaceon-masterset-app/compare/v0.6.0...HEAD
+[Unreleased]: https://github.com/erflores-tech/glaceon-masterset-app/compare/v0.7.0...HEAD
+[0.7.0]: https://github.com/erflores-tech/glaceon-masterset-app/releases/tag/v0.7.0
 [0.6.0]: https://github.com/erflores-tech/glaceon-masterset-app/releases/tag/v0.6.0
 [0.5.0]: https://github.com/erflores-tech/glaceon-masterset-app/releases/tag/v0.5.0
 [0.4.0]: https://github.com/erflores-tech/glaceon-masterset-app/releases/tag/v0.4.0
