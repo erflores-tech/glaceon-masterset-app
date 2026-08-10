@@ -14,6 +14,7 @@ import InstallPWA from './components/InstallPWA'
 import ErrorBoundary from './components/ErrorBoundary'
 import { useRegisterSW } from 'virtual:pwa-register/react'
 import { useState, useMemo } from 'react'
+import { useAndroidBackToDismissKeyboard } from './hooks/useAndroidBackToDismissKeyboard'
 import { Snowflake, LayoutGrid, List, CheckCircle2, Truck, CloudOff, CloudCheck, CloudSync, RefreshCw, Settings as SettingsIcon } from 'lucide-react'
 
 function AppShell() {
@@ -35,6 +36,8 @@ function AppShell() {
     updateServiceWorker(true)
     setNeedUpdate(false)
   }
+  useAndroidBackToDismissKeyboard()
+
   const { syncStatus } = useCollection()
   const location = useLocation()
 
