@@ -282,6 +282,24 @@ export function CollectionProvider({ children }) {
     })
   }, [])
 
+  const markManyNotOwned = useCallback((cardIds) => {
+    const now = new Date().toISOString()
+    setCollection((prev) => {
+      const next = { ...prev }
+      cardIds.forEach((cardId) => {
+        const existing = prev[cardId] || {}
+        next[cardId] = {
+          ...existing,
+          owned: false,
+          ordered: false,
+          orderedAt: undefined,
+          updatedAt: now,
+        }
+      })
+      return next
+    })
+  }, [])
+
   const toggleOrdered = useCallback((cardId) => {
     setCollection((prev) => {
       const existing = prev[cardId] || {}
@@ -427,6 +445,7 @@ export function CollectionProvider({ children }) {
       setLayout,
       toggleOwned,
       markManyOwned,
+      markManyNotOwned,
       toggleOrdered,
       setPurchaseLocation,
       setNote,
@@ -453,6 +472,7 @@ export function CollectionProvider({ children }) {
       setLayout,
       toggleOwned,
       markManyOwned,
+      markManyNotOwned,
       toggleOrdered,
       setPurchaseLocation,
       setNote,

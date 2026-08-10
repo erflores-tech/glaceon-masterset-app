@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- New **Owned** management page at `/owned` lists every card marked `owned` in a responsive table with card thumbnails, set, language, variant, grade, and owned date.
+- Bulk actions on the Owned page: select all / individual checkboxes and a **Mark selected not owned** button that clears owned state for the selected cards.
+- Quick per-row **Not Owned** button to mark a single owned card as no longer owned.
+- Filter owned cards by language and grade, plus search by name/set/card number.
+- Sort owned cards by owned date (default newest first), release order, name, set, or grade.
+- New `markManyNotOwned` collection action for efficient bulk status updates.
+- Component tests for the Owned page.
+
+### Changed
+- Top navigation order is now **Cards → Owned → Ordered → Dashboard → Settings**.
+
 ## [0.6.0] - 2026-08-10
 
 ### Security
