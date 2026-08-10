@@ -1,6 +1,6 @@
 # Glaceon Master Set
 
-[![Version](https://img.shields.io/badge/version-0.5.0-blue)](https://github.com/erflores-tech/glaceon-masterset-app/releases)
+[![Version](https://img.shields.io/badge/version-0.6.0-blue)](https://github.com/erflores-tech/glaceon-masterset-app/releases)
 [![CI](https://github.com/erflores-tech/glaceon-masterset-app/actions/workflows/ci.yml/badge.svg)](https://github.com/erflores-tech/glaceon-masterset-app/actions/workflows/ci.yml)
 
 Offline-first Progressive Web App for tracking your Glaceon Pokémon TCG master set collection across English, Japanese, and Chinese languages.
@@ -10,10 +10,11 @@ Offline-first Progressive Web App for tracking your Glaceon Pokémon TCG master 
 - **149-card catalog** with release order, sets, variants, and multi-language support.
 - **Offline-first**: collection data is saved locally and synced to Firebase when signed in.
 - **Cloud sync** via Firebase Auth (Google or anonymous) and Firestore.
+- **Conflict-resistant sync**: deterministic remote merge with version + timestamp precedence; documented in `SYNC_CONTRACT.md`.
 - **Binder layouts**: 2×2, 3×3, 4×3, 4×4 with pagination matching physical pages.
 - **Search and filter** by set, language, variant, and ownership status.
 - **Card detail view** with notes, grade, page/slot position, and prev/next navigation.
-- **Export JSON** backups with validation.
+- **Export JSON** backups with validation and automatic v1 → v2 migration.
 - **PWA install** and automatic update prompts.
 - **Offline card images**: all 149 card images are bundled as lossless WebP (~119 MB precache) so every card renders offline from first launch.
 - **Ordered tracking**: mark cards as ordered, set purchase location/date, and the dashboard shows "In Transit" cards.
@@ -66,7 +67,7 @@ Offline-first Progressive Web App for tracking your Glaceon Pokémon TCG master 
   - `context/` — global state and sync logic
   - `data/` — card catalog
   - `hooks/` — reusable hooks
-  - `lib/` — utilities (backup, layout, Firebase init)
+  - `lib/` — utilities (backup, sync, layout, Firebase init)
   - `pages/` — route-level pages
 - `scripts/` — data-generation and image-pipeline scripts
   - `convert-cards-to-webp.mjs` — converts `public/cards/*.png` to lossless WebP
@@ -78,6 +79,7 @@ Offline-first Progressive Web App for tracking your Glaceon Pokémon TCG master 
 - Firebase Hosting serves a strict Content Security Policy and security headers (see `firebase.json`).
 - Firestore rules allow each user to read/write only their own `users/{uid}/collection/state` document.
 - Backup imports are validated, size-limited, and ignore unknown/prototype-pollution keys.
+- Dependabot is enabled for npm and GitHub Actions to keep dependencies current.
 - Never commit `.env` or `dist/`; both are ignored by Git.
 
 ## Backup format
