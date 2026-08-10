@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { memo } from 'react'
 import { Link } from 'react-router-dom'
 import { useCollection } from '../hooks/useCollection'
 import { Check, Truck } from 'lucide-react'
@@ -11,14 +12,13 @@ const DENSITY_TEXT = {
   '4x4': 'text-xs',
 }
 
-export default function CardItem({ card, density = '4x3' }) {
-  const { toggleOwned, toggleOrdered, getCardState } = useCollection()
-  const state = getCardState(card.id)
+function CardItem({ card, state, density = '4x3' }) {
+  const { toggleOwned, toggleOrdered } = useCollection()
 
   const imageSources = card.imageSources || []
   const isDense = density === '4x4' || density === '4x3'
-  const isOwned = state.owned
-  const isOrdered = state.ordered && !isOwned
+  const isOwned = state?.owned ?? false
+  const isOrdered = (state?.ordered ?? false) && !isOwned
 
   return (
     <div
@@ -117,3 +117,18 @@ export default function CardItem({ card, density = '4x3' }) {
     </div>
   )
 }
+
+function propsAreEqual(prev, next) {
+  if (prev.card.id !== next.card.id) return false
+  if (prev.density !== next.density) return false
+  // Compare only the state fields rendered by CardItem.
+  const prevState = prev.state ?? {}
+  const nextState = next.state ?? {}
+  return (
+    prevState.owned === nextState.owned &&
+    prevState.ordered === nextState.ordered
+  )
+}
+
+const MemoCardItem = memo(CardItem, propsAreEqual)
+export default MemoCardItem

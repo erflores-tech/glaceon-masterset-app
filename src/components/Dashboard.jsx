@@ -1,7 +1,12 @@
 import { useCollection } from '../hooks/useCollection'
-import { useMemo, useState } from 'react'
+import { useMemo, useState, memo } from 'react'
 import { Link } from 'react-router-dom'
 import { CheckCircle2, Circle, Sparkles, Truck } from 'lucide-react'
+
+const TOTAL_ICON = <Circle className="w-5 h-5 text-ice-400" />
+const OWNED_ICON = <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+const IN_TRANSIT_ICON = <Truck className="w-5 h-5 text-amber-400" />
+const REMAINING_ICON = <Circle className="w-5 h-5 text-rose-300" />
 
 export default function Dashboard() {
   const { cards, collection, stats } = useCollection()
@@ -42,10 +47,10 @@ export default function Dashboard() {
       </h1>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <StatCard label="Total Cards" value={stats.total} icon={<Circle className="w-5 h-5 text-ice-400" />} />
-        <StatCard label="Owned" value={stats.owned} icon={<CheckCircle2 className="w-5 h-5 text-emerald-400" />} />
-        <StatCard label="In Transit" value={stats.inTransit} icon={<Truck className="w-5 h-5 text-amber-400" />} />
-        <StatCard label="Remaining" value={stats.remaining} icon={<Circle className="w-5 h-5 text-rose-300" />} />
+        <StatCard label="Total Cards" value={stats.total} icon={TOTAL_ICON} />
+        <StatCard label="Owned" value={stats.owned} icon={OWNED_ICON} />
+        <StatCard label="In Transit" value={stats.inTransit} icon={IN_TRANSIT_ICON} />
+        <StatCard label="Remaining" value={stats.remaining} icon={REMAINING_ICON} />
       </div>
 
       <div className="bg-white dark:bg-navy-700 rounded-2xl p-4 sm:p-6 shadow-card">
@@ -110,7 +115,7 @@ export default function Dashboard() {
   )
 }
 
-function StatCard({ label, value, icon }) {
+const StatCard = memo(function StatCard({ label, value, icon }) {
   return (
     <div className="bg-white dark:bg-navy-700 rounded-2xl p-4 shadow-card flex items-center gap-3">
       <div className="p-2.5 rounded-xl bg-ice-50 dark:bg-navy-600">
@@ -122,4 +127,4 @@ function StatCard({ label, value, icon }) {
       </div>
     </div>
   )
-}
+})

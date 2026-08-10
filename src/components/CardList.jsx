@@ -167,7 +167,7 @@ export default function CardList() {
 
       <div className={`grid gap-3 ${LAYOUT_CONFIG[layout].cols}`}>
         {paginatedCards.map((card) => (
-          <CardItem key={card.id} card={card} density={layout} />
+          <CardItem key={card.id} card={card} state={collection[card.id]} density={layout} />
         ))}
       </div>
 
