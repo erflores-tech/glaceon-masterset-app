@@ -1,12 +1,15 @@
 import { describe, it, expect } from 'vitest'
 import {
   validateBackupPayload,
+  validateBackupFile,
   sanitizeCardState,
   computeImportPreview,
   createBackupPayload,
   isValidCardId,
   BACKUP_VERSION,
   MAX_LOCATION_LENGTH,
+  MAX_BACKUP_SIZE_BYTES,
+  MAX_ENTRIES,
 } from '../../src/lib/backup'
 
 describe('backup validation', () => {
@@ -150,5 +153,93 @@ describe('backup validation', () => {
     expect(isValidCardId('prototype')).toBe(false)
     expect(isValidCardId('')).toBe(false)
     expect(isValidCardId('card-1')).toBe(true)
+  })
+
+  it('sanitizes script-injection-like notes and locations', () => {
+    const payload = {
+      version: BACKUP_VERSION,
+      cards: {
+        'card-1': {
+          owned: true,
+          note: "<script>alert('xss)</script>",
+          purchaseLocation: "eBay<script>alert('loc')</script>",
+        },
+      },
+    }
+    const result = validateBackupPayload(payload, knownIds)
+    expect(result.cards['card-1'].note).toBe("<script>alert('xss)</script>")
+    expect(result.cards['card-1'].purchaseLocation).toBe("eBay<script>alert('loc')</script>")
+  })
+
+  it('ignores prototype pollution style card entries', () => {
+    const payload = JSON.parse(
+      '{"version":2,"cards":{"__proto__":{"polluted":true},"card-1":{"owned":true}}}'
+    )
+    const result = validateBackupPayload(payload, knownIds)
+    expect(Object.prototype.hasOwnProperty.call(result.cards, '__proto__')).toBe(false)
+    expect(Object.prototype.hasOwnProperty.call(result.cards, 'polluted')).toBe(false)
+    expect(result.cards['card-1']).toBeDefined()
+  })
+
+  it('throws when cards exceeds maximum entries', () => {
+    const cards = {}
+    for (let i = 0; i < MAX_ENTRIES + 1; i++) {
+      cards[`card-${i}`] = { owned: true }
+    }
+    expect(() =>
+      validateBackupPayload({ version: BACKUP_VERSION, cards }, knownIds)
+    ).toThrow('too many entries')
+  })
+
+  it('throws when backup file exceeds size limit', () => {
+    const file = { size: MAX_BACKUP_SIZE_BYTES + 1 }
+    expect(() => validateBackupFile(file)).toThrow('too large')
+  })
+
+  it('returns null for completely invalid card state', () => {
+    expect(sanitizeCardState(null)).toBeNull()
+    expect(sanitizeCardState('not an object')).toBeNull()
+    expect(sanitizeCardState({ ordered: 'maybe' })).toEqual({})
+  })
+
+  it('preserves exportedAt and ownedAt timestamps', () => {
+    const ts = '2023-08-01T12:00:00.000Z'
+    const payload = {
+      version: BACKUP_VERSION,
+      exportedAt: ts,
+      cards: {
+        'card-1': { owned: true, ownedAt: ts, updatedAt: ts },
+      },
+    }
+    const result = validateBackupPayload(payload, knownIds)
+    expect(result.cards['card-1'].ownedAt).toBe(ts)
+    expect(result.cards['card-1'].updatedAt).toBe(ts)
+  })
+
+  it('does not migrate want when card is already owned in v1', () => {
+    const payload = {
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      cards: {
+        'card-1': { owned: true, want: true },
+      },
+    }
+    const result = validateBackupPayload(payload, knownIds)
+    expect(result.cards['card-1']).toEqual({
+      owned: true,
+    })
+  })
+
+  it('leaves v2 ordered without orderedAt as-is', () => {
+    const payload = {
+      version: 2,
+      exportedAt: new Date().toISOString(),
+      cards: {
+        'card-1': { owned: false, ordered: true },
+      },
+    }
+    const result = validateBackupPayload(payload, knownIds)
+    expect(result.cards['card-1'].orderedAt).toBeUndefined()
+    expect(result.cards['card-1'].updatedAt).toBeUndefined()
   })
 })
