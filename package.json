@@ -2,11 +2,14 @@
   "name": "glaceon-masterset",
   "private": true,
   "version": "0.5.0",
+  "engines": {
+    "node": ">=22"
+  },
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "oxlint",
+    "lint": "oxlint --deny-warnings",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:emulator": "firebase emulators:exec --only firestore --project glaceon-master-set \"vitest run tests/firestore.rules.emulator.test.js\"",
