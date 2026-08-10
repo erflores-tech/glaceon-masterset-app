@@ -21,6 +21,7 @@ import {
   BACKUP_VERSION,
   MAX_BACKUP_SIZE_BYTES,
 } from '../lib/backup'
+import { mergeRemoteCollection } from '../lib/sync'
 import { LAYOUT_OPTIONS } from '../lib/layout'
 import rawCards from '../data/cards.json'
 import binderOrder from '../data/binder-order.json'
@@ -146,29 +147,12 @@ export function CollectionProvider({ children }) {
 
       setCollection((prev) => {
         const localVersion = localVersionRef.current
-        if (remoteVersion < localVersion) {
-          // Local state is newer; keep it and let debounced write push it up.
-          return prev
-        }
-
-        // Merge carefully: remote wins for entries it includes, but preserve
-        // local-only entries that are newer than the remote sync time.
-        const merged = { ...prev }
-        let changed = false
-        for (const [cardId, remoteState] of Object.entries(remoteCards)) {
-          const localState = prev[cardId]
-          if (!localState) {
-            merged[cardId] = remoteState
-            changed = true
-            continue
-          }
-          const localUpdated = localState.updatedAt ? Date.parse(localState.updatedAt) : Infinity
-          const remoteUpdated = remoteState.updatedAt ? Date.parse(remoteState.updatedAt) : 0
-          if (remoteUpdated >= localUpdated || remoteVersion > localVersion) {
-            merged[cardId] = remoteState
-            changed = true
-          }
-        }
+        const { merged, changed } = mergeRemoteCollection({
+          localCollection: prev,
+          localVersion,
+          remoteCollection: remoteCards,
+          remoteVersion,
+        })
 
         if (!changed) {
           // Nothing changed; avoid a provider re-render that would flicker UI.
@@ -215,6 +199,7 @@ export function CollectionProvider({ children }) {
           .then(() => {
             setSyncStatus('synced')
             setLastError(null)
+            return undefined
           })
           .catch((err) => {
             console.error('Firestore save error', err)
