@@ -1,14 +1,36 @@
 {
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "oxc"],
+  "plugins": ["react", "jsx-a11y", "promise", "import"],
   "ignorePatterns": [
-    "archive/**",
-    "dist/**",
-    "node_modules/**",
-    "public/**"
+    "archive/**/*",
+    "public/**/*",
+    "dist/**/*",
+    "scripts/**/*",
+    "src/data/**/*.json",
+    "tests/data/**/*.json"
   ],
+  "categories": {
+    "correctness": "deny",
+    "suspicious": "warn"
+  },
   "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
+    "react/jsx-key": "deny",
+    "react/no-array-index-key": "warn",
+    "react/react-in-jsx-scope": "off",
+    "jsx-a11y/alt-text": "deny",
+    "jsx-a11y/anchor-is-valid": "warn",
+    "jsx-a11y/control-has-associated-label": "deny",
+    "jsx-a11y/click-events-have-key-events": "warn",
+    "jsx-a11y/no-static-element-interactions": "warn",
+    "import/no-namespace": "off",
+    "promise/catch-or-return": "warn",
+    "no-magic-numbers": "off",
+    "sort-keys": "off",
+    "jsx-max-depth": "off",
+    "func-style": "off",
+    "curly": "off",
+    "no-ternary": "off",
+    "capitalized-comments": "off",
+    "sort-imports": "off",
+    "id-length": "off"
   }
 }

@@ -23,6 +23,7 @@ isSupported().then((yes) => {
   if (yes) {
     getAnalytics(app)
   }
+  return undefined
 }).catch(() => {
   // analytics not supported (e.g. SSR/offline)
 })

@@ -36,9 +36,9 @@ async function render({ size, maskable, name }) {
 
 // favicon.ico: 32x32 and 16x16 multi-resolution
 async function generateFavicon() {
-  const sizes = [32, 16]
+  const faviconSizes = [32, 16]
   const buffers = await Promise.all(
-    sizes.map((s) =>
+    faviconSizes.map((s) =>
       sharp(svgBuffer, { density: 144 })
         .resize(s, s, { fit: 'contain', background: { r: 11, g: 31, b: 51, alpha: 1 } })
         .png()
