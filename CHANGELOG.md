@@ -7,10 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Fixed
-- Corrected Terastal Gathering Chinese set size from `/187` to `/208` for the 6 final Chinese cards: `046/187 → 046/208` (4 variants), `047/187 → 047/208`, and `227/187 → 227/208`. Renamed the corresponding bundled WebP files. The Chinese Terastal Gathering set has 208 cards, not 187.
+### Security
+- Tighten Firebase Hosting CSP by removing `'unsafe-eval'` from `script-src` and keep `'unsafe-inline'` only on `style-src`.
+
+### Added
+- Add Dependabot configuration for weekly npm and GitHub Actions dependency updates.
+- Add `CODEOWNERS` and pull request template to enforce review checklist and Conventional Commits.
+- Add `engines` field in `package.json` requiring Node.js >= 22.
+- Add `src/lib/sync.js` with deterministic remote merge logic, document merge contract in `SYNC_CONTRACT.md`, and cover it with `tests/lib/sync.test.js`.
+- Add data-integrity and edge-case tests for backup validation: prototype pollution keys, size and entry limits, invalid card states, timestamp preservation, v1 want migration, and v2 ordered handling.
+- Add `.oxlintrc.json` expanding lint coverage with React, JSX-a11y, Promise, and Import plugins; `npm run lint` now runs `oxlint --deny-warnings` and passes with zero warnings.
 
 ### Changed
+- Split `src/pages/Ordered.jsx` into `src/pages/ordered/` subcomponents for search, filters, sorting, selection, table, mobile list, Jumbo section, and shared utilities.
+- Improve accessibility across the app: add `aria-label`/`aria-pressed` to action buttons, label CardList search and progress bar, convert Toast to `<output>`, label Ordered checkboxes, and remove nested links in OrderedTable.
+- Convert `console.error` calls in runtime source files to structured messages with explicit context while preserving user-facing `lastError` / toast notifications.
 - Align the card catalog and binder navigation with the supplied PokéCottage PDF sequence using a canonical 148-card binder order.
 - Keep the SWSH197 Jumbo card in the catalog while placing it outside binder slots and after the PDF-ordered cards.
 - Move Terastal Gathering `227/208` before the `046/208` variants, with `047/208` as the final binder card.
