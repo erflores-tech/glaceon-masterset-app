@@ -1,3 +1,4 @@
+import * as React from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { useCollection } from '../hooks/useCollection'
 import { useState, useMemo } from 'react'
@@ -50,8 +51,9 @@ export default function CardDetail() {
       <button
         onClick={() => navigate(-1)}
         className="flex items-center gap-1.5 text-sm text-navy-500 dark:text-ice-300 hover:text-glaceon transition"
+        aria-label="Back to card list"
       >
-        <ArrowLeft className="w-4 h-4" /> Back
+        <ArrowLeft className="w-4 h-4" aria-hidden="true" /> Back
       </button>
 
       <div className="bg-white dark:bg-navy-700 rounded-2xl p-4 sm:p-6 shadow-card">
@@ -87,8 +89,10 @@ export default function CardDetail() {
                     ? 'bg-glaceon text-navy-700'
                     : 'bg-ice-100 dark:bg-navy-600 text-navy-600 dark:text-ice-100 hover:bg-ice-200'
                 }`}
+                aria-label={`${state.owned ? 'Unmark' : 'Mark'} ${card.pokemon} ${state.owned ? 'not owned' : 'owned'}`}
+                aria-pressed={state.owned}
               >
-                <Check className="w-5 h-5" />
+                <Check className="w-5 h-5" aria-hidden="true" />
                 {state.owned ? 'Owned' : 'Mark Owned'}
               </button>
               <button
@@ -98,8 +102,10 @@ export default function CardDetail() {
                     ? 'bg-amber-400 text-navy-700'
                     : 'bg-ice-100 dark:bg-navy-600 text-navy-600 dark:text-ice-100 hover:bg-ice-200'
                 }`}
+                aria-label={`${state.ordered ? 'Cancel order for' : 'Mark'} ${card.pokemon} ${state.ordered ? '' : 'ordered'}`}
+                aria-pressed={state.ordered}
               >
-                <Truck className="w-5 h-5" />
+                <Truck className="w-5 h-5" aria-hidden="true" />
                 {state.ordered ? 'Ordered' : 'Mark Ordered'}
               </button>
             </div>
@@ -123,6 +129,7 @@ export default function CardDetail() {
                       <button
                         onClick={() => setShowLocationSheet(true)}
                         className="px-3 py-2 rounded-lg bg-ice-100 dark:bg-navy-600 text-navy-600 dark:text-ice-200 text-sm font-medium hover:bg-ice-200 dark:hover:bg-navy-500"
+                        aria-label="Choose a recent purchase location"
                       >
                         Recent
                       </button>

@@ -90,8 +90,10 @@ export default function CardItem({ card, density = '4x3' }) {
                   : 'bg-ice-100 dark:bg-navy-600 text-navy-400 dark:text-ice-300 hover:bg-ice-200'
               }`}
               title={isOwned ? 'Mark not owned' : 'Mark owned'}
+              aria-label={`${isOwned ? 'Unmark' : 'Mark'} ${card.pokemon} ${isOwned ? 'not owned' : 'owned'}`}
+              aria-pressed={isOwned}
             >
-              <Check className="w-4 h-4" />
+              <Check className="w-4 h-4" aria-hidden="true" />
             </button>
             <button
               onClick={(e) => {
@@ -104,8 +106,10 @@ export default function CardItem({ card, density = '4x3' }) {
                   : 'bg-ice-100 dark:bg-navy-600 text-navy-400 dark:text-ice-300 hover:bg-ice-200'
               }`}
               title={isOrdered ? 'Cancel order' : 'Mark ordered'}
+              aria-label={`${isOrdered ? 'Cancel order for' : 'Mark'} ${card.pokemon} ${isOrdered ? '' : 'ordered'}`}
+              aria-pressed={isOrdered}
             >
-              <Truck className="w-4 h-4" />
+              <Truck className="w-4 h-4" aria-hidden="true" />
             </button>
           </div>
         </div>

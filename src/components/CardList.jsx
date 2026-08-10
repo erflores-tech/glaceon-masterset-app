@@ -100,6 +100,7 @@ export default function CardList() {
               value={search}
               onChange={(e) => updateParam('q', e.target.value)}
               placeholder="Search cards, sets, numbers..."
+              aria-label="Search cards, sets, numbers"
               className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white dark:bg-navy-700 border border-ice-200 dark:border-navy-500 focus:outline-none focus:ring-2 focus:ring-glaceon text-navy-700 dark:text-ice-100 placeholder:text-navy-300"
             />
             {search && (
@@ -149,12 +150,12 @@ export default function CardList() {
               {stats.owned} / {stats.total} cards
             </div>
           </div>
-          <div className="w-full h-2.5 bg-ice-100 dark:bg-navy-600 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-gradient-to-r from-glaceon to-ice-300 transition-all"
-              style={{ width: `${masterPct}%` }}
-            />
-          </div>
+          <progress
+            className="w-full h-2.5 bg-ice-100 dark:bg-navy-600 rounded-full overflow-hidden appearance-none [&::-webkit-progress-bar]:bg-transparent [&::-webkit-progress-value]:bg-gradient-to-r [&::-webkit-progress-value]:from-glaceon [&::-webkit-progress-value]:to-ice-300 [&::-moz-progress-bar]:bg-gradient-to-r [&::-moz-progress-bar]:from-glaceon [&::-moz-progress-bar]:to-ice-300"
+            aria-label="Master set completion"
+            value={masterPct}
+            max={100}
+          />
         </div>
 
         <div className="text-sm text-navy-400 dark:text-ice-300">
@@ -203,7 +204,8 @@ export default function CardList() {
             <div className="flex items-center gap-1">
               {getVisiblePages(page, totalPages).map((p, idx) =>
                 p === '…' ? (
-                  <span key={`gap-${idx}`} className="px-1 text-navy-400 dark:text-ice-300">
+                  // eslint-disable-next-line react/no-array-index-key
+                  <span key={`ellipsis-${page}-${idx}`} className="px-1 text-navy-400 dark:text-ice-300">
                     …
                   </span>
                 ) : (

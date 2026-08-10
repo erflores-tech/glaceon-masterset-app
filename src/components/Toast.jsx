@@ -33,7 +33,7 @@ function Toast({ toast, onDismiss }) {
     : 'bg-white dark:bg-navy-700 border-ice-200 dark:border-navy-500'
 
   return (
-    <div className={`flex items-start gap-3 p-3 rounded-xl shadow-lg border ${bg}`} role="status" aria-live="polite">
+    <output className={`flex items-start gap-3 p-3 rounded-xl shadow-lg border ${bg}`} aria-live="polite">
       <div className="mt-0.5">{icons[toast.type] || icons.info}</div>
       <div className="flex-1 text-sm text-navy-700 dark:text-ice-100">
         {toast.title && <div className="font-semibold">{toast.title}</div>}
@@ -46,6 +46,6 @@ function Toast({ toast, onDismiss }) {
       >
         <X className="w-4 h-4" />
       </button>
-    </div>
+    </output>
   )
 }
