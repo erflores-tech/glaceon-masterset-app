@@ -21,10 +21,14 @@ import {
   BACKUP_VERSION,
   MAX_BACKUP_SIZE_BYTES,
 } from '../lib/backup'
-import { mergeRemoteCollection } from '../lib/sync'
+import { mergeRemoteCollection, bumpVersion } from '../lib/sync'
 import { LAYOUT_OPTIONS } from '../lib/layout'
 import rawCards from '../data/cards.json'
 import binderOrder from '../data/binder-order.json'
+
+/**
+ * @typedef {import('../lib/sync.js').CollectionMap} CollectionMap
+ */
 
 import { CollectionContext } from './CollectionContext.js'
 
@@ -51,6 +55,28 @@ function saveJson(key, value) {
     console.error(`Failed to save ${key} to localStorage`, e)
     return false
   }
+}
+
+/**
+ * Remove `undefined` values from a collection so Firestore never receives them.
+ * @param {CollectionMap} collection
+ * @returns {CollectionMap}
+ */
+function sanitizeCollectionForFirestore(collection) {
+  const cleaned = {}
+  for (const [cardId, state] of Object.entries(collection)) {
+    if (!state || typeof state !== 'object' || Array.isArray(state)) {
+      continue
+    }
+    const entry = {}
+    for (const [key, value] of Object.entries(state)) {
+      if (value !== undefined) {
+        entry[key] = value
+      }
+    }
+    cleaned[cardId] = entry
+  }
+  return cleaned
 }
 
 function getKnownCardIds(cards) {
@@ -147,21 +173,32 @@ export function CollectionProvider({ children }) {
 
       setCollection((prev) => {
         const localVersion = localVersionRef.current
-        const { merged, changed } = mergeRemoteCollection({
-          localCollection: prev,
-          localVersion,
-          remoteCollection: remoteCards,
-          remoteVersion,
-        })
-
-        if (!changed) {
-          // Nothing changed; avoid a provider re-render that would flicker UI.
+        let merged
+        try {
+          const result = mergeRemoteCollection({
+            localCollection: prev,
+            localVersion,
+            remoteCollection: remoteCards,
+            remoteVersion,
+          })
+          merged = result.merged
+          if (!result.changed) {
+            return prev
+          }
+        } catch (err) {
+          setLastError(err)
+          setSyncStatus('error')
           return prev
         }
 
         saveJson(STORAGE_KEY, merged)
         return merged
       })
+
+      // Advance the local version baseline so future local edits do not
+      // overwrite a newer remote snapshot.
+      localVersionRef.current = Math.max(localVersionRef.current, remoteVersion)
+      saveJson(SYNC_STATE_KEY, { version: localVersionRef.current, updatedAt: new Date().toISOString() })
 
       setPendingRemoteVersion(remoteVersion)
       setSyncStatus('synced')
@@ -182,19 +219,20 @@ export function CollectionProvider({ children }) {
       saveJson(STORAGE_KEY, collection)
 
       if (user) {
-        localVersionRef.current += 1
-        const version = localVersionRef.current
+        const version = bumpVersion(localVersionRef.current, pendingRemoteVersion)
+        localVersionRef.current = version
         saveJson(SYNC_STATE_KEY, { version, updatedAt: new Date().toISOString() })
 
         const ref = doc(db, 'users', user.uid, 'collection', 'state')
+        const cardsForFirestore = sanitizeCollectionForFirestore(collection)
+
         setDoc(
           ref,
           {
-            cards: collection,
+            cards: cardsForFirestore,
             version,
             updatedAt: serverTimestamp(),
-          },
-          { merge: true }
+          }
         )
           .then(() => {
             setSyncStatus('synced')
@@ -219,7 +257,7 @@ export function CollectionProvider({ children }) {
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current)
     }
-  }, [collection, user])
+  }, [collection, user, pendingRemoteVersion])
 
   // Flush pending writes before unload
   useEffect(() => {
@@ -246,18 +284,21 @@ export function CollectionProvider({ children }) {
     setCollection((prev) => {
       const existing = prev[cardId] || {}
       const owned = !existing.owned
+      const next = {
+        ...existing,
+        owned,
+        ownedAt: owned ? new Date().toISOString() : existing.ownedAt,
+        // Clear ordered state when the card arrives
+        ordered: owned ? false : existing.ordered,
+        updatedAt: new Date().toISOString(),
+      }
+      if (!owned) {
+        next.purchaseLocation = existing.purchaseLocation
+        next.orderedAt = existing.orderedAt
+      }
       return {
         ...prev,
-        [cardId]: {
-          ...existing,
-          owned,
-          ownedAt: owned ? new Date().toISOString() : existing.ownedAt,
-          // Clear ordered state when the card arrives
-          ordered: owned ? false : existing.ordered,
-          purchaseLocation: owned ? undefined : existing.purchaseLocation,
-          orderedAt: owned ? undefined : existing.orderedAt,
-          updatedAt: new Date().toISOString(),
-        },
+        [cardId]: next,
       }
     })
   }, [])
@@ -273,8 +314,6 @@ export function CollectionProvider({ children }) {
           owned: true,
           ownedAt: existing.ownedAt || now,
           ordered: false,
-          purchaseLocation: undefined,
-          orderedAt: undefined,
           updatedAt: now,
         }
       })
@@ -292,7 +331,7 @@ export function CollectionProvider({ children }) {
           ...existing,
           owned: false,
           ordered: false,
-          orderedAt: undefined,
+          orderedAt: existing.orderedAt,
           updatedAt: now,
         }
       })
@@ -304,31 +343,34 @@ export function CollectionProvider({ children }) {
     setCollection((prev) => {
       const existing = prev[cardId] || {}
       const ordered = !existing.ordered
+      const next = {
+        ...existing,
+        ordered,
+        updatedAt: new Date().toISOString(),
+      }
+      if (ordered) {
+        next.purchaseLocation = existing.purchaseLocation
+        next.orderedAt = new Date().toISOString()
+      }
       return {
         ...prev,
-        [cardId]: {
-          ...existing,
-          ordered,
-          purchaseLocation: ordered ? existing.purchaseLocation : undefined,
-          orderedAt: ordered ? new Date().toISOString() : undefined,
-          updatedAt: new Date().toISOString(),
-        },
+        [cardId]: next,
       }
     })
   }, [])
 
   const setPurchaseLocation = useCallback(
-    (cardId, purchaseLocation) => updateCard(cardId, { purchaseLocation }),
+    (cardId, purchaseLocation) => updateCard(cardId, { purchaseLocation: purchaseLocation || '' }),
     [updateCard]
   )
 
   const setNote = useCallback(
-    (cardId, note) => updateCard(cardId, { note }),
+    (cardId, note) => updateCard(cardId, { note: note || '' }),
     [updateCard]
   )
 
   const setGrade = useCallback(
-    (cardId, grade) => updateCard(cardId, { grade }),
+    (cardId, grade) => updateCard(cardId, { grade: grade || '' }),
     [updateCard]
   )
 
@@ -392,7 +434,13 @@ export function CollectionProvider({ children }) {
         reader.readAsText(file)
       })
 
-      const payload = JSON.parse(text)
+      let payload
+      try {
+        payload = JSON.parse(text)
+      } catch (parseErr) {
+        throw new Error('Invalid backup: file is not valid JSON', { cause: parseErr })
+      }
+
       const { cards: importedCards, ignored } = validateBackupPayload(
         payload,
         cardIdsRef.current
@@ -410,6 +458,10 @@ export function CollectionProvider({ children }) {
     },
     [collection]
   )
+
+  const acknowledgeError = useCallback(() => {
+    setLastError(null)
+  }, [])
 
   const getCardState = useCallback(
     (cardId) => collection[cardId] || { owned: false, ordered: false, note: '', grade: '', purchaseLocation: '' },
@@ -456,6 +508,7 @@ export function CollectionProvider({ children }) {
       signOutUser,
       exportJson,
       importJson,
+      acknowledgeError,
       BACKUP_VERSION,
       MAX_BACKUP_SIZE_BYTES,
     }),
@@ -483,6 +536,7 @@ export function CollectionProvider({ children }) {
       signOutUser,
       exportJson,
       importJson,
+      acknowledgeError,
     ]
   )
 

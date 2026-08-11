@@ -12,23 +12,32 @@ import AuthButton from './components/AuthButton'
 import BackupButtons from './components/BackupButtons'
 import InstallPWA from './components/InstallPWA'
 import ErrorBoundary from './components/ErrorBoundary'
+import { ToastContainer } from './components/Toast'
 import { useRegisterSW } from 'virtual:pwa-register/react'
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { useAndroidBackToDismissKeyboard } from './hooks/useAndroidBackToDismissKeyboard'
+import { useToasts } from './hooks/useToasts'
 import { Snowflake, LayoutGrid, List, CheckCircle2, Truck, CloudOff, CloudCheck, CloudSync, RefreshCw, Settings as SettingsIcon } from 'lucide-react'
 
 function AppShell() {
   const [needUpdate, setNeedUpdate] = useState(false)
+  const { toasts, addToast, removeToast } = useToasts()
 
   const updateServiceWorker = useRegisterSW({
     onNeedRefresh() {
       setNeedUpdate(true)
     },
-    onRegisteredSW(swUrl, r) {
-      console.log('SW registered:', swUrl, r)
+    onRegisteredSW() {
+      // Service worker registration is successful.
+      // This is intentionally not surfaced to the user.
+      return undefined
     },
     onRegisterError(error) {
-      console.error('SW registration error', error)
+      addToast({
+        type: 'error',
+        title: 'Offline mode unavailable',
+        message: error?.message || 'Could not enable offline caching.',
+      })
     },
   })
 
@@ -38,8 +47,36 @@ function AppShell() {
   }
   useAndroidBackToDismissKeyboard()
 
-  const { syncStatus } = useCollection()
+  const { syncStatus, lastError, acknowledgeError } = useCollection()
   const location = useLocation()
+
+  useEffect(() => {
+    if (!lastError) return
+
+    const code = lastError?.code || ''
+    let title = 'Sync problem'
+    let message = 'Your changes are saved locally. We’ll retry automatically.'
+
+    if (code === 'permission-denied') {
+      title = 'Sign-in required'
+      message = 'Your session expired. Sign in again to keep syncing.'
+    } else if (code === 'unauthenticated') {
+      title = 'Not signed in'
+      message = 'Sign in to back up your collection to the cloud.'
+    } else if (code === 'resource-exhausted') {
+      title = 'Rate limit reached'
+      message = 'Too many changes at once. Please wait a moment.'
+    } else if (code === 'failed-precondition') {
+      title = 'Multiple tabs open'
+      message = 'Close other tabs of this app to enable cloud sync.'
+    }
+
+    const id = addToast({ type: 'error', title, message, duration: 6000 })
+    return () => {
+      acknowledgeError()
+      removeToast(id)
+    }
+  }, [lastError, addToast, removeToast, acknowledgeError])
 
   const isList = location.pathname === '/' || location.pathname.startsWith('/card/')
   const isOwned = location.pathname === '/owned'
@@ -161,6 +198,8 @@ function AppShell() {
           </div>
         </div>
       </footer>
+
+      <ToastContainer toasts={toasts} onDismiss={removeToast} />
     </div>
   )
 }

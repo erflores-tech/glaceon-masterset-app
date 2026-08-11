@@ -78,23 +78,13 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="w-full h-4 bg-ice-100 dark:bg-navy-600 rounded-full overflow-hidden mb-6">
-          <div
-            className="h-full bg-gradient-to-r from-glaceon to-ice-300 transition-all"
-            style={{ width: `${filteredStats.pct}%` }}
-          />
-        </div>
+        <ProgressBar pct={filteredStats.pct} size="h-4" className="bg-gradient-to-r from-glaceon to-ice-300 mb-6" />
 
         <div className="space-y-2 max-h-[60vh] overflow-auto pr-1">
           {setProgress.map((s) => (
             <div key={s.name} className="flex items-center gap-3">
               <div className="w-28 sm:w-48 text-sm truncate" title={s.name}>{s.name}</div>
-              <div className="flex-1 h-2.5 bg-ice-100 dark:bg-navy-600 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-glaceon rounded-full"
-                  style={{ width: `${s.pct}%` }}
-                />
-              </div>
+              <ProgressBar pct={s.pct} className="bg-glaceon" />
               <div className="w-16 text-right text-sm text-navy-400 dark:text-ice-300">
                 {s.owned}/{s.total}
               </div>
@@ -114,6 +104,18 @@ export default function Dashboard() {
     </div>
   )
 }
+
+const ProgressBar = memo(function ProgressBar({ pct, size = 'h-2.5', className }) {
+  return (
+    <div className={`flex-1 ${size} bg-ice-100 dark:bg-navy-600 rounded-full overflow-hidden`}>
+      <div
+        className={`h-full rounded-full transition-all ${className}`}
+        style={{ width: `${pct}%` }}
+        aria-hidden="true"
+      />
+    </div>
+  )
+})
 
 const StatCard = memo(function StatCard({ label, value, icon }) {
   return (

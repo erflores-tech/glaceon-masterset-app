@@ -4,13 +4,23 @@ export const MAX_NOTE_LENGTH = 5000
 export const MAX_LOCATION_LENGTH = 80
 export const MAX_ENTRIES = 10000
 
-const FORBIDDEN_KEYS = ['__proto__', 'constructor', 'prototype']
+const FORBIDDEN_KEYS = new Set(['__proto__', 'constructor', 'prototype'])
 const VALID_GRADES = new Set(['', 'NM', 'LP', 'MP', 'HP', 'PSA 10', 'PSA 9', 'PSA 8', 'CGC 10', 'BGS 9.5'])
 
+/**
+ * @param {unknown} cardId
+ * @returns {boolean}
+ */
 export function isValidCardId(cardId) {
-  return typeof cardId === 'string' && cardId.length > 0 && cardId.length <= 128 && !FORBIDDEN_KEYS.includes(cardId)
+  return typeof cardId === 'string' && cardId.length > 0 && cardId.length <= 128 && !FORBIDDEN_KEYS.has(cardId)
 }
 
+/**
+ * Sanitize and migrate a single card state from a backup payload.
+ * @param {unknown} state
+ * @param {number} [sourceVersion]
+ * @returns {import('./sync.js').CardState | null}
+ */
 export function sanitizeCardState(state, sourceVersion = BACKUP_VERSION) {
   if (!state || typeof state !== 'object') return null
   const sanitized = {}
@@ -59,16 +69,26 @@ export function sanitizeCardState(state, sourceVersion = BACKUP_VERSION) {
   return sanitized
 }
 
+/**
+ * Ensure a backup file object is acceptable before reading it.
+ * @param {unknown} file
+ */
 export function validateBackupFile(file) {
   if (!file || typeof file !== 'object') {
     throw new Error('Invalid backup file: expected object')
   }
 
-  if (file.size && file.size > MAX_BACKUP_SIZE_BYTES) {
+  if ('size' in file && file.size > MAX_BACKUP_SIZE_BYTES) {
     throw new Error(`Backup file too large: ${file.size} bytes exceeds ${MAX_BACKUP_SIZE_BYTES} bytes`)
   }
 }
 
+/**
+ * Validate and sanitize an entire backup payload.
+ * @param {unknown} payload
+ * @param {Set<string>} [knownCardIds]
+ * @returns {{ cards: import('./sync.js').CollectionMap, ignored: number }}
+ */
 export function validateBackupPayload(payload, knownCardIds) {
   if (!payload || typeof payload !== 'object') {
     throw new Error('Invalid backup: expected JSON object')
@@ -112,6 +132,11 @@ export function validateBackupPayload(payload, knownCardIds) {
   return { cards: result, ignored }
 }
 
+/**
+ * Build a backup payload from the current collection.
+ * @param {import('./sync.js').CollectionMap} collection
+ * @returns {{ version: number, exportedAt: string, cards: import('./sync.js').CollectionMap }}
+ */
 export function createBackupPayload(collection) {
   return {
     version: BACKUP_VERSION,
@@ -120,6 +145,12 @@ export function createBackupPayload(collection) {
   }
 }
 
+/**
+ * Compare an import candidate against the current collection.
+ * @param {import('./sync.js').CollectionMap} currentCollection
+ * @param {import('./sync.js').CollectionMap} importedCards
+ * @returns {{ added: string[], updated: string[], unchanged: string[] }}
+ */
 export function computeImportPreview(currentCollection, importedCards) {
   const added = []
   const updated = []

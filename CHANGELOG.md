@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Security
+- Harden Firestore rules: enforce ownership, strict top-level schema, known card-ID allowlist, per-card state validation, and deny delete/unknown paths.
+- Tighten Firebase Hosting CSP by removing `'unsafe-inline'` from `script-src` and `style-src`, and add `object-src 'none'` and `upgrade-insecure-requests`.
+
+### Added
+- `sanitizeCollectionForFirestore` strips `undefined` values before Firestore writes to prevent runtime errors.
+- `mergeRemoteCollection` now validates sync versions, parses timestamps safely, and skips invalid remote entries.
+- `bumpVersion` utility prevents version overflow and safely advances local sync version past remote baseline.
+- New `tests/lib/sync-validation.test.js` covering invalid versions, malformed timestamps, and remote-state filtering.
+- New `tests/lib/firestore.rules.unit.test.js` plus `tests/data/allowed-card-ids.js` to validate rule allowlists statically.
+- `scripts/sync-firestore-allowlist.js` keeps `firestore.rules` card-ID allowlist in sync with `src/data/cards.json`.
+- `scripts/check-csp.js`, `scripts/check-bundle.js`, and `scripts/check-version.js` for release gates.
+- User-facing toast notifications for sync errors, backup import/export, and sign-in/out via `App.jsx` and `Settings.jsx`.
+- Accessibility unit test for `Dashboard` using `vitest-axe` at `tests/a11y/dashboard.a11y.test.jsx`.
+- GitHub Actions CI workflow running lint, rules tests, a11y tests, unit tests, build, CSP/bundle checks, and security audit.
+
+### Changed
+- `CollectionProvider` advances `localVersionRef` to `max(local, remote)` after each snapshot and switches from merge to full `setDoc` writes.
+- `Dashboard` progress bars extracted into a memoized `ProgressBar` component, removing inline `style={{width}}`.
+- `Settings.jsx` now surfaces cloud-sync status and exposes sign-in/out plus backup import/export controls.
+- Added JSDoc types to `src/lib/sync.js`, `src/lib/backup.js`, and `src/context/CollectionContext.js`.
+
 ## [0.7.1] - 2026-08-11
 
 ### Fixed

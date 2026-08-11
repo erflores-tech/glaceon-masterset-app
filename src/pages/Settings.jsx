@@ -1,6 +1,7 @@
 import { useCollection } from '../hooks/useCollection'
+import { useToasts } from '../hooks/useToasts'
 import { LAYOUT_OPTIONS, LAYOUT_CONFIG } from '../lib/layout'
-import { Grid2X2, Grid3X3, LayoutGrid, ChevronLeft } from 'lucide-react'
+import { Grid2X2, Grid3X3, LayoutGrid, ChevronLeft, LogOut, UploadCloud, DownloadCloud } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 const LAYOUT_ICONS = {
@@ -18,7 +19,59 @@ const SETTINGS_LAYOUT_META = {
 }
 
 export default function Settings() {
-  const { layout, setLayout } = useCollection()
+  const { layout, setLayout, user, signInWithGoogle, signOutUser, exportJson, importJson, syncStatus, lastError } = useCollection()
+  const { addToast } = useToasts()
+
+  const handleExport = () => {
+    try {
+      exportJson()
+      addToast({ type: 'success', title: 'Backup exported', message: 'Your collection file is downloading.' })
+    } catch (err) {
+      addToast({ type: 'error', title: 'Export failed', message: err.message })
+    }
+  }
+
+  const handleImport = async (event) => {
+    const file = event.target.files?.[0]
+    if (!file) return
+    try {
+      const result = await importJson(file)
+      addToast({
+        type: 'success',
+        title: 'Backup imported',
+        message: `${result.imported} cards imported, ${result.ignored} ignored.`,
+      })
+    } catch (err) {
+      addToast({ type: 'error', title: 'Import failed', message: err.message })
+    } finally {
+      event.target.value = ''
+    }
+  }
+
+  const handleSignIn = async () => {
+    try {
+      await signInWithGoogle()
+      addToast({ type: 'success', title: 'Signed in', message: 'Cloud sync is now enabled.' })
+    } catch (err) {
+      addToast({ type: 'error', title: 'Sign-in failed', message: err.message })
+    }
+  }
+
+  const handleSignOut = async () => {
+    try {
+      await signOutUser()
+      addToast({ type: 'info', title: 'Signed out', message: 'Your collection remains on this device.' })
+    } catch (err) {
+      addToast({ type: 'error', title: 'Sign-out failed', message: err.message })
+    }
+  }
+
+  const syncLabel = {
+    local: 'Local only',
+    syncing: 'Syncing…',
+    synced: 'Synced',
+    error: 'Sync error',
+  }[syncStatus] || syncStatus
 
   return (
     <div className="space-y-6 max-w-2xl mx-auto">
@@ -70,6 +123,45 @@ export default function Settings() {
         <div className="text-xs text-navy-400 dark:text-ice-300 bg-ice-50 dark:bg-navy-600 rounded-lg p-3">
           Current selection: <span className="font-medium text-navy-700 dark:text-white">{SETTINGS_LAYOUT_META[layout].label}</span> ·{' '}
           {LAYOUT_CONFIG[layout].pageSize} cards per page
+        </div>
+      </section>
+
+      <section className="bg-white dark:bg-navy-700 rounded-2xl p-5 border border-ice-200 dark:border-navy-500 shadow-sm space-y-3">
+        <h2 className="text-lg font-semibold text-navy-700 dark:text-white">Cloud sync</h2>
+        <div className="flex items-center justify-between text-sm">
+          <span className="text-navy-400 dark:text-ice-300">Status</span>
+          <span className={`font-medium ${lastError ? 'text-rose-500' : 'text-navy-700 dark:text-white'}`}>{syncLabel}</span>
+        </div>
+        {user ? (
+          <button
+            onClick={handleSignOut}
+            className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-ice-50 dark:bg-navy-600 text-navy-700 dark:text-white font-medium hover:bg-ice-100 dark:hover:bg-navy-500 transition"
+          >
+            <LogOut className="w-4 h-4" /> Sign out
+          </button>
+        ) : (
+          <button
+            onClick={handleSignIn}
+            className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-navy-600 text-white font-medium hover:bg-navy-700 transition"
+          >
+            <UploadCloud className="w-4 h-4" /> Sign in with Google
+          </button>
+        )}
+      </section>
+
+      <section className="bg-white dark:bg-navy-700 rounded-2xl p-5 border border-ice-200 dark:border-navy-500 shadow-sm space-y-3">
+        <h2 className="text-lg font-semibold text-navy-700 dark:text-white">Backup</h2>
+        <div className="grid grid-cols-2 gap-3">
+          <button
+            onClick={handleExport}
+            className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-ice-50 dark:bg-navy-600 text-navy-700 dark:text-white font-medium hover:bg-ice-100 dark:hover:bg-navy-500 transition"
+          >
+            <DownloadCloud className="w-4 h-4" /> Export
+          </button>
+          <label className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-glaceon text-navy-700 font-medium hover:bg-ice-300 transition cursor-pointer">
+            <UploadCloud className="w-4 h-4" /> Import
+            <input type="file" accept="application/json" className="hidden" onChange={handleImport} />
+          </label>
         </div>
       </section>
 
