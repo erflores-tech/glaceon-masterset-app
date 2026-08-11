@@ -1,6 +1,6 @@
 # Glaceon Master Set
 
-[![Version](https://img.shields.io/badge/version-0.7.0-blue)](https://github.com/erflores-tech/glaceon-masterset-app/releases)
+[![Version](https://img.shields.io/badge/version-0.7.1-blue)](https://github.com/erflores-tech/glaceon-masterset-app/releases)
 [![CI](https://github.com/erflores-tech/glaceon-masterset-app/actions/workflows/ci.yml/badge.svg)](https://github.com/erflores-tech/glaceon-masterset-app/actions/workflows/ci.yml)
 
 Offline-first Progressive Web App for tracking your Glaceon Pokémon TCG master set collection across English, Japanese, and Chinese languages.

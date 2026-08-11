@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.1] - 2026-08-11
+
+### Fixed
+- Corrected Polychromatic Gathering: Friend Chinese set size from `/150` to `/132` for 6 cards: `034/150 → 034/132`, `035/150 → 035/132`, `140/150 → 140/132`, `141/150 → 141/132`, `167/150 → 167/132`, and `168/150 → 168/132`. Renamed the corresponding bundled WebP files.
+
 ## [0.7.0] - 2026-08-10
 
 ### Added
@@ -129,7 +134,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 149-card catalog across English, Japanese, and Chinese languages.
 - Binder-style layouts (2×2, 3×3, 4×3, 4×4), search/filter, dashboard, export/import.
 
-[Unreleased]: https://github.com/erflores-tech/glaceon-masterset-app/compare/v0.7.0...HEAD
+[Unreleased]: https://github.com/erflores-tech/glaceon-masterset-app/compare/v0.7.1...HEAD
+[0.7.1]: https://github.com/erflores-tech/glaceon-masterset-app/releases/tag/v0.7.1
 [0.7.0]: https://github.com/erflores-tech/glaceon-masterset-app/releases/tag/v0.7.0
 [0.6.0]: https://github.com/erflores-tech/glaceon-masterset-app/releases/tag/v0.6.0
 [0.5.0]: https://github.com/erflores-tech/glaceon-masterset-app/releases/tag/v0.5.0
