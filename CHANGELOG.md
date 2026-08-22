@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `bumpVersion` utility prevents version overflow and safely advances local sync version past remote baseline.
 - New `tests/lib/sync-validation.test.js` covering invalid versions, malformed timestamps, and remote-state filtering.
 - New `tests/lib/firestore.rules.unit.test.js` plus `tests/data/allowed-card-ids.js` to validate rule allowlists statically.
+- New `tests/components/CardList.pagination.test.jsx` covering URL-based pagination, filter-driven page reset, and back navigation from card detail.
 - `scripts/sync-firestore-allowlist.js` keeps `firestore.rules` card-ID allowlist in sync with `src/data/cards.json`.
 - `scripts/check-csp.js`, `scripts/check-bundle.js`, and `scripts/check-version.js` for release gates.
 - User-facing toast notifications for sync errors, backup import/export, and sign-in/out via `App.jsx` and `Settings.jsx`.
@@ -28,6 +29,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `Dashboard` progress bars extracted into a memoized `ProgressBar` component, removing inline `style={{width}}`.
 - `Settings.jsx` now surfaces cloud-sync status and exposes sign-in/out plus backup import/export controls.
 - Added JSDoc types to `src/lib/sync.js`, `src/lib/backup.js`, and `src/context/CollectionContext.js`.
+- `CardList` pagination is now persisted in the URL as `?page=N` instead of sessionStorage, so browser Back/Forward and reloads restore the previous page reliably. Filters still clear the page parameter to land on page 1.
+- `useLastListState` no longer stores `page`; it only preserves filter search params for cross-route scenarios.
 
 ## [0.7.1] - 2026-08-11
 

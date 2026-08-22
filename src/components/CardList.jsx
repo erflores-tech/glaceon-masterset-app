@@ -1,9 +1,8 @@
 import * as React from 'react'
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo, useCallback } from 'react'
 import { useCollection } from '../hooks/useCollection'
 import { useSearchParams } from 'react-router-dom'
 import { LAYOUT_CONFIG } from '../lib/layout'
-import { useLastListState, loadLastListState } from '../hooks/useLastListState'
 import CardItem from './CardItem'
 import { Search, SlidersHorizontal, X, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react'
 
@@ -28,15 +27,6 @@ export default function CardList() {
   const { cards, collection, layout, stats } = useCollection()
   const [searchParams, setSearchParams] = useSearchParams()
   const [showFilters, setShowFilters] = useState(false)
-  const lastState = loadLastListState()
-  const [page, setPage] = useState(() => {
-    // Restore page from last list state when returning from card detail
-    if (lastState?.page) return lastState.page
-    return 1
-  })
-
-  // Persist current filters/page so CardDetail can restore them on back
-  useLastListState({ page })
 
   const masterPct = stats.total ? Math.round((stats.owned / stats.total) * 100) : 0
 
@@ -70,24 +60,35 @@ export default function CardList() {
   const pageSize = LAYOUT_CONFIG[layout].pageSize
   const totalPages = Math.max(1, Math.ceil(filteredCards.length / pageSize))
 
-  useEffect(() => {
-    setPage(1)
-  }, [layout, search, setFilter, langFilter, variantFilter, statusFilter])
+  // Page is a URL parameter so it survives browser Back/Forward and page reloads.
+  const pageParam = Number(searchParams.get('page')) || 1
+  const page = useMemo(() => Math.min(Math.max(1, pageParam), totalPages), [pageParam, totalPages])
 
-  const paginatedCards = useMemo(() => {
-    const safePage = Math.min(page, totalPages)
-    return filteredCards.slice((safePage - 1) * pageSize, safePage * pageSize)
-  }, [filteredCards, page, pageSize, totalPages])
-
-  const updateParam = (key, value) => {
+  const updateParam = useCallback((key, value) => {
     const params = new URLSearchParams(searchParams)
     if (value === 'All' || value === '') {
       params.delete(key)
     } else {
       params.set(key, value)
     }
-    setSearchParams(params)
-  }
+    // Changing any filter should drop the stale page param so the user lands on page 1.
+    if (key !== 'page') {
+      params.delete('page')
+    }
+    setSearchParams(params, { replace: true })
+    // Return the updated params so callers can read the new state synchronously in tests.
+    return params
+  }, [searchParams, setSearchParams])
+
+  const setPage = useCallback((next) => {
+    const value = typeof next === 'function' ? next(page) : next
+    const clamped = Math.min(Math.max(1, value), totalPages)
+    updateParam('page', clamped === 1 ? '' : String(clamped))
+  }, [page, totalPages, updateParam])
+
+  const paginatedCards = useMemo(() => {
+    return filteredCards.slice((page - 1) * pageSize, page * pageSize)
+  }, [filteredCards, page, pageSize])
 
   return (
     <div className="space-y-4">
