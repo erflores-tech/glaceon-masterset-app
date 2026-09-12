@@ -44,7 +44,15 @@ Offline-first Progressive Web App for tracking your Glaceon Pokémon TCG master 
 - `npm run lint` — run Oxlint
 - `npm run test` — run Vitest tests
 - `npm run test:emulator` — run Firestore rules tests with the emulator
+- `npm run test:functions` — run Firebase Cloud Functions tests
 - `npm run preview` — preview production build locally
+
+## Pagination
+
+- The card list stores the current page in the URL as `?page=N`.
+- Browser Back/Forward and page reloads restore the previous page automatically.
+- Changing any filter (set, language, variant, status) resets the page to 1 and removes `?page` from the URL.
+- Invalid page values (non-numeric, negative, zero, decimals, or whitespace-only) fall back to page 1.
 
 ## Firebase setup
 
@@ -60,6 +68,11 @@ Offline-first Progressive Web App for tracking your Glaceon Pokémon TCG master 
    npm run build
    firebase deploy --only hosting
    ```
+6. Deploy the audit Cloud Function after making changes in `functions/`:
+   ```bash
+   cd functions
+   npm run deploy
+   ```
 
 ## Project structure
 
@@ -70,10 +83,11 @@ Offline-first Progressive Web App for tracking your Glaceon Pokémon TCG master 
   - `hooks/` — reusable hooks
   - `lib/` — utilities (backup, sync, layout, Firebase init)
   - `pages/` — route-level pages
+- `functions/` — Firebase Cloud Functions (audit logging for collection writes)
 - `scripts/` — data-generation and image-pipeline scripts
   - `convert-cards-to-webp.mjs` — converts `public/cards/*.png` to lossless WebP
 - `archive/` — legacy widget scripts retained for reference
-- `tests/` — unit, component, and Firestore rules tests
+- `tests/` — unit, component, accessibility, and Firestore rules tests
 
 ## Security notes
 

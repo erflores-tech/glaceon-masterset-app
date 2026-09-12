@@ -1,12 +1,10 @@
+import { Suspense, lazy, useState, useMemo, useEffect } from 'react'
 import { Routes, Route, Link, useLocation } from 'react-router-dom'
 import { CollectionProvider } from './context/CollectionProvider.jsx'
 import { useCollection } from './hooks/useCollection'
 import Dashboard from './components/Dashboard'
 import CardList from './components/CardList'
 import CardDetail from './components/CardDetail'
-import Owned from './pages/Owned'
-import Ordered from './pages/Ordered'
-import Settings from './pages/Settings'
 import Login from './pages/Login'
 import AuthButton from './components/AuthButton'
 import BackupButtons from './components/BackupButtons'
@@ -14,10 +12,13 @@ import InstallPWA from './components/InstallPWA'
 import ErrorBoundary from './components/ErrorBoundary'
 import { ToastContainer } from './components/Toast'
 import { useRegisterSW } from 'virtual:pwa-register/react'
-import { useState, useMemo, useEffect } from 'react'
 import { useAndroidBackToDismissKeyboard } from './hooks/useAndroidBackToDismissKeyboard'
 import { useToasts } from './hooks/useToasts'
 import { Snowflake, LayoutGrid, List, CheckCircle2, Truck, CloudOff, CloudCheck, CloudSync, RefreshCw, Settings as SettingsIcon } from 'lucide-react'
+
+const Owned = lazy(() => import('./pages/Owned'))
+const Ordered = lazy(() => import('./pages/Ordered'))
+const Settings = lazy(() => import('./pages/Settings'))
 
 function AppShell() {
   const [needUpdate, setNeedUpdate] = useState(false)
@@ -181,10 +182,22 @@ function AppShell() {
         <Routes>
           <Route path="/" element={<CardList />} />
           <Route path="/card/:cardId" element={<CardDetail />} />
-          <Route path="/owned" element={<Owned />} />
-          <Route path="/ordered" element={<Ordered />} />
+          <Route path="/owned" element={
+            <Suspense fallback={<div aria-live="polite" className="p-8 text-center">Loading owned cards…</div>}>
+              <Owned />
+            </Suspense>
+          } />
+          <Route path="/ordered" element={
+            <Suspense fallback={<div aria-live="polite" className="p-8 text-center">Loading ordered cards…</div>}>
+              <Ordered />
+            </Suspense>
+          } />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/settings" element={<Settings />} />
+          <Route path="/settings" element={
+            <Suspense fallback={<div aria-live="polite" className="p-8 text-center">Loading settings…</div>}>
+              <Settings />
+            </Suspense>
+          } />
           <Route path="/login" element={<Login />} />
         </Routes>
       </main>

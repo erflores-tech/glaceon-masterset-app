@@ -15,8 +15,9 @@
     "test:emulator": "cross-env FIREBASE_EMULATOR_JAVA_PATH= FIREBASE_EMULATOR_FIRESTORE_ONLY=true firebase emulators:exec --only firestore --project glaceon-master-set \"vitest run tests/firestore.rules.emulator.test.js\"",
     "test:rules": "vitest run tests/lib/firestore.rules.unit.test.js",
     "test:a11y": "vitest run tests/a11y",
+    "test:functions": "cd functions && npm test",
     "preview": "vite preview",
-    "validate": "npm run lint && npm run test:rules && npm run test:a11y && npm test && npm run build && node scripts/check-csp.js && node scripts/check-bundle.js",
+    "validate": "npm run lint && npm run test:rules && npm run test:a11y && npm test && npm run test:functions && npm run build && node scripts/check-csp.js && node scripts/check-bundle.js",
     "security:audit": "npm audit --audit-level=moderate",
     "bundle:analyze": "npx vite-bundle-analyzer dist"
   },

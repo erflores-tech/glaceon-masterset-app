@@ -1,5 +1,6 @@
 import { Component } from 'react'
 import { RefreshCw, AlertTriangle } from 'lucide-react'
+import { logger } from '../lib/logger'
 
 export default class ErrorBoundary extends Component {
   constructor(props) {
@@ -12,7 +13,7 @@ export default class ErrorBoundary extends Component {
   }
 
   componentDidCatch(error, errorInfo) {
-    console.error('Application error boundary caught an error:', error, errorInfo)
+    logger.error('Application error boundary caught an error:', error, { componentStack: errorInfo?.componentStack })
   }
 
   handleReload = () => {

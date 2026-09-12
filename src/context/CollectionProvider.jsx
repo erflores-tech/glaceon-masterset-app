@@ -25,6 +25,7 @@ import { mergeRemoteCollection, bumpVersion } from '../lib/sync'
 import { LAYOUT_OPTIONS } from '../lib/layout'
 import rawCards from '../data/cards.json'
 import binderOrder from '../data/binder-order.json'
+import { logger } from '../lib/logger'
 
 /**
  * @typedef {import('../lib/sync.js').CollectionMap} CollectionMap
@@ -52,7 +53,7 @@ function saveJson(key, value) {
     localStorage.setItem(key, JSON.stringify(value))
     return true
   } catch (e) {
-    console.error(`Failed to save ${key} to localStorage`, e)
+    logger.error(`Failed to save ${key} to localStorage`, e)
     return false
   }
 }
@@ -203,7 +204,7 @@ export function CollectionProvider({ children }) {
       setPendingRemoteVersion(remoteVersion)
       setSyncStatus('synced')
     }, (err) => {
-      console.error('Firestore subscription error', err)
+      logger.error('Firestore subscription error', err)
       setLastError(err)
       setSyncStatus('error')
     })
@@ -240,7 +241,7 @@ export function CollectionProvider({ children }) {
             return undefined
           })
           .catch((err) => {
-            console.error('Firestore save error', err)
+            logger.error('Firestore save error', err)
             setLastError(err)
             setSyncStatus('error')
           })
@@ -385,7 +386,7 @@ export function CollectionProvider({ children }) {
     try {
       await signInWithPopup(auth, googleProvider)
     } catch (err) {
-      console.error('Google sign-in error', err)
+      logger.error('Google sign-in error', err)
       setLastError(err)
     }
   }, [])
@@ -394,7 +395,7 @@ export function CollectionProvider({ children }) {
     try {
       await signInAnonymously(auth)
     } catch (err) {
-      console.error('Preview sign-in error', err)
+      logger.error('Preview sign-in error', err)
       setLastError(err)
     }
   }, [])
@@ -403,7 +404,7 @@ export function CollectionProvider({ children }) {
     try {
       await signOut(auth)
     } catch (err) {
-      console.error('Sign-out error', err)
+      logger.error('Sign-out error', err)
       setLastError(err)
     }
   }, [])

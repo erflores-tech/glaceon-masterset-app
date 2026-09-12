@@ -117,6 +117,57 @@ describe('CardList pagination persistence', () => {
     expect(screen.getByText(/Page 1 of 1/)).toBeInTheDocument()
   })
 
+  it.each([
+    { input: 'abc', expected: 1 },
+    { input: '-3', expected: 1 },
+    { input: '0', expected: 1 },
+    { input: '3.14', expected: 1 },
+  ])('falls back to page 1 for invalid page value "$input"', ({ input, expected }) => {
+    const cards = Array.from({ length: 8 }, (_, i) => makeCard(`c${i + 1}`, `0${i + 1}`, `Pokemon ${i + 1}`, 'Set A'))
+    render(
+      <MemoryRouter initialEntries={[`/?page=${encodeURIComponent(input)}`]}>
+        <CollectionContext.Provider
+          value={{
+            cards,
+            collection: {},
+            layout: '2x2',
+            stats: { total: cards.length, owned: 0, inTransit: 0, remaining: cards.length },
+            toggleOwned: vi.fn(),
+            toggleOrdered: vi.fn(),
+            getCardState: () => ({ owned: false, ordered: false, note: '', grade: '', purchaseLocation: '' }),
+          }}
+        >
+          <CardList />
+        </CollectionContext.Provider>
+      </MemoryRouter>
+    )
+
+    expect(screen.getByText(new RegExp(`Page ${expected} of 2`))).toBeInTheDocument()
+  })
+
+  it('trims surrounding whitespace from page values', () => {
+    const cards = Array.from({ length: 8 }, (_, i) => makeCard(`c${i + 1}`, `0${i + 1}`, `Pokemon ${i + 1}`, 'Set A'))
+    render(
+      <MemoryRouter initialEntries={[`/?page=${encodeURIComponent('  2  ')}`]}>
+        <CollectionContext.Provider
+          value={{
+            cards,
+            collection: {},
+            layout: '2x2',
+            stats: { total: cards.length, owned: 0, inTransit: 0, remaining: cards.length },
+            toggleOwned: vi.fn(),
+            toggleOrdered: vi.fn(),
+            getCardState: () => ({ owned: false, ordered: false, note: '', grade: '', purchaseLocation: '' }),
+          }}
+        >
+          <CardList />
+        </CollectionContext.Provider>
+      </MemoryRouter>
+    )
+
+    expect(screen.getByText(/Page 2 of 2/)).toBeInTheDocument()
+  })
+
   it('resets page to 1 when a filter changes', () => {
     const cards = [
       ...Array.from({ length: 6 }, (_, i) => makeCard(`a${i + 1}`, `0${i + 1}`, `Alpha ${i + 1}`, 'Set A')),

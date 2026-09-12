@@ -61,8 +61,11 @@ export default function CardList() {
   const totalPages = Math.max(1, Math.ceil(filteredCards.length / pageSize))
 
   // Page is a URL parameter so it survives browser Back/Forward and page reloads.
-  const pageParam = Number(searchParams.get('page')) || 1
-  const page = useMemo(() => Math.min(Math.max(1, pageParam), totalPages), [pageParam, totalPages])
+  const rawPage = searchParams.get('page')
+  const trimmedPage = typeof rawPage === 'string' ? rawPage.trim() : rawPage
+  const parsedPage = trimmedPage ? Number(trimmedPage) : NaN
+  const safePage = Number.isInteger(parsedPage) && parsedPage >= 1 ? parsedPage : 1
+  const page = useMemo(() => Math.min(Math.max(1, safePage), totalPages), [safePage, totalPages])
 
   const updateParam = useCallback((key, value) => {
     const params = new URLSearchParams(searchParams)

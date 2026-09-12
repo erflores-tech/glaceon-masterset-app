@@ -3,6 +3,12 @@ import { useSearchParams } from 'react-router-dom'
 
 const LIST_STATE_KEY = 'glaceon-last-list-state-v3'
 
+/**
+ * Persist the current card-list search params to sessionStorage.
+ * This preserves filter state across route changes (e.g. card detail → back).
+ *
+ * @param {URLSearchParams} params
+ */
 export function saveLastListState(params) {
   try {
     const state = {
@@ -14,6 +20,11 @@ export function saveLastListState(params) {
   }
 }
 
+/**
+ * Load the previously saved list search params from sessionStorage.
+ *
+ * @returns {{ params: URLSearchParams } | null}
+ */
 export function loadLastListState() {
   try {
     const raw = sessionStorage.getItem(LIST_STATE_KEY)
@@ -27,6 +38,9 @@ export function loadLastListState() {
   }
 }
 
+/**
+ * Remove any saved list search params from sessionStorage.
+ */
 export function clearLastListState() {
   try {
     sessionStorage.removeItem(LIST_STATE_KEY)
@@ -35,6 +49,12 @@ export function clearLastListState() {
   }
 }
 
+/**
+ * Hook that keeps the current card-list search params in sessionStorage so that
+ * navigating back from a card detail page can restore the previous filters.
+ *
+ * @returns {{ lastParams: string }}
+ */
 export function useLastListState() {
   const [searchParams] = useSearchParams()
   const lastParamsRef = useRef(searchParams.toString())

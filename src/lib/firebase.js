@@ -2,6 +2,7 @@ import { initializeApp } from 'firebase/app'
 import { getAuth, GoogleAuthProvider } from 'firebase/auth'
 import { getFirestore, enableIndexedDbPersistence } from 'firebase/firestore'
 import { getAnalytics, isSupported } from 'firebase/analytics'
+import { logger } from './logger.js'
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -31,9 +32,9 @@ isSupported().then((yes) => {
 // Enable Firestore offline persistence for PWA functionality
 enableIndexedDbPersistence(db).catch((err) => {
   if (err.code === 'failed-precondition') {
-    console.warn('Firestore persistence disabled: multiple tabs open')
+    logger.warn('Firestore persistence disabled: multiple tabs open')
   } else if (err.code === 'unimplemented') {
-    console.warn('Firestore persistence not available in this browser')
+    logger.warn('Firestore persistence not available in this browser')
   }
 })
 
