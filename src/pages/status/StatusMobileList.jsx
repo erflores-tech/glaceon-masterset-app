@@ -1,11 +1,12 @@
 import { memo } from 'react'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-import { Check } from 'lucide-react'
 import SmartImage from '../../components/SmartImage'
 import { formatDate } from './utils.js'
 
-function MobileRow({ card, state, isSelected, onToggleRow, onMarkOwned }) {
+function MobileRow({ card, state, isSelected, onToggleRow, onRowAction, config }) {
+  const ActionIcon = config.rowAction.icon
+  const chipValue = state[config.chip.key]
   return (
     <div className={`p-3 ${isSelected ? 'bg-glaceon/10' : ''}`}>
       <div className="flex items-start gap-3">
@@ -38,22 +39,22 @@ function MobileRow({ card, state, isSelected, onToggleRow, onMarkOwned }) {
           <div className="text-xs text-navy-400 dark:text-ice-300 mt-1">
             {card.language} · {card.variant}
           </div>
-          {state.purchaseLocation && (
+          {chipValue && (
             <div className="text-xs text-navy-500 dark:text-ice-300 mt-1">
-              From {state.purchaseLocation}
+              {config.chip.text(chipValue)}
             </div>
           )}
           <div className="text-xs text-navy-400 dark:text-ice-300 mt-1">
-            Ordered {formatDate(state.orderedAt)}
+            {config.dateLabel} {formatDate(state[config.dateField])}
           </div>
         </div>
         <button
-          onClick={() => onMarkOwned(card.id)}
-          className="flex flex-col items-center justify-center w-10 h-10 rounded-lg bg-glaceon text-navy-700 hover:bg-ice-300 transition shadow-sm"
-          title="Mark owned"
-          aria-label={`Mark ${card.pokemon} owned`}
+          onClick={() => onRowAction(card.id)}
+          className={`flex flex-col items-center justify-center w-10 h-10 rounded-lg transition shadow-sm ${config.actionClass}`}
+          title={config.rowAction.mobileTitle}
+          aria-label={config.rowAction.getAriaLabel(card)}
         >
-          <Check className="w-5 h-5" />
+          <ActionIcon className="w-5 h-5" />
         </button>
       </div>
     </div>
@@ -64,14 +65,15 @@ const MemoMobileRow = memo(MobileRow, (prev, next) => {
   return (
     prev.card.id === next.card.id &&
     prev.isSelected === next.isSelected &&
-    prev.state.purchaseLocation === next.state.purchaseLocation &&
-    prev.state.orderedAt === next.state.orderedAt &&
+    prev.state[prev.config.chip.key] === next.state[next.config.chip.key] &&
+    prev.state[prev.config.dateField] === next.state[next.config.dateField] &&
     prev.onToggleRow === next.onToggleRow &&
-    prev.onMarkOwned === next.onMarkOwned
+    prev.onRowAction === next.onRowAction &&
+    prev.config === next.config
   )
 })
 
-export default function OrderedMobileList({ cards, collection, selected, onToggleRow, onMarkOwned }) {
+export default function StatusMobileList({ cards, collection, selected, onToggleRow, onRowAction, config }) {
   return (
     <div className="sm:hidden divide-y divide-ice-100 dark:divide-navy-600">
       {cards.map((card) => (
@@ -81,7 +83,8 @@ export default function OrderedMobileList({ cards, collection, selected, onToggl
           state={collection[card.id] || {}}
           isSelected={selected.has(card.id)}
           onToggleRow={onToggleRow}
-          onMarkOwned={onMarkOwned}
+          onRowAction={onRowAction}
+          config={config}
         />
       ))}
     </div>

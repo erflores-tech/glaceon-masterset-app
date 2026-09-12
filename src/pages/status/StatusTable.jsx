@@ -1,11 +1,11 @@
 import { memo } from 'react'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-import { X } from 'lucide-react'
 import SmartImage from '../../components/SmartImage'
 import { formatDate } from './utils.js'
 
-function TableRow({ card, state, isSelected, onToggleRow, onMarkNotOwned }) {
+function TableRow({ card, state, isSelected, onToggleRow, onRowAction, config }) {
+  const ActionIcon = config.rowAction.icon
   return (
     <tr className={isSelected ? 'bg-glaceon/10' : ''}>
       <td className="px-4 py-3">
@@ -42,19 +42,19 @@ function TableRow({ card, state, isSelected, onToggleRow, onMarkNotOwned }) {
       <td className="px-4 py-3 text-sm text-navy-700 dark:text-ice-100">{card.language}</td>
       <td className="px-4 py-3 text-sm text-navy-700 dark:text-ice-100">{card.variant}</td>
       <td className="px-4 py-3 text-sm text-navy-700 dark:text-ice-100">
-        {state.grade || '—'}
+        {state[config.fieldColumn.key] || '—'}
       </td>
       <td className="px-4 py-3 text-sm text-navy-500 dark:text-ice-300">
-        {formatDate(state.ownedAt)}
+        {formatDate(state[config.dateColumn.key])}
       </td>
       <td className="px-4 py-3 text-right">
         <button
-          onClick={() => onMarkNotOwned(card.id)}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rose-100 dark:bg-rose-900/40 text-rose-700 dark:text-rose-200 text-sm font-semibold hover:bg-rose-200 dark:hover:bg-rose-900/60 transition shadow-sm"
-          aria-label={`Mark ${card.pokemon} not owned`}
+          onClick={() => onRowAction(card.id)}
+          className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold transition shadow-sm ${config.actionClass}`}
+          aria-label={config.rowAction.getAriaLabel ? config.rowAction.getAriaLabel(card) : undefined}
         >
-          <X className="w-4 h-4" />
-          Not Owned
+          <ActionIcon className="w-4 h-4" />
+          {config.rowAction.label}
         </button>
       </td>
     </tr>
@@ -65,28 +65,29 @@ const MemoTableRow = memo(TableRow, (prev, next) => {
   return (
     prev.card.id === next.card.id &&
     prev.isSelected === next.isSelected &&
-    prev.state.grade === next.state.grade &&
-    prev.state.ownedAt === next.state.ownedAt &&
+    prev.state[prev.config.fieldColumn.key] === next.state[next.config.fieldColumn.key] &&
+    prev.state[prev.config.dateColumn.key] === next.state[next.config.dateColumn.key] &&
     prev.onToggleRow === next.onToggleRow &&
-    prev.onMarkNotOwned === next.onMarkNotOwned
+    prev.onRowAction === next.onRowAction &&
+    prev.config === next.config
   )
 })
 
-export default function OwnedTable({ cards, collection, selected, onToggleRow, onMarkNotOwned }) {
+export default function StatusTable({ cards, collection, selected, onToggleRow, onRowAction, config }) {
   return (
     <div className="hidden sm:block overflow-x-auto">
       <table className="w-full text-left">
         <thead className="bg-ice-50 dark:bg-navy-600">
           <tr>
             <th className="w-10 px-4 py-3">
-              <span className="sr-only" id="select-all-owned-label">Select all cards</span>
+              <span className="sr-only" id={config.ids.selectAllLabel}>Select all cards</span>
             </th>
             <th className="px-4 py-3 text-xs font-semibold text-navy-500 dark:text-ice-300 uppercase tracking-wide">Card</th>
             <th className="px-4 py-3 text-xs font-semibold text-navy-500 dark:text-ice-300 uppercase tracking-wide">Set</th>
             <th className="px-4 py-3 text-xs font-semibold text-navy-500 dark:text-ice-300 uppercase tracking-wide">Language</th>
             <th className="px-4 py-3 text-xs font-semibold text-navy-500 dark:text-ice-300 uppercase tracking-wide">Variant</th>
-            <th className="px-4 py-3 text-xs font-semibold text-navy-500 dark:text-ice-300 uppercase tracking-wide">Grade</th>
-            <th className="px-4 py-3 text-xs font-semibold text-navy-500 dark:text-ice-300 uppercase tracking-wide">Owned</th>
+            <th className="px-4 py-3 text-xs font-semibold text-navy-500 dark:text-ice-300 uppercase tracking-wide">{config.fieldColumn.header}</th>
+            <th className="px-4 py-3 text-xs font-semibold text-navy-500 dark:text-ice-300 uppercase tracking-wide">{config.dateColumn.header}</th>
             <th className="px-4 py-3 text-right text-xs font-semibold text-navy-500 dark:text-ice-300 uppercase tracking-wide">Action</th>
           </tr>
         </thead>
@@ -98,7 +99,8 @@ export default function OwnedTable({ cards, collection, selected, onToggleRow, o
               state={collection[card.id] || {}}
               isSelected={selected.has(card.id)}
               onToggleRow={onToggleRow}
-              onMarkNotOwned={onMarkNotOwned}
+              onRowAction={onRowAction}
+              config={config}
             />
           ))}
         </tbody>

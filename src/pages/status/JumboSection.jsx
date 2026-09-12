@@ -1,11 +1,13 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-import { X, Maximize } from 'lucide-react'
+import { Maximize } from 'lucide-react'
 import SmartImage from '../../components/SmartImage'
 import { formatDate } from './utils.js'
 
-export default function JumboSection({ cards, collection, onMarkNotOwned }) {
+export default function JumboSection({ cards, collection, onRowAction, config }) {
   if (cards.length === 0) return null
+
+  const ActionIcon = config.rowAction.icon
 
   return (
     <div className="space-y-3">
@@ -20,6 +22,7 @@ export default function JumboSection({ cards, collection, onMarkNotOwned }) {
       <div className="bg-white dark:bg-navy-700 rounded-2xl shadow-card border border-ice-200 dark:border-navy-500 overflow-hidden divide-y divide-ice-100 dark:divide-navy-600">
         {cards.map((card) => {
           const state = collection[card.id] || {}
+          const chipValue = state[config.chip.key]
           return (
             <div key={card.id} className="p-3 sm:p-4">
               <div className="flex items-start gap-4">
@@ -45,22 +48,22 @@ export default function JumboSection({ cards, collection, onMarkNotOwned }) {
                   <div className="text-sm text-navy-400 dark:text-ice-300">
                     {card.language} · {card.variant}
                   </div>
-                  {state.grade && (
+                  {chipValue && (
                     <div className="text-sm text-navy-500 dark:text-ice-300">
-                      Grade {state.grade}
+                      {config.chip.text(chipValue)}
                     </div>
                   )}
                   <div className="text-sm text-navy-400 dark:text-ice-300">
-                    Owned {formatDate(state.ownedAt)}
+                    {config.dateLabel} {formatDate(state[config.dateField])}
                   </div>
                 </div>
                 <button
-                  onClick={() => onMarkNotOwned(card.id)}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rose-100 dark:bg-rose-900/40 text-rose-700 dark:text-rose-200 text-sm font-semibold hover:bg-rose-200 dark:hover:bg-rose-900/60 transition shadow-sm"
-                  aria-label={`Mark ${card.pokemon} not owned`}
+                  onClick={() => onRowAction(card.id)}
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold transition shadow-sm ${config.actionClass}`}
+                  aria-label={config.rowAction.getAriaLabel(card)}
                 >
-                  <X className="w-4 h-4" />
-                  Not Owned
+                  <ActionIcon className="w-4 h-4" />
+                  {config.rowAction.label}
                 </button>
               </div>
             </div>

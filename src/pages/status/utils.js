@@ -1,12 +1,3 @@
-export const SORT_OPTIONS = [
-  { key: 'ownedAt', label: 'Owned Date', dir: 'desc' },
-  { key: 'ownedAt', label: 'Owned Date', dir: 'asc' },
-  { key: 'releaseOrder', label: 'Release Order', dir: 'asc' },
-  { key: 'pokemon', label: 'Name', dir: 'asc' },
-  { key: 'set', label: 'Set', dir: 'asc' },
-  { key: 'grade', label: 'Grade', dir: 'asc' },
-]
-
 export function formatDate(iso) {
   if (!iso) return '—'
   try {
@@ -20,7 +11,7 @@ export function formatDate(iso) {
   }
 }
 
-export function filterOwnedCards({ cards, collection, search, langFilter, gradeFilter }) {
+export function filterCards({ cards, collection, search, langFilter, secondaryFilter, secondaryField }) {
   const q = search.trim().toLowerCase()
   return cards.filter((c) => {
     if (q) {
@@ -28,20 +19,22 @@ export function filterOwnedCards({ cards, collection, search, langFilter, gradeF
       if (!text.includes(q)) return false
     }
     if (langFilter !== 'All' && c.language !== langFilter) return false
-    if (gradeFilter !== 'All' && collection[c.id]?.grade !== gradeFilter) return false
+    if (secondaryFilter !== 'All' && collection[c.id]?.[secondaryField] !== secondaryFilter) return false
     return true
   })
 }
 
-export function sortOwnedCards({ cards, sortIndex, collection, allCards }) {
-  const { key, dir } = SORT_OPTIONS[sortIndex] || SORT_OPTIONS[0]
+export function sortCards({ cards, sortOptions, sortIndex, collection, allCards, dateField }) {
+  const option = sortOptions[sortIndex] || sortOptions[0]
+  const { key, dir } = option
   const multiplier = dir === 'asc' ? 1 : -1
+  const fromCollection = key === dateField || option.source === 'collection'
   return [...cards].sort((a, b) => {
     let va
     let vb
-    if (key === 'ownedAt') {
-      va = collection[a.id]?.ownedAt || ''
-      vb = collection[b.id]?.ownedAt || ''
+    if (fromCollection) {
+      va = collection[a.id]?.[key] || ''
+      vb = collection[b.id]?.[key] || ''
     } else if (key === 'releaseOrder') {
       va = allCards.indexOf(a)
       vb = allCards.indexOf(b)

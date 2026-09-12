@@ -1,17 +1,18 @@
 import * as React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { CheckCircle2, ArrowLeft } from 'lucide-react'
+import { ArrowLeft } from 'lucide-react'
 
-export default function PageHeader({ ownedCount }) {
+export default function PageHeader({ config, count }) {
   const navigate = useNavigate()
+  const Icon = config.header.icon
 
   return (
     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
       <h1 className="text-2xl sm:text-3xl font-bold text-navy-700 dark:text-white flex items-center gap-2">
-        <CheckCircle2 className="w-7 h-7 text-emerald-400" />
-        Owned Cards
-        <span className="text-sm font-medium px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-200">
-          {ownedCount}
+        <Icon className={`w-7 h-7 ${config.header.iconClass}`} />
+        {config.header.title}
+        <span className={`text-sm font-medium px-2.5 py-0.5 rounded-full ${config.header.badgeClass}`}>
+          {count}
         </span>
       </h1>
       <button
