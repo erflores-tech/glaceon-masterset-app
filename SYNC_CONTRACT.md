@@ -6,16 +6,38 @@ The app stores collection state in two places:
 2. **Cloud** — Firestore at `users/{uid}/collection/state`.
 
 Both copies contain a `cards` object keyed by card ID. The Firestore document also
-contains a monotonic `version` integer that tracks the last local write that was
-successfully pushed.
+contains a monotonic `version` integer and an `updatedAt` server timestamp.
 
-## Merge rules
+## Write path
 
-When the provider receives a Firestore snapshot, it calls `mergeRemoteCollection`:
+Local mutations are **not** written to Firestore as whole-document overwrites.
+Instead, each mutation queues a per-card patch in `pendingCardUpdatesRef`. A
+debounced timer (1200 ms) fires `syncPendingCards`, which opens a Firestore
+`runTransaction`:
 
-1. If `remoteVersion < localVersion`, the snapshot is older than the newest local
-   edit. The local collection is kept unchanged and the debounced write path will
-   eventually push the newer state to Firestore.
+1. Read the current document at `users/{uid}/collection/state`.
+2. Apply **all** pending card updates on top of the current Firestore `cards`
+   using `applyCardUpdates()`. This merges field-level patches (e.g. `owned`,
+   `note`) onto each card's existing remote state.
+3. Write back `{ cards, version: remoteVersion + 1, updatedAt: serverTimestamp() }`.
+
+Firestore retries the transaction automatically if another client wrote between
+the read and the commit. On retry, the transaction re-reads the latest document
+and re-applies the same pending patches, so no data is lost. On success, the
+pending updates are cleared. On failure, the pending updates remain queued and
+will be included in the next transaction attempt.
+
+Multiple rapid edits (e.g. toggling five cards in succession) are coalesced into
+a single transaction by the debounce timer.
+
+## Merge rules (incoming snapshots)
+
+When the provider receives a Firestore snapshot (via `onSnapshot` or a
+`visibilitychange` re-fetch), it calls `mergeRemoteCollection`:
+
+1. If `remoteVersion < localVersion`, the snapshot is older than the newest
+   remote version we have seen. The local collection is kept unchanged; the next
+   transaction will push the newer local state.
 2. Otherwise the remote document is equal or newer. For every card in the remote
    snapshot:
    - If the card does not exist locally, use the remote state.
@@ -28,22 +50,34 @@ When the provider receives a Firestore snapshot, it calls `mergeRemoteCollection
 
 ## Version counter
 
-`localVersionRef` starts from the value saved in `glaceon-sync-state-v1` and is
-incremented every time a debounced local write is sent to Firestore. It is a
-client-side logical clock; it never decrements and is reset only when the
-stored sync state is cleared.
+The Firestore document's `version` field is the authoritative sync version. It is
+incremented inside each transaction as `remoteVersion + 1`. There is no
+client-side write version counter.
+
+`localVersionRef` tracks the highest remote version seen so far. It is persisted
+to `glaceon-sync-state-v1` and is used only by the merge logic to decide whether
+an incoming snapshot is stale.
+
+## Visibility re-sync
+
+A `visibilitychange` listener re-fetches the Firestore document when the app
+regains focus and a user is signed in. This catches mobile browsers that
+disconnect the `onSnapshot` listener while backgrounded. The fetched snapshot is
+processed through the same merge rules as `onSnapshot`.
 
 ## Important edge cases
 
-- **Offline edits**: A user edits while offline. `localVersion` increments on the
-  next debounced write attempt. The write fails silently and `syncStatus` becomes
-  `error`. When the device comes back online, the pending write retries, the
-  remote version catches up, and subsequent snapshots merge correctly.
-- **Multiple tabs**: Each tab maintains its own `localVersionRef`. The last tab to
-  write wins at the Firestore level. Tabs receive snapshots via `onSnapshot` and
-  apply the merge rules above.
-- **Multiple devices**: Same as multiple tabs. The device with the highest
-  `localVersion` at write time dominates until another device writes.
-- **Remote doc missing**: Treated as an empty remote collection. The merge is a
-  no-op; the local collection remains and will be written to Firestore on the next
-  debounced save.
+- **Concurrent edits on two devices**: Each device's transaction reads the
+  current Firestore state, applies its own pending card patches, and writes back.
+  If two transactions overlap, Firestore retries the losing one. Both devices'
+  card changes survive because each transaction merges onto the latest state.
+- **Offline edits**: A user edits while offline. The pending card updates
+  accumulate in `pendingCardUpdatesRef`. When the device comes back online, the
+  debounced sync fires a transaction that reads the current Firestore state,
+  applies all accumulated patches, and writes back. `syncStatus` becomes `error`
+  if the transaction fails and the pending updates retry on the next mutation.
+- **Multiple tabs**: Each tab maintains its own `pendingCardUpdatesRef`. Tabs
+  write independently via transactions. Each tab receives snapshots via
+  `onSnapshot` and applies the merge rules above.
+- **Remote doc missing**: Treated as an empty remote collection with version 0.
+  The transaction writes the pending cards as the initial document state.

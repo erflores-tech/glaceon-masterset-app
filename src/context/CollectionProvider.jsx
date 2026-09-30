@@ -11,7 +11,7 @@ import {
   signInAnonymously,
   signOut,
 } from 'firebase/auth'
-import { doc, setDoc, onSnapshot, serverTimestamp } from 'firebase/firestore'
+import { doc, runTransaction, getDoc, onSnapshot, serverTimestamp } from 'firebase/firestore'
 import { auth, db, googleProvider } from '../lib/firebase'
 import {
   createBackupPayload,
@@ -21,7 +21,7 @@ import {
   BACKUP_VERSION,
   MAX_BACKUP_SIZE_BYTES,
 } from '../lib/backup'
-import { mergeRemoteCollection, bumpVersion } from '../lib/sync'
+import { mergeRemoteCollection, applyCardUpdates } from '../lib/sync'
 import { LAYOUT_OPTIONS } from '../lib/layout'
 import rawCards from '../data/cards.json'
 import binderOrder from '../data/binder-order.json'
@@ -132,13 +132,16 @@ export function CollectionProvider({ children }) {
     const saved = loadJson(LAYOUT_KEY, null)
     return LAYOUT_OPTIONS.includes(saved) ? saved : '4x3'
   })
-  const [pendingRemoteVersion, setPendingRemoteVersion] = useState(null)
 
   const timeoutRef = useRef(null)
   const flushRef = useRef(null)
   const localVersionRef = useRef(
     loadJson(SYNC_STATE_KEY, { version: 0 }).version || 0
   )
+  const pendingCardUpdatesRef = useRef({})
+  const syncTimerRef = useRef(null)
+  const collectionRef = useRef(collection)
+  collectionRef.current = collection
 
   // Watch auth state
   useEffect(() => {
@@ -149,103 +152,87 @@ export function CollectionProvider({ children }) {
     return () => unsub()
   }, [])
 
-  // Subscribe to Firestore doc when signed in; never let an older snapshot
-  // overwrite newer local edits.
+  // Shared snapshot merge logic used by both onSnapshot and visibility re-sync
+  const handleRemoteSnapshot = useCallback((snap) => {
+    setLastError(null)
+    if (!snap.exists()) {
+      setSyncStatus('synced')
+      return
+    }
+
+    const data = snap.data()
+    const remoteVersion = data.version || 0
+    const remoteCards = data.cards || {}
+
+    setCollection((prev) => {
+      const localVersion = localVersionRef.current
+      let merged
+      try {
+        const result = mergeRemoteCollection({
+          localCollection: prev,
+          localVersion,
+          remoteCollection: remoteCards,
+          remoteVersion,
+        })
+        merged = result.merged
+        if (!result.changed) {
+          return prev
+        }
+      } catch (err) {
+        setLastError(err)
+        setSyncStatus('error')
+        return prev
+      }
+
+      saveJson(STORAGE_KEY, merged)
+      return merged
+    })
+
+    localVersionRef.current = Math.max(localVersionRef.current, remoteVersion)
+    saveJson(SYNC_STATE_KEY, { version: localVersionRef.current, updatedAt: new Date().toISOString() })
+    setSyncStatus('synced')
+  }, [])
+
+  // Subscribe to Firestore doc when signed in
   useEffect(() => {
     if (!user) {
       setSyncStatus('local')
-      setPendingRemoteVersion(null)
       return
     }
 
     setSyncStatus('syncing')
     const ref = doc(db, 'users', user.uid, 'collection', 'state')
-    const unsub = onSnapshot(ref, (snap) => {
-      setLastError(null)
-      if (!snap.exists()) {
-        setSyncStatus('synced')
-        setPendingRemoteVersion(null)
-        return
-      }
-
-      const data = snap.data()
-      const remoteVersion = data.version || 0
-      const remoteCards = data.cards || {}
-
-      setCollection((prev) => {
-        const localVersion = localVersionRef.current
-        let merged
-        try {
-          const result = mergeRemoteCollection({
-            localCollection: prev,
-            localVersion,
-            remoteCollection: remoteCards,
-            remoteVersion,
-          })
-          merged = result.merged
-          if (!result.changed) {
-            return prev
-          }
-        } catch (err) {
-          setLastError(err)
-          setSyncStatus('error')
-          return prev
-        }
-
-        saveJson(STORAGE_KEY, merged)
-        return merged
-      })
-
-      // Advance the local version baseline so future local edits do not
-      // overwrite a newer remote snapshot.
-      localVersionRef.current = Math.max(localVersionRef.current, remoteVersion)
-      saveJson(SYNC_STATE_KEY, { version: localVersionRef.current, updatedAt: new Date().toISOString() })
-
-      setPendingRemoteVersion(remoteVersion)
-      setSyncStatus('synced')
-    }, (err) => {
+    const unsub = onSnapshot(ref, handleRemoteSnapshot, (err) => {
       logger.error('Firestore subscription error', err)
       setLastError(err)
       setSyncStatus('error')
     })
 
     return () => unsub()
-  }, [user])
+  }, [user, handleRemoteSnapshot])
 
-  // Persist to localStorage and Firestore (debounced)
+  // Re-sync when app regains focus (catches mobile browser backgrounding)
+  useEffect(() => {
+    const handler = () => {
+      if (document.visibilityState === 'visible' && user) {
+        const ref = doc(db, 'users', user.uid, 'collection', 'state')
+        getDoc(ref).then((snap) => {
+          handleRemoteSnapshot(snap)
+          return undefined
+        }).catch((err) => {
+          logger.error('Visibility re-sync error', err)
+        })
+      }
+    }
+    document.addEventListener('visibilitychange', handler)
+    return () => document.removeEventListener('visibilitychange', handler)
+  }, [user, handleRemoteSnapshot])
+
+  // Persist collection to localStorage (debounced)
   useEffect(() => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current)
-
     timeoutRef.current = setTimeout(() => {
       saveJson(STORAGE_KEY, collection)
-
-      if (user) {
-        const version = bumpVersion(localVersionRef.current, pendingRemoteVersion)
-        localVersionRef.current = version
-        saveJson(SYNC_STATE_KEY, { version, updatedAt: new Date().toISOString() })
-
-        const ref = doc(db, 'users', user.uid, 'collection', 'state')
-        const cardsForFirestore = sanitizeCollectionForFirestore(collection)
-
-        setDoc(
-          ref,
-          {
-            cards: cardsForFirestore,
-            version,
-            updatedAt: serverTimestamp(),
-          }
-        )
-          .then(() => {
-            setSyncStatus('synced')
-            setLastError(null)
-            return undefined
-          })
-          .catch((err) => {
-            logger.error('Firestore save error', err)
-            setLastError(err)
-            setSyncStatus('error')
-          })
-      }
     }, DEBOUNCE_MS)
 
     flushRef.current = () => {
@@ -258,12 +245,75 @@ export function CollectionProvider({ children }) {
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current)
     }
-  }, [collection, user, pendingRemoteVersion])
+  }, [collection])
+
+  // Transactional sync: reads current Firestore state, applies pending card
+  // changes on top, and writes back atomically. Prevents concurrent edits
+  // from different devices from clobbering each other.
+  const syncPendingCards = useCallback(() => {
+    if (!user) return
+    const pending = pendingCardUpdatesRef.current
+    if (Object.keys(pending).length === 0) return
+
+    setSyncStatus('syncing')
+    const ref = doc(db, 'users', user.uid, 'collection', 'state')
+
+    runTransaction(db, async (transaction) => {
+      const snap = await transaction.get(ref)
+      const remoteCards = snap.exists() ? (snap.data().cards || {}) : {}
+      const remoteVersion = snap.exists() ? (snap.data().version || 0) : 0
+
+      const mergedCards = applyCardUpdates(remoteCards, pendingCardUpdatesRef.current)
+      const cleaned = sanitizeCollectionForFirestore(mergedCards)
+
+      transaction.set(ref, {
+        cards: cleaned,
+        version: remoteVersion + 1,
+        updatedAt: serverTimestamp(),
+      })
+    })
+      .then(() => {
+        pendingCardUpdatesRef.current = {}
+        setSyncStatus('synced')
+        setLastError(null)
+        return undefined
+      })
+      .catch((err) => {
+        logger.error('Firestore sync error', err)
+        setLastError(err)
+        setSyncStatus('error')
+      })
+  }, [user])
+
+  const scheduleSync = useCallback(() => {
+    if (syncTimerRef.current) clearTimeout(syncTimerRef.current)
+    syncTimerRef.current = setTimeout(() => {
+      syncPendingCards()
+    }, DEBOUNCE_MS)
+  }, [syncPendingCards])
+
+  const queueCardSync = useCallback((cardId, cardState) => {
+    pendingCardUpdatesRef.current = {
+      ...pendingCardUpdatesRef.current,
+      [cardId]: { ...pendingCardUpdatesRef.current[cardId], ...cardState },
+    }
+    scheduleSync()
+  }, [scheduleSync])
+
+  const queueCardsSync = useCallback((cardUpdates) => {
+    const merged = { ...pendingCardUpdatesRef.current }
+    for (const [cardId, state] of Object.entries(cardUpdates)) {
+      merged[cardId] = { ...merged[cardId], ...state }
+    }
+    pendingCardUpdatesRef.current = merged
+    scheduleSync()
+  }, [scheduleSync])
 
   // Flush pending writes before unload
   useEffect(() => {
     const handler = () => {
       if (flushRef.current) flushRef.current()
+      if (syncTimerRef.current) clearTimeout(syncTimerRef.current)
       saveJson(STORAGE_KEY, collection)
     }
     window.addEventListener('beforeunload', handler)
@@ -271,41 +321,38 @@ export function CollectionProvider({ children }) {
   }, [collection])
 
   const updateCard = useCallback((cardId, patch) => {
-    setCollection((prev) => ({
-      ...prev,
-      [cardId]: {
-        ...prev[cardId],
-        ...patch,
-        updatedAt: new Date().toISOString(),
-      },
-    }))
-  }, [])
+    const now = new Date().toISOString()
+    setCollection((prev) => {
+      const newState = { ...prev[cardId], ...patch, updatedAt: now }
+      queueCardSync(cardId, newState)
+      return { ...prev, [cardId]: newState }
+    })
+  }, [queueCardSync])
 
   const toggleOwned = useCallback((cardId) => {
+    const now = new Date().toISOString()
     setCollection((prev) => {
       const existing = prev[cardId] || {}
       const owned = !existing.owned
       const next = {
         ...existing,
         owned,
-        ownedAt: owned ? new Date().toISOString() : existing.ownedAt,
-        // Clear ordered state when the card arrives
+        ownedAt: owned ? now : existing.ownedAt,
         ordered: owned ? false : existing.ordered,
-        updatedAt: new Date().toISOString(),
+        updatedAt: now,
       }
       if (!owned) {
         next.purchaseLocation = existing.purchaseLocation
         next.orderedAt = existing.orderedAt
       }
-      return {
-        ...prev,
-        [cardId]: next,
-      }
+      queueCardSync(cardId, next)
+      return { ...prev, [cardId]: next }
     })
-  }, [])
+  }, [queueCardSync])
 
   const markManyOwned = useCallback((cardIds) => {
     const now = new Date().toISOString()
+    const updates = {}
     setCollection((prev) => {
       const next = { ...prev }
       cardIds.forEach((cardId) => {
@@ -317,13 +364,16 @@ export function CollectionProvider({ children }) {
           ordered: false,
           updatedAt: now,
         }
+        updates[cardId] = next[cardId]
       })
       return next
     })
-  }, [])
+    queueCardsSync(updates)
+  }, [queueCardsSync])
 
   const markManyNotOwned = useCallback((cardIds) => {
     const now = new Date().toISOString()
+    const updates = {}
     setCollection((prev) => {
       const next = { ...prev }
       cardIds.forEach((cardId) => {
@@ -335,30 +385,31 @@ export function CollectionProvider({ children }) {
           orderedAt: existing.orderedAt,
           updatedAt: now,
         }
+        updates[cardId] = next[cardId]
       })
       return next
     })
-  }, [])
+    queueCardsSync(updates)
+  }, [queueCardsSync])
 
   const toggleOrdered = useCallback((cardId) => {
+    const now = new Date().toISOString()
     setCollection((prev) => {
       const existing = prev[cardId] || {}
       const ordered = !existing.ordered
       const next = {
         ...existing,
         ordered,
-        updatedAt: new Date().toISOString(),
+        updatedAt: now,
       }
       if (ordered) {
         next.purchaseLocation = existing.purchaseLocation
-        next.orderedAt = new Date().toISOString()
+        next.orderedAt = now
       }
-      return {
-        ...prev,
-        [cardId]: next,
-      }
+      queueCardSync(cardId, next)
+      return { ...prev, [cardId]: next }
     })
-  }, [])
+  }, [queueCardSync])
 
   const setPurchaseLocation = useCallback(
     (cardId, purchaseLocation) => updateCard(cardId, { purchaseLocation: purchaseLocation || '' }),
@@ -453,11 +504,12 @@ export function CollectionProvider({ children }) {
         const merged = { ...collection, ...importedCards }
         setCollection(merged)
         saveJson(STORAGE_KEY, merged)
+        queueCardsSync(importedCards)
       }
 
       return { imported: Object.keys(importedCards).length, ignored, preview }
     },
-    [collection]
+    [collection, queueCardsSync]
   )
 
   const acknowledgeError = useCallback(() => {
@@ -492,7 +544,6 @@ export function CollectionProvider({ children }) {
       authLoading,
       syncStatus,
       lastError,
-      pendingRemoteVersion,
       stats,
       layout,
       setLayout,
@@ -520,7 +571,6 @@ export function CollectionProvider({ children }) {
       authLoading,
       syncStatus,
       lastError,
-      pendingRemoteVersion,
       stats,
       layout,
       setLayout,

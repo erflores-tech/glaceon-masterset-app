@@ -13,7 +13,6 @@ import { createContext } from 'react'
  * @property {boolean} authLoading
  * @property {'local' | 'syncing' | 'synced' | 'error'} syncStatus
  * @property {Error | null} lastError
- * @property {number | null} pendingRemoteVersion
  * @property {Stats} stats
  * @property {string} layout
  * @property {(layout: string) => void} setLayout

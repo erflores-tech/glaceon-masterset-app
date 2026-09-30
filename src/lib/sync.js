@@ -113,3 +113,24 @@ export function bumpVersion(localVersion, remoteVersion) {
   }
   return next
 }
+
+/**
+ * Apply pending card updates on top of the current Firestore cards map.
+ * Used inside a transaction to merge local edits onto the latest remote state
+ * before writing back, so concurrent edits to different cards don't clobber
+ * each other.
+ *
+ * @param {CollectionMap} remoteCards - Cards from the Firestore document.
+ * @param {CollectionMap} updates - Pending local card changes keyed by card ID.
+ * @returns {CollectionMap} The merged cards map.
+ */
+export function applyCardUpdates(remoteCards, updates) {
+  const merged = { ...remoteCards }
+  for (const [cardId, state] of Object.entries(updates)) {
+    if (!isValidEntry(state)) {
+      continue
+    }
+    merged[cardId] = { ...merged[cardId], ...state }
+  }
+  return merged
+}
